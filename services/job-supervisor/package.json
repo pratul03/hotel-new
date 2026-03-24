@@ -1,0 +1,26 @@
+{
+  "name": "airbnb-job-supervisor",
+  "version": "1.0.0",
+  "description": "Job supervisor microservice — CRON-based background jobs with Redis event publishing",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "prisma generate && tsc",
+    "start": "node dist/index.js",
+    "prisma:generate": "prisma generate"
+  },
+  "dependencies": {
+    "@prisma/client": "^7.4.2",
+    "dotenv": "^17.3.1",
+    "node-cron": "^3.0.2",
+    "prisma": "^7.4.2",
+    "redis": "^4.6.12"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.5",
+    "@types/node-cron": "^3.0.11",
+    "tsx": "^4.7.0",
+    "typescript": "^5.9.3"
+  },
+  "packageManager": "pnpm@10.30.3+sha512.c961d1e0a2d8e354ecaa5166b822516668b7f44cb5bd95122d590dd81922f606f5473b6d23ec4a5be05e7fcd18e8488d47d978bbe981872f1145d06e9a740017"
+}

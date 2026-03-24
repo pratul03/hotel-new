@@ -1,0 +1,141 @@
+version: "3.9"
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: airbnb-postgres
+    environment:
+      POSTGRES_USER: airbnb_user
+      POSTGRES_PASSWORD: airbnb_password
+      POSTGRES_DB: airbnb_dev
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U airbnb_user -d airbnb_dev"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - airbnb-network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: airbnb-redis
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - airbnb-network
+
+  # MinIO Object Storage
+  minio:
+    image: minio/minio:latest
+    container_name: airbnb-minio
+    environment:
+      MINIO_ADMIN_USER: minioadmin
+      MINIO_ADMIN_PASSWORD: minioadmin
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/minio
+      - ./minio/init-buckets.sh:/init-buckets.sh:ro
+    command: server /minio --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - airbnb-network
+
+  # PgAdmin for Database Management (Optional)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: airbnb-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@airbnb.local
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    networks:
+      - airbnb-network
+
+  # ─── Notification Microservice ─────────────────────────────────────────────
+  notification-service:
+    image: node:20-alpine
+    container_name: airbnb-notification
+    working_dir: /app
+    volumes:
+      - ../../services/notification:/app
+      - /app/node_modules
+    command: sh -c "npm install && npx prisma generate && npx tsx src/index.ts"
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://airbnb_user:airbnb_password@postgres:5432/airbnb_dev
+      REDIS_URL: redis://redis:6379
+      REDIS_PASSWORD: ""
+      GMAIL_USER: ${GMAIL_USER}
+      GMAIL_APP_PASSWORD: ${GMAIL_APP_PASSWORD}
+      APP_NAME: ${APP_NAME:-My BnB}
+      APP_URL: ${APP_URL:-http://localhost:3001}
+      FROM_EMAIL_NAME: ${FROM_EMAIL_NAME:-My BnB}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - airbnb-network
+
+  # ─── Job Supervisor Microservice ────────────────────────────────────────────
+  job-supervisor:
+    image: node:20-alpine
+    container_name: airbnb-job-supervisor
+    working_dir: /app
+    volumes:
+      - ../../services/job-supervisor:/app
+      - /app/node_modules
+    command: sh -c "npm install && npx prisma generate && npx tsx src/index.ts"
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://airbnb_user:airbnb_password@postgres:5432/airbnb_dev
+      REDIS_URL: redis://redis:6379
+      REDIS_PASSWORD: ""
+      ENABLE_CRON_JOBS: "true"
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - airbnb-network
+
+volumes:
+  postgres_data:
+  redis_data:
+  minio_data:
+
+networks:
+  airbnb-network:
+    driver: bridge
