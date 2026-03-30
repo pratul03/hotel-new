@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const authMiddleware_1 = require("../../../middleware/authMiddleware");
+const utils_1 = require("../../../utils");
+const host_finance_controller_1 = require("../controllers/host-finance.controller");
+const router = (0, express_1.Router)();
+router.get("/earnings", authMiddleware_1.authenticate, (0, authMiddleware_1.requireRole)(["host", "admin"]), (0, utils_1.catchAsync)(host_finance_controller_1.hostfinanceController.getEarnings));
+router.get("/transactions", authMiddleware_1.authenticate, (0, authMiddleware_1.requireRole)(["host", "admin"]), (0, utils_1.catchAsync)(host_finance_controller_1.hostfinanceController.getTransactions));
+router.get("/payout-account", authMiddleware_1.authenticate, (0, authMiddleware_1.requireRole)(["host", "admin"]), (0, utils_1.catchAsync)(host_finance_controller_1.hostfinanceController.getPayoutAccount));
+router.put("/payout-account", authMiddleware_1.authenticate, (0, authMiddleware_1.requireRole)(["host", "admin"]), (0, utils_1.catchAsync)(host_finance_controller_1.hostfinanceController.upsertPayoutAccount));
+router.get("/payouts", authMiddleware_1.authenticate, (0, authMiddleware_1.requireRole)(["host", "admin"]), (0, utils_1.catchAsync)(host_finance_controller_1.hostfinanceController.getPayouts));
+router.post("/payouts/request", authMiddleware_1.authenticate, (0, authMiddleware_1.requireRole)(["host", "admin"]), (0, utils_1.catchAsync)(host_finance_controller_1.hostfinanceController.requestPayout));
+exports.default = router;

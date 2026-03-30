@@ -1,7 +1,8 @@
 import "dotenv/config";
 import { prisma } from "./config/database";
+import { env } from "./config/environment";
 import { verifyMailer } from "./config/mailer";
-import { startSubscriber } from "./subscriber";
+import { startSubscriber, stopSubscriber } from "./subscriber";
 
 const start = async () => {
   console.log("🚀 Starting Notification Service...");
@@ -38,11 +39,14 @@ const start = async () => {
   }
 
   console.log("\n✅ Notification Service is running");
-  console.log("   Listening for events on channel: app:events\n");
+  console.log(
+    `   Listening for events on channel: ${env.REDIS_EVENT_CHANNEL}\n`,
+  );
 
   // Graceful shutdown
   const shutdown = async (signal: string) => {
     console.log(`\n${signal} received — shutting down notification service...`);
+    await stopSubscriber();
     await prisma.$disconnect();
     process.exit(0);
   };

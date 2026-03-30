@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const authMiddleware_1 = require("../../../middleware/authMiddleware");
+const utils_1 = require("../../../utils");
+const support_controller_1 = require("../controllers/support.controller");
+const router = (0, express_1.Router)();
+router.post("/tickets", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(support_controller_1.supportController.createTicket));
+router.get("/tickets", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(support_controller_1.supportController.getTickets));
+router.get("/tickets/:id", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(support_controller_1.supportController.getTicket));
+router.post("/tickets/:id/reply", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(support_controller_1.supportController.reply));
+router.post("/tickets/:id/escalate", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(support_controller_1.supportController.escalate));
+router.post("/emergency", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(support_controller_1.supportController.createEmergency));
+router.get("/ops/routing-console", authMiddleware_1.authenticate, (0, authMiddleware_1.requireRole)(["admin"]), (0, utils_1.catchAsync)(support_controller_1.supportController.routingConsole));
+router.get("/ops/dashboard", authMiddleware_1.authenticate, (0, authMiddleware_1.requireRole)(["admin"]), (0, utils_1.catchAsync)(support_controller_1.supportController.opsDashboard));
+exports.default = router;

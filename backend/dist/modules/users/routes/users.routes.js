@@ -1,0 +1,17 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const authMiddleware_1 = require("../../../middleware/authMiddleware");
+const utils_1 = require("../../../utils");
+const users_controller_1 = require("../controllers/users.controller");
+const router = (0, express_1.Router)();
+router.get("/:id/profile", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(users_controller_1.usersController.getProfile));
+router.put("/:id/profile", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(users_controller_1.usersController.updateProfile));
+router.post("/:id/verify-document", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(users_controller_1.usersController.addDocument));
+router.get("/:id/documents", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(users_controller_1.usersController.listDocuments));
+router.delete("/:id/documents/:docId", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(users_controller_1.usersController.deleteDocument));
+router.get("/:id/host-verification", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(users_controller_1.usersController.hostVerification));
+router.get("/:id/identity-verification", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(users_controller_1.usersController.identityVerification));
+router.get("/:id/identity-verification/mock", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(users_controller_1.usersController.identityVerification));
+router.get("/:id/loyalty", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(users_controller_1.usersController.loyalty));
+exports.default = router;

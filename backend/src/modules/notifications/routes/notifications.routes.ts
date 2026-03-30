@@ -1,95 +1,42 @@
-import { Router, Response } from "express";
-import { z } from "zod";
-import {
-  authenticate,
-  AuthenticatedRequest,
-} from "../../../middleware/authMiddleware";
-import { catchAsync, successResponse } from "../../../utils";
-import { notificationService } from "../services/notifications.service";
+import { Router } from "express";
+import { authenticate } from "../../../middleware/authMiddleware";
+import { catchAsync } from "../../../utils";
+import { notificationsController } from "../controllers/notifications.controller";
 
 const router = Router();
 
-const getParam = (value: string | string[] | undefined): string =>
-  Array.isArray(value) ? value[0] || "" : value || "";
-
-const preferencesSchema = z.object({
-  inApp: z.boolean().optional(),
-  email: z.boolean().optional(),
-  push: z.boolean().optional(),
-  booking: z.boolean().optional(),
-  message: z.boolean().optional(),
-  payment: z.boolean().optional(),
-  marketing: z.boolean().optional(),
-});
-
-router.get(
-  "/",
-  authenticate,
-  catchAsync(async (req: AuthenticatedRequest, res: Response) => {
-    const data = await notificationService.list(req.userId as string);
-    res.json(successResponse(data, "Notifications fetched"));
-  }),
-);
+router.get("/", authenticate, catchAsync(notificationsController.list));
 
 router.patch(
   "/:id/read",
   authenticate,
-  catchAsync(async (req: AuthenticatedRequest, res: Response) => {
-    const id = getParam(req.params.id as string | string[] | undefined);
-    const data = await notificationService.markRead(req.userId as string, id);
-    res.json(successResponse(data, "Notification marked as read"));
-  }),
+  catchAsync(notificationsController.markRead),
 );
 
 router.patch(
   "/read-all",
   authenticate,
-  catchAsync(async (req: AuthenticatedRequest, res: Response) => {
-    const data = await notificationService.markAllRead(req.userId as string);
-    res.json(successResponse(data, "All notifications marked as read"));
-  }),
+  catchAsync(notificationsController.markAllRead),
 );
 
 router.get(
   "/unread-count",
   authenticate,
-  catchAsync(async (req: AuthenticatedRequest, res: Response) => {
-    const data = await notificationService.unreadCount(req.userId as string);
-    res.json(successResponse(data, "Unread count fetched"));
-  }),
+  catchAsync(notificationsController.unreadCount),
 );
 
 router.get(
   "/preferences",
   authenticate,
-  catchAsync(async (req: AuthenticatedRequest, res: Response) => {
-    const data = await notificationService.getPreferences(req.userId as string);
-    res.json(successResponse(data, "Notification preferences fetched"));
-  }),
+  catchAsync(notificationsController.getPreferences),
 );
 
 router.put(
   "/preferences",
   authenticate,
-  catchAsync(async (req: AuthenticatedRequest, res: Response) => {
-    const payload = preferencesSchema.parse(req.body);
-    const data = await notificationService.updatePreferences(
-      req.userId as string,
-      payload,
-    );
-    res.json(successResponse(data, "Notification preferences updated"));
-  }),
+  catchAsync(notificationsController.updatePreferences),
 );
 
-router.delete(
-  "/:id",
-  authenticate,
-  catchAsync(async (req: AuthenticatedRequest, res: Response) => {
-    const id = getParam(req.params.id as string | string[] | undefined);
-    const data = await notificationService.delete(req.userId as string, id);
-    res.json(successResponse(data, "Notification deleted"));
-  }),
-);
+router.delete("/:id", authenticate, catchAsync(notificationsController.delete));
 
 export default router;
-

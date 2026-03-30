@@ -139,7 +139,8 @@ const createPdfBuffer = async (html: string): Promise<Buffer> => {
   }
 };
 
-const buildFileUrl = (documentId: string) => `/api/invoices/${documentId}/pdf`;
+const buildFileUrl = (documentId: string) =>
+  `/api/v1/invoices/${documentId}/pdf`;
 
 const ensureInvoiceBucket = async () => {
   if (invoiceBucketReady) return;

@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const authMiddleware_1 = require("../../../middleware/authMiddleware");
+const utils_1 = require("../../../utils");
+const invoices_controller_1 = require("../controllers/invoices.controller");
+const router = (0, express_1.Router)();
+router.post("/", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(invoices_controller_1.invoicesController.create));
+router.get("/", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(invoices_controller_1.invoicesController.list));
+router.get("/:id/pdf", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(invoices_controller_1.invoicesController.getPdf));
+router.get("/:id/url", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(invoices_controller_1.invoicesController.getAccessUrl));
+router.post("/ops/storage-audit", authMiddleware_1.authenticate, (0, authMiddleware_1.requireRole)(["admin"]), (0, utils_1.catchAsync)(invoices_controller_1.invoicesController.runStorageAudit));
+router.patch("/:id/revoke", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(invoices_controller_1.invoicesController.revoke));
+exports.default = router;

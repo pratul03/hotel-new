@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const authMiddleware_1 = require("../../../middleware/authMiddleware");
+const utils_1 = require("../../../utils");
+const search_history_controller_1 = require("../controllers/search-history.controller");
+const router = (0, express_1.Router)();
+router.post("/", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(search_history_controller_1.searchhistoryController.create));
+router.get("/", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(search_history_controller_1.searchhistoryController.list));
+router.delete("/", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(search_history_controller_1.searchhistoryController.clear));
+exports.default = router;

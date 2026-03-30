@@ -41,7 +41,7 @@ const queueInvoiceGeneration = (payload: {
 }) => {
   if (process.env.NODE_ENV === "test") return;
 
-  void import("../../invoices/services/invoicing.service")
+  void import("../../invoices/services/invoicing.service.js")
     .then(({ invoicingService }) =>
       invoicingService.createDocument(payload.userId, {
         type: payload.type,

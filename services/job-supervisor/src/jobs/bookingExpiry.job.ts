@@ -57,20 +57,19 @@ export const runBookingExpiryJob = async (): Promise<void> => {
         }),
       ]);
 
-      await publisher.publish(
-        EVENT_CHANNEL,
-        JSON.stringify({
-          type: "booking.expired",
-          data: {
-            bookingId: booking.id,
-            guest: booking.guest,
-            hotel: { name: booking.room.hotel.name },
-            checkIn: booking.checkIn,
-            checkOut: booking.checkOut,
-          },
-          timestamp: new Date().toISOString(),
-        }),
-      );
+      const message = JSON.stringify({
+        type: "booking.expired",
+        data: {
+          bookingId: booking.id,
+          guest: booking.guest,
+          hotel: { name: booking.room.hotel.name },
+          checkIn: booking.checkIn,
+          checkOut: booking.checkOut,
+        },
+        timestamp: new Date().toISOString(),
+      });
+
+      await publisher.publish(EVENT_CHANNEL, message);
 
       processed++;
     } catch (err: any) {

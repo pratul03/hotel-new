@@ -15,6 +15,7 @@ export const env = {
   // Redis
   REDIS_URL: required("REDIS_URL"),
   REDIS_PASSWORD: process.env.REDIS_PASSWORD || "",
+  REDIS_EVENT_CHANNEL: process.env.REDIS_EVENT_CHANNEL || "app:v1:events",
 
   // Gmail SMTP
   GMAIL_USER: required("GMAIL_USER"),

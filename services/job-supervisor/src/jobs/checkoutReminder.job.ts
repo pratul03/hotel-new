@@ -51,22 +51,21 @@ export const runCheckoutReminderJob = async (): Promise<void> => {
 
   for (const booking of checkingInTomorrow) {
     try {
-      await publisher.publish(
-        EVENT_CHANNEL,
-        JSON.stringify({
-          type: "checkin.reminder",
-          data: {
-            bookingId: booking.id,
-            guest: booking.guest,
-            hotel: {
-              name: booking.room.hotel.name,
-              checkInTime: booking.room.hotel.checkInTime,
-            },
-            checkIn: booking.checkIn,
+      const checkInMessage = JSON.stringify({
+        type: "checkin.reminder",
+        data: {
+          bookingId: booking.id,
+          guest: booking.guest,
+          hotel: {
+            name: booking.room.hotel.name,
+            checkInTime: booking.room.hotel.checkInTime,
           },
-          timestamp: new Date().toISOString(),
-        }),
-      );
+          checkIn: booking.checkIn,
+        },
+        timestamp: new Date().toISOString(),
+      });
+
+      await publisher.publish(EVENT_CHANNEL, checkInMessage);
       processed++;
     } catch (err: any) {
       errors.push(`CheckIn reminder for booking ${booking.id}: ${err.message}`);
@@ -90,22 +89,21 @@ export const runCheckoutReminderJob = async (): Promise<void> => {
 
   for (const booking of checkingOutTomorrow) {
     try {
-      await publisher.publish(
-        EVENT_CHANNEL,
-        JSON.stringify({
-          type: "checkout.reminder",
-          data: {
-            bookingId: booking.id,
-            guest: booking.guest,
-            hotel: {
-              name: booking.room.hotel.name,
-              checkOutTime: booking.room.hotel.checkOutTime,
-            },
-            checkOut: booking.checkOut,
+      const checkOutMessage = JSON.stringify({
+        type: "checkout.reminder",
+        data: {
+          bookingId: booking.id,
+          guest: booking.guest,
+          hotel: {
+            name: booking.room.hotel.name,
+            checkOutTime: booking.room.hotel.checkOutTime,
           },
-          timestamp: new Date().toISOString(),
-        }),
-      );
+          checkOut: booking.checkOut,
+        },
+        timestamp: new Date().toISOString(),
+      });
+
+      await publisher.publish(EVENT_CHANNEL, checkOutMessage);
       processed++;
     } catch (err: any) {
       errors.push(

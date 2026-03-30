@@ -106,7 +106,7 @@ describe("invoicingService", () => {
         status: "issued",
         currency: "INR",
         amount: 1200,
-        fileUrl: "/api/invoices/invdoc-1/pdf",
+        fileUrl: "/api/v1/invoices/invdoc-1/pdf",
         storageBucket: "airbnb-invoices",
         storageKey: "invoices/2026/invdoc-1/OTH-100.pdf",
         lineItems: "[]",
@@ -139,7 +139,7 @@ describe("invoicingService", () => {
         status: "issued",
         currency: "INR",
         amount: 1200,
-        fileUrl: "/api/invoices/invdoc-1/pdf",
+        fileUrl: "/api/v1/invoices/invdoc-1/pdf",
         storageBucket: "airbnb-invoices",
         storageKey: "invoices/2026/invdoc-1/OTH-100.pdf",
         lineItems: "[]",
@@ -202,7 +202,7 @@ describe("invoicingService", () => {
       documentNumber: "PAY-1",
       currency: "INR",
       amount: 5000,
-      fileUrl: "/api/invoices/invdoc-1/pdf",
+      fileUrl: "/api/v1/invoices/invdoc-1/pdf",
       storageBucket: "airbnb-invoices",
       storageKey: "invoices/2026/invdoc-1/PAY-1.pdf",
       lineItems: "[]",
@@ -223,7 +223,7 @@ describe("invoicingService", () => {
     expect(mockLaunch).toHaveBeenCalled();
     expect(mockMinioClient.putObject).toHaveBeenCalled();
     expect("fileName" in result && result.fileName.includes(".pdf")).toBe(true);
-    expect(result.fileUrl).toBe("/api/invoices/invdoc-1/pdf");
+    expect(result.fileUrl).toBe("/api/v1/invoices/invdoc-1/pdf");
   });
 
   it("should throw unauthorized for booking managed by someone else", async () => {
@@ -284,7 +284,7 @@ describe("invoicingService", () => {
       documentNumber: "OTH-100",
       currency: "INR",
       amount: 1200,
-      fileUrl: "/api/invoices/invdoc-1/pdf",
+      fileUrl: "/api/v1/invoices/invdoc-1/pdf",
       storageBucket: "airbnb-invoices",
       storageKey: "invoices/2026/invdoc-1/OTH-100.pdf",
       lineItems: JSON.stringify([{ description: "Service fee", amount: 1200 }]),
@@ -304,7 +304,7 @@ describe("invoicingService", () => {
     invoiceFindUnique.mockResolvedValue({
       id: "invdoc-1",
       userId: "guest-1",
-      fileUrl: "/api/invoices/invdoc-1/pdf",
+      fileUrl: "/api/v1/invoices/invdoc-1/pdf",
       storageBucket: "airbnb-invoices",
       storageKey: "invoices/2026/invdoc-1/OTH-100.pdf",
     });
@@ -315,7 +315,7 @@ describe("invoicingService", () => {
       600,
     );
 
-    expect(result.fileUrl).toBe("/api/invoices/invdoc-1/pdf");
+    expect(result.fileUrl).toBe("/api/v1/invoices/invdoc-1/pdf");
     expect(result.signedUrl).toBe("https://signed-url");
     expect(mockMinioClient.presignedGetObject).toHaveBeenCalledWith(
       "airbnb-invoices",

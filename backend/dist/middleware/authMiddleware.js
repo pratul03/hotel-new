@@ -4,7 +4,7 @@ exports.requireRole = exports.authenticate = void 0;
 const tslib_1 = require("tslib");
 const jsonwebtoken_1 = tslib_1.__importDefault(require("jsonwebtoken"));
 const environment_1 = require("../config/environment");
-const session_service_1 = require("../services/session.service");
+const session_service_1 = require("../modules/auth/services/session.service");
 const authenticate = (req, res, next) => {
     try {
         const authHeader = req.headers.authorization;

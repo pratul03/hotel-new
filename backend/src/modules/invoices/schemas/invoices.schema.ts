@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z, v } from "../../../utils/validation";
 
 export const invoiceTypeSchema = z.enum([
   "order",
@@ -10,16 +10,16 @@ export const invoiceTypeSchema = z.enum([
 
 export const createInvoiceSchema = z.object({
   type: invoiceTypeSchema,
-  title: z.string().trim().min(3).max(160),
-  bookingId: z.string().trim().min(1).optional(),
-  paymentId: z.string().trim().min(1).optional(),
-  amount: z.number().positive().optional(),
-  currency: z.string().trim().length(3).optional(),
+  title: v.text(3, 160),
+  bookingId: v.id().optional(),
+  paymentId: v.id().optional(),
+  amount: v.positiveNumber().optional(),
+  currency: z.coerce.string().trim().length(3).optional(),
   lineItems: z
     .array(
       z.object({
-        description: z.string().trim().min(2).max(240),
-        amount: z.number().positive(),
+        description: v.text(2, 240),
+        amount: v.positiveNumber(),
       }),
     )
     .optional(),
@@ -32,12 +32,12 @@ export const listFilterSchema = z.object({
 });
 
 export const accessUrlSchema = z.object({
-  expiresIn: z.coerce.number().int().min(60).max(86400).optional(),
+  expiresIn: v.int(60, 86400).optional(),
 });
 
 export const storageAuditSchema = z.object({
-  limit: z.coerce.number().int().min(1).max(500).optional(),
-  olderThanDays: z.coerce.number().int().min(0).max(3650).optional(),
-  repairMissing: z.coerce.boolean().optional(),
-  dryRun: z.coerce.boolean().optional(),
+  limit: v.int(1, 500).optional(),
+  olderThanDays: v.int(0, 3650).optional(),
+  repairMissing: v.bool().optional(),
+  dryRun: v.bool().optional(),
 });

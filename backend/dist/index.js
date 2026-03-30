@@ -51,6 +51,7 @@ const startServer = async () => {
         app.listen(environment_1.env.PORT, () => {
             console.log(`\n✅ Server running on http://localhost:${environment_1.env.PORT}`);
             console.log(`🔗 Health check: http://localhost:${environment_1.env.PORT}/health\n`);
+            console.log(`🔗 Versioned health: http://localhost:${environment_1.env.PORT}/api/v1/health\n`);
         });
         // Graceful shutdown
         const gracefulShutdown = async (signal) => {

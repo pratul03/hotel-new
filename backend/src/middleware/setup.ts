@@ -25,6 +25,30 @@ import hostFinanceRoutes from "../modules/host-finance/routes/host-finance.route
 import hostToolsRoutes from "../modules/host-tools/routes/host-tools.routes";
 import invoicesRoutes from "../modules/invoices/routes/invoices.routes";
 
+const API_V1_BASE = "/api/v1";
+
+const mountApiRoutes = (app: Express, prefix: string) => {
+  app.use(`${prefix}/auth`, authRoutes);
+  app.use(`${prefix}/hotels`, hotelRoutes);
+  app.use(`${prefix}/rooms`, roomRoutes);
+  app.use(`${prefix}/bookings`, bookingRoutes);
+  app.use(`${prefix}/reviews`, reviewRoutes);
+  app.use(`${prefix}/wishlist`, wishlistRoutes);
+  app.use(`${prefix}/wishlists`, wishlistRoutes);
+  app.use(`${prefix}/users`, usersRoutes);
+  app.use(`${prefix}/messages`, messagesRoutes);
+  app.use(`${prefix}/notifications`, notificationsRoutes);
+  app.use(`${prefix}/support`, supportRoutes);
+  app.use(`${prefix}/search-history`, searchHistoryRoutes);
+  app.use(`${prefix}/reports`, reportsRoutes);
+  app.use(`${prefix}/payments`, paymentsRoutes);
+  app.use(`${prefix}/invoices`, invoicesRoutes);
+  app.use(`${prefix}/promotions`, promotionsRoutes);
+  app.use(`${prefix}/host`, hostProfileRoutes);
+  app.use(`${prefix}/host/finance`, hostFinanceRoutes);
+  app.use(`${prefix}/host/tools`, hostToolsRoutes);
+};
+
 export const setupMiddleware = (app: Express) => {
   // Trust proxy
   app.set("trust proxy", 1);
@@ -72,26 +96,18 @@ export const setupMiddleware = (app: Express) => {
     });
   });
 
-  // Routes
-  app.use("/api/auth", authRoutes);
-  app.use("/api/hotels", hotelRoutes);
-  app.use("/api/rooms", roomRoutes);
-  app.use("/api/bookings", bookingRoutes);
-  app.use("/api/reviews", reviewRoutes);
-  app.use("/api/wishlist", wishlistRoutes);
-  app.use("/api/wishlists", wishlistRoutes);
-  app.use("/api/users", usersRoutes);
-  app.use("/api/messages", messagesRoutes);
-  app.use("/api/notifications", notificationsRoutes);
-  app.use("/api/support", supportRoutes);
-  app.use("/api/search-history", searchHistoryRoutes);
-  app.use("/api/reports", reportsRoutes);
-  app.use("/api/payments", paymentsRoutes);
-  app.use("/api/invoices", invoicesRoutes);
-  app.use("/api/promotions", promotionsRoutes);
-  app.use("/api/host", hostProfileRoutes);
-  app.use("/api/host/finance", hostFinanceRoutes);
-  app.use("/api/host/tools", hostToolsRoutes);
+  app.get(`${API_V1_BASE}/health`, (_req: Request, res: Response) => {
+    res.json({
+      status: "OK",
+      timestamp: new Date().toISOString(),
+      uptime: process.uptime(),
+      environment: env.NODE_ENV,
+      version: "v1",
+    });
+  });
+
+  // Primary versioned routes.
+  mountApiRoutes(app, API_V1_BASE);
 
   // 404 handler
   app.use((req: Request, res: Response) => {

@@ -1,12 +1,6 @@
 // Shared type definitions for the notification service
 
-export const EVENT_CHANNEL = "app:events";
-
-export interface AppEvent<T = Record<string, any>> {
-  type: string;
-  data: T;
-  timestamp: string;
-}
+export const EVENT_CHANNEL = "app:v1:events";
 
 export interface UserInfo {
   id: string;
@@ -132,3 +126,30 @@ export interface IncidentEscalatedEventData {
   createdAt: string;
   adminEmail: string;
 }
+
+export interface AppEventPayloadMap {
+  "booking.created": BookingCreatedEventData;
+  "booking.confirmed": BookingConfirmedEventData;
+  "booking.cancelled": BookingCancelledEventData;
+  "booking.checked_in": BookingCheckedInEventData;
+  "booking.checked_out": BookingCheckedOutEventData;
+  "booking.expired": BookingExpiredEventData;
+  "payment.success": PaymentSuccessEventData;
+  "payment.failed": PaymentFailedEventData;
+  "message.new": MessageNewEventData;
+  "review.created": ReviewCreatedEventData;
+  "checkin.reminder": CheckInReminderEventData;
+  "checkout.reminder": CheckOutReminderEventData;
+  "superhost.updated": SuperhostUpdatedEventData;
+  "incident.escalated": IncidentEscalatedEventData;
+}
+
+export type AppEventType = keyof AppEventPayloadMap;
+
+export type AppEvent = {
+  [K in AppEventType]: {
+    type: K;
+    data: AppEventPayloadMap[K];
+    timestamp: string;
+  };
+}[AppEventType];

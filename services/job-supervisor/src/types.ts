@@ -1,4 +1,6 @@
-export const EVENT_CHANNEL = "app:events";
+import { env } from "./config/environment";
+
+export const EVENT_CHANNEL = env.REDIS_EVENT_CHANNEL;
 
 export interface JobResult {
   jobName: string;

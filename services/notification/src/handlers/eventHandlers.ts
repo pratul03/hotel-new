@@ -4,7 +4,6 @@ import {
   createBulkInAppNotifications,
 } from "../services/inAppService";
 import { env } from "../config/environment";
-import { AppEvent } from "../types";
 
 // Booking templates
 import {
@@ -39,65 +38,79 @@ import {
   superhostRevokedTemplate,
   incidentEscalatedTemplate,
 } from "../templates/system.template";
+import {
+  AppEvent,
+  BookingCancelledEventData,
+  BookingCheckedInEventData,
+  BookingCheckedOutEventData,
+  BookingConfirmedEventData,
+  BookingCreatedEventData,
+  BookingExpiredEventData,
+  CheckInReminderEventData,
+  CheckOutReminderEventData,
+  IncidentEscalatedEventData,
+  MessageNewEventData,
+  PaymentFailedEventData,
+  PaymentSuccessEventData,
+  ReviewCreatedEventData,
+  SuperhostUpdatedEventData,
+} from "../types";
 
 /**
  * Main event dispatcher — called for every event received from Redis.
  */
 export const handleEvent = async (event: AppEvent): Promise<void> => {
-  const { type, data } = event;
-  console.log(`[Handler] Processing event: ${type}`);
+  console.log(`[Handler] Processing event: ${event.type}`);
 
-  switch (type) {
+  switch (event.type) {
     case "booking.created":
-      await handleBookingCreated(data as any);
+      await handleBookingCreated(event.data);
       break;
     case "booking.confirmed":
-      await handleBookingConfirmed(data as any);
+      await handleBookingConfirmed(event.data);
       break;
     case "booking.cancelled":
-      await handleBookingCancelled(data as any);
+      await handleBookingCancelled(event.data);
       break;
     case "booking.checked_in":
-      await handleBookingCheckedIn(data as any);
+      await handleBookingCheckedIn(event.data);
       break;
     case "booking.checked_out":
-      await handleBookingCheckedOut(data as any);
+      await handleBookingCheckedOut(event.data);
       break;
     case "booking.expired":
-      await handleBookingExpired(data as any);
+      await handleBookingExpired(event.data);
       break;
     case "payment.success":
-      await handlePaymentSuccess(data as any);
+      await handlePaymentSuccess(event.data);
       break;
     case "payment.failed":
-      await handlePaymentFailed(data as any);
+      await handlePaymentFailed(event.data);
       break;
     case "message.new":
-      await handleMessageNew(data as any);
+      await handleMessageNew(event.data);
       break;
     case "review.created":
-      await handleReviewCreated(data as any);
+      await handleReviewCreated(event.data);
       break;
     case "checkin.reminder":
-      await handleCheckInReminder(data as any);
+      await handleCheckInReminder(event.data);
       break;
     case "checkout.reminder":
-      await handleCheckOutReminder(data as any);
+      await handleCheckOutReminder(event.data);
       break;
     case "superhost.updated":
-      await handleSuperhostUpdated(data as any);
+      await handleSuperhostUpdated(event.data);
       break;
     case "incident.escalated":
-      await handleIncidentEscalated(data as any);
+      await handleIncidentEscalated(event.data);
       break;
-    default:
-      console.log(`[Handler] Unknown event type: ${type} — ignored`);
   }
 };
 
 // ─── Individual Handlers ──────────────────────────────────────────────────────
 
-async function handleBookingCreated(data: any) {
+async function handleBookingCreated(data: BookingCreatedEventData) {
   const {
     bookingId,
     guest,
@@ -152,7 +165,7 @@ async function handleBookingCreated(data: any) {
   await sendEmail({ to: host.email, ...hostTpl });
 }
 
-async function handleBookingConfirmed(data: any) {
+async function handleBookingConfirmed(data: BookingConfirmedEventData) {
   const { bookingId, guest, hotel, checkIn, checkOut, amount } = data;
 
   await createInAppNotification({
@@ -173,7 +186,7 @@ async function handleBookingConfirmed(data: any) {
   await sendEmail({ to: guest.email, ...tpl });
 }
 
-async function handleBookingCancelled(data: any) {
+async function handleBookingCancelled(data: BookingCancelledEventData) {
   const { bookingId, guest, host, hotel, checkIn, checkOut, reason } = data;
 
   await createBulkInAppNotifications([
@@ -214,7 +227,7 @@ async function handleBookingCancelled(data: any) {
   await sendEmail({ to: host.email, ...hostTpl });
 }
 
-async function handleBookingCheckedIn(data: any) {
+async function handleBookingCheckedIn(data: BookingCheckedInEventData) {
   const { bookingId, guest, hotel, checkOut } = data;
 
   await createInAppNotification({
@@ -233,7 +246,7 @@ async function handleBookingCheckedIn(data: any) {
   await sendEmail({ to: guest.email, ...tpl });
 }
 
-async function handleBookingCheckedOut(data: any) {
+async function handleBookingCheckedOut(data: BookingCheckedOutEventData) {
   const { bookingId, guest, hotel } = data;
 
   await createInAppNotification({
@@ -251,7 +264,7 @@ async function handleBookingCheckedOut(data: any) {
   await sendEmail({ to: guest.email, ...tpl });
 }
 
-async function handleBookingExpired(data: any) {
+async function handleBookingExpired(data: BookingExpiredEventData) {
   const { bookingId, guest, hotel, checkIn, checkOut } = data;
 
   await createInAppNotification({
@@ -270,7 +283,7 @@ async function handleBookingExpired(data: any) {
   await sendEmail({ to: guest.email, ...tpl });
 }
 
-async function handlePaymentSuccess(data: any) {
+async function handlePaymentSuccess(data: PaymentSuccessEventData) {
   const { bookingId, paymentId, guest, amount, hotel } = data;
 
   await createInAppNotification({
@@ -290,7 +303,7 @@ async function handlePaymentSuccess(data: any) {
   await sendEmail({ to: guest.email, ...tpl });
 }
 
-async function handlePaymentFailed(data: any) {
+async function handlePaymentFailed(data: PaymentFailedEventData) {
   const { bookingId, guest, amount } = data;
 
   await createInAppNotification({
@@ -308,7 +321,7 @@ async function handlePaymentFailed(data: any) {
   await sendEmail({ to: guest.email, ...tpl });
 }
 
-async function handleMessageNew(data: any) {
+async function handleMessageNew(data: MessageNewEventData) {
   const { messageId, sender, receiver, content, bookingId } = data;
 
   await createInAppNotification({
@@ -327,7 +340,7 @@ async function handleMessageNew(data: any) {
   await sendEmail({ to: receiver.email, ...tpl });
 }
 
-async function handleReviewCreated(data: any) {
+async function handleReviewCreated(data: ReviewCreatedEventData) {
   const { reviewId, sender, receiver, rating, comment } = data;
 
   await createInAppNotification({
@@ -346,7 +359,7 @@ async function handleReviewCreated(data: any) {
   await sendEmail({ to: receiver.email, ...tpl });
 }
 
-async function handleCheckInReminder(data: any) {
+async function handleCheckInReminder(data: CheckInReminderEventData) {
   const { bookingId, guest, hotel, checkIn } = data;
 
   await createInAppNotification({
@@ -366,7 +379,7 @@ async function handleCheckInReminder(data: any) {
   await sendEmail({ to: guest.email, ...tpl });
 }
 
-async function handleCheckOutReminder(data: any) {
+async function handleCheckOutReminder(data: CheckOutReminderEventData) {
   const { bookingId, guest, hotel, checkOut } = data;
 
   await createInAppNotification({
@@ -386,7 +399,7 @@ async function handleCheckOutReminder(data: any) {
   await sendEmail({ to: guest.email, ...tpl });
 }
 
-async function handleSuperhostUpdated(data: any) {
+async function handleSuperhostUpdated(data: SuperhostUpdatedEventData) {
   const { host, status, previousStatus } = data;
 
   await createInAppNotification({
@@ -408,7 +421,7 @@ async function handleSuperhostUpdated(data: any) {
   }
 }
 
-async function handleIncidentEscalated(data: any) {
+async function handleIncidentEscalated(data: IncidentEscalatedEventData) {
   const {
     incidentId,
     bookingId,

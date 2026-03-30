@@ -122,19 +122,18 @@ export const runSuperhostCalcJob = async (): Promise<void> => {
 
       // Publish event only if status changed
       if (previousStatus !== newStatus) {
-        await publisher.publish(
-          EVENT_CHANNEL,
-          JSON.stringify({
-            type: "superhost.updated",
-            data: {
-              userId: host.id,
-              host: { id: host.id, name: host.name, email: host.email },
-              status: newStatus,
-              previousStatus,
-            },
-            timestamp: new Date().toISOString(),
-          }),
-        );
+        const message = JSON.stringify({
+          type: "superhost.updated",
+          data: {
+            userId: host.id,
+            host: { id: host.id, name: host.name, email: host.email },
+            status: newStatus,
+            previousStatus,
+          },
+          timestamp: new Date().toISOString(),
+        });
+
+        await publisher.publish(EVENT_CHANNEL, message);
       }
 
       processed++;

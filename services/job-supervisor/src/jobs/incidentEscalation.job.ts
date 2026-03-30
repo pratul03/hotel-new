@@ -48,21 +48,20 @@ export const runIncidentEscalationJob = async (): Promise<void> => {
         data: { status: "investigating" },
       });
 
-      await publisher.publish(
-        EVENT_CHANNEL,
-        JSON.stringify({
-          type: "incident.escalated",
-          data: {
-            incidentId: incident.id,
-            bookingId: incident.bookingId,
-            reporterName: incident.reportedBy.name,
-            description: incident.description,
-            createdAt: incident.createdAt,
-            adminEmail: env.ADMIN_EMAIL,
-          },
-          timestamp: new Date().toISOString(),
-        }),
-      );
+      const message = JSON.stringify({
+        type: "incident.escalated",
+        data: {
+          incidentId: incident.id,
+          bookingId: incident.bookingId,
+          reporterName: incident.reportedBy.name,
+          description: incident.description,
+          createdAt: incident.createdAt,
+          adminEmail: env.ADMIN_EMAIL,
+        },
+        timestamp: new Date().toISOString(),
+      });
+
+      await publisher.publish(EVENT_CHANNEL, message);
 
       processed++;
     } catch (err: any) {

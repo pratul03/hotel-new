@@ -24,12 +24,13 @@ const initializeMinIOBuckets = async () => {
         `${environment_1.env.MINIO_BUCKET_PREFIX}-room-images`,
         `${environment_1.env.MINIO_BUCKET_PREFIX}-hotel-images`,
         `${environment_1.env.MINIO_BUCKET_PREFIX}-user-avatars`,
+        `${environment_1.env.MINIO_BUCKET_PREFIX}-invoices`,
     ];
     try {
         for (const bucket of buckets) {
             const exists = await client.bucketExists(bucket);
             if (!exists) {
-                await client.makeBucket(bucket, 'us-east-1');
+                await client.makeBucket(bucket, "us-east-1");
                 console.log(`✅ MinIO bucket created: ${bucket}`);
             }
             else {
@@ -38,7 +39,7 @@ const initializeMinIOBuckets = async () => {
         }
     }
     catch (error) {
-        console.error('❌ MinIO initialization error:', error);
+        console.error("❌ MinIO initialization error:", error);
         throw error;
     }
 };

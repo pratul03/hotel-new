@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const authMiddleware_1 = require("../../../middleware/authMiddleware");
+const utils_1 = require("../../../utils");
+const reports_controller_1 = require("../controllers/reports.controller");
+const router = (0, express_1.Router)();
+router.post("/incident", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(reports_controller_1.reportsController.reportIncident));
+router.get("/incidents", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(reports_controller_1.reportsController.listIncidents));
+router.get("/aircover-board", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(reports_controller_1.reportsController.airCoverBoard));
+router.post("/off-platform-fee", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(reports_controller_1.reportsController.createOffPlatformFee));
+router.get("/off-platform-fee", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(reports_controller_1.reportsController.listOffPlatformFee));
+router.get("/:id", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(reports_controller_1.reportsController.getIncident));
+router.patch("/:id/status", authMiddleware_1.authenticate, (0, authMiddleware_1.requireRole)(["host", "admin"]), (0, utils_1.catchAsync)(reports_controller_1.reportsController.updateIncidentStatus));
+router.patch("/:id/resolve", authMiddleware_1.authenticate, (0, authMiddleware_1.requireRole)(["admin"]), (0, utils_1.catchAsync)(reports_controller_1.reportsController.resolveIncident));
+exports.default = router;

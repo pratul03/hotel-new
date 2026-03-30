@@ -1,0 +1,17 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const authMiddleware_1 = require("../../../middleware/authMiddleware");
+const utils_1 = require("../../../utils");
+const wishlist_controller_1 = require("../controllers/wishlist.controller");
+const router = (0, express_1.Router)();
+router.get("/", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(wishlist_controller_1.wishlistController.list));
+router.get("/shared/:shareCode", (0, utils_1.catchAsync)(wishlist_controller_1.wishlistController.getSharedList));
+router.get("/lists", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(wishlist_controller_1.wishlistController.listCollections));
+router.post("/collaborate/share", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(wishlist_controller_1.wishlistController.createShareLink));
+router.post("/collaborate/invite", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(wishlist_controller_1.wishlistController.inviteCollaborator));
+router.get("/collaborate/invites", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(wishlist_controller_1.wishlistController.listInvites));
+router.post("/collaborate/accept", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(wishlist_controller_1.wishlistController.acceptInvite));
+router.post("/", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(wishlist_controller_1.wishlistController.add));
+router.delete("/:roomId", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(wishlist_controller_1.wishlistController.remove));
+exports.default = router;

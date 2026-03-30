@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const authMiddleware_1 = require("../../../middleware/authMiddleware");
+const utils_1 = require("../../../utils");
+const notifications_controller_1 = require("../controllers/notifications.controller");
+const router = (0, express_1.Router)();
+router.get("/", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(notifications_controller_1.notificationsController.list));
+router.patch("/:id/read", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(notifications_controller_1.notificationsController.markRead));
+router.patch("/read-all", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(notifications_controller_1.notificationsController.markAllRead));
+router.get("/unread-count", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(notifications_controller_1.notificationsController.unreadCount));
+router.get("/preferences", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(notifications_controller_1.notificationsController.getPreferences));
+router.put("/preferences", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(notifications_controller_1.notificationsController.updatePreferences));
+router.delete("/:id", authMiddleware_1.authenticate, (0, utils_1.catchAsync)(notifications_controller_1.notificationsController.delete));
+exports.default = router;

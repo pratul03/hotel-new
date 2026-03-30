@@ -11,6 +11,7 @@ export const env = {
   DATABASE_URL: required("DATABASE_URL"),
   REDIS_URL: required("REDIS_URL"),
   REDIS_PASSWORD: process.env.REDIS_PASSWORD || "",
+  REDIS_EVENT_CHANNEL: process.env.REDIS_EVENT_CHANNEL || "app:v1:events",
   ENABLE_CRON_JOBS: process.env.ENABLE_CRON_JOBS !== "false",
   ADMIN_EMAIL: process.env.ADMIN_EMAIL || "",
 };
