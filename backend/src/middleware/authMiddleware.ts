@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { env } from "../config/environment";
-import { sessionService } from "../modules/auth/services/session.service";
+import { sessionService } from "../domains/auth/services/session.service";
 
 export interface AuthenticatedRequest extends Request {
   userId?: string;

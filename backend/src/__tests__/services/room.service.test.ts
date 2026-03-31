@@ -38,7 +38,7 @@ jest.mock("../../config/database", () => ({
   },
 }));
 
-import { roomService, calculatePricing } from "../../modules/room/services/room.service";
+import { roomService, calculatePricing } from "../../domains/room/services/room.service";
 import { prisma } from "../../config/database";
 import { AppError } from "../../utils";
 

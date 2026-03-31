@@ -436,7 +436,7 @@ export default function HotelDetailPage() {
                             {review.sender?.name ?? "Guest"}
                           </p>
                           <StarRating
-                            rating={review.rating}
+                            value={review.rating}
                             readonly
                             size="sm"
                           />

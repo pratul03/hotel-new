@@ -23,7 +23,7 @@ jest.mock("../../config/database", () => ({
   },
 }));
 
-import { notificationService } from "../../modules/notifications/services/notifications.service";
+import { notificationService } from "../../domains/notifications/services/notifications.service";
 import { prisma } from "../../config/database";
 
 const notificationFindMany = prisma.notification.findMany as jest.Mock;

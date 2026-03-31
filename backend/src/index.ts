@@ -14,7 +14,7 @@ const startServer = async () => {
     console.log(`📝 Environment: ${env.NODE_ENV}`);
 
     // Setup middleware
-    setupMiddleware(app);
+    await setupMiddleware(app);
 
     // Initialize database connection
     console.log("📚 Connecting to PostgreSQL...");
@@ -52,9 +52,12 @@ const startServer = async () => {
     // Start listening
     app.listen(env.PORT, () => {
       console.log(`\n✅ Server running on http://localhost:${env.PORT}`);
-      console.log(`🔗 Health check: http://localhost:${env.PORT}/health\n`);
       console.log(
-        `🔗 Versioned health: http://localhost:${env.PORT}/api/v1/health\n`,
+        `🔗 GraphQL endpoint: http://localhost:${env.PORT}/api/graphql`,
+      );
+      console.log(`📚 Swagger UI: http://localhost:${env.PORT}/api/docs`);
+      console.log(
+        `📄 OpenAPI JSON: http://localhost:${env.PORT}/api/docs.json\n`,
       );
     });
 

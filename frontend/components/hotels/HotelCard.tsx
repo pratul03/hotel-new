@@ -20,6 +20,12 @@ export function HotelCard({
   isWishlisted = false,
 }: HotelCardProps) {
   // Use first available room's basePrice; fall back to undefined
+  const roomImages = (hotel as HotelDetail).rooms?.[0]?.images;
+  const normalizedImages = Array.isArray(roomImages)
+    ? roomImages
+    : typeof roomImages === "string" && roomImages.length > 0
+      ? [roomImages]
+      : [];
   const pricePerNight = (hotel as HotelDetail).rooms?.[0]?.basePrice;
   const hasPrice = typeof pricePerNight === "number";
 
@@ -29,7 +35,7 @@ export function HotelCard({
         title={hotel.name}
         subtitle={hotel.location}
         description={hotel.description}
-        images={(hotel as HotelDetail).rooms?.[0]?.images ?? []}
+        images={normalizedImages}
         stats={[
           ...(hasPrice
             ? [{ label: "/night", value: formatPrice(pricePerNight) }]

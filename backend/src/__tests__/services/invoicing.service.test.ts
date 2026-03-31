@@ -67,7 +67,7 @@ jest.mock("../../config/database", () => ({
 }));
 
 import { Readable } from "stream";
-import { invoicingService } from "../../modules/invoices/services/invoicing.service";
+import { invoicingService } from "../../domains/invoices/services/invoicing.service";
 import { prisma } from "../../config/database";
 import { AppError } from "../../utils";
 

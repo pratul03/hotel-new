@@ -23,7 +23,7 @@ jest.mock("../../config/database", () => ({
   },
 }));
 
-import { searchHistoryService } from "../../modules/search-history/services/search-history.service";
+import { searchHistoryService } from "../../domains/search-history/services/search-history.service";
 import { prisma } from "../../config/database";
 
 const historyCreate = prisma.searchHistory.create as jest.Mock;

@@ -47,7 +47,7 @@ jest.mock("../../utils/eventPublisher", () => ({
   publishEvent: jest.fn().mockResolvedValue(undefined),
 }));
 
-import { bookingService } from "../../modules/booking/services/booking.service";
+import { bookingService } from "../../domains/booking/services/booking.service";
 import { prisma } from "../../config/database";
 import { AppError } from "../../utils";
 

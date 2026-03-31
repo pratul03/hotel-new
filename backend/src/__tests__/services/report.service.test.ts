@@ -25,7 +25,7 @@ jest.mock("../../config/database", () => ({
   },
 }));
 
-import { reportService } from "../../modules/reports/services/reports.service";
+import { reportService } from "../../domains/reports/services/reports.service";
 import { prisma } from "../../config/database";
 import { AppError } from "../../utils";
 

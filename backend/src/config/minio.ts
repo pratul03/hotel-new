@@ -3,6 +3,19 @@ import { env } from "./environment";
 
 let minioClient: Client | null = null;
 
+const buildPublicReadPolicy = (bucket: string) =>
+  JSON.stringify({
+    Version: "2012-10-17",
+    Statement: [
+      {
+        Effect: "Allow",
+        Principal: "*",
+        Action: ["s3:GetObject"],
+        Resource: [`arn:aws:s3:::${bucket}/*`],
+      },
+    ],
+  });
+
 export const getMinioClient = (): Client => {
   if (minioClient) {
     return minioClient;
@@ -27,6 +40,11 @@ export const initializeMinIOBuckets = async () => {
     `${env.MINIO_BUCKET_PREFIX}-user-avatars`,
     `${env.MINIO_BUCKET_PREFIX}-invoices`,
   ];
+  const publicBuckets = [
+    `${env.MINIO_BUCKET_PREFIX}-room-images`,
+    `${env.MINIO_BUCKET_PREFIX}-hotel-images`,
+    `${env.MINIO_BUCKET_PREFIX}-user-avatars`,
+  ];
 
   try {
     for (const bucket of buckets) {
@@ -36,6 +54,11 @@ export const initializeMinIOBuckets = async () => {
         console.log(`✅ MinIO bucket created: ${bucket}`);
       } else {
         console.log(`✅ MinIO bucket exists: ${bucket}`);
+      }
+
+      if (publicBuckets.includes(bucket)) {
+        await client.setBucketPolicy(bucket, buildPublicReadPolicy(bucket));
+        console.log(`✅ MinIO public read policy applied: ${bucket}`);
       }
     }
   } catch (error) {

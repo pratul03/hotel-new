@@ -1,0 +1,10 @@
+2026-04-01T00:37:33: 
+2026-04-01T00:37:33: > airbnb-job-supervisor@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/services/job-supervisor
+2026-04-01T00:37:33: > tsx watch src/index.ts
+2026-04-01T00:37:33: 
+2026-04-01T00:39:31:  ELIFECYCLE  Command failed with exit code 2.
+2026-04-01T00:39:31: 
+2026-04-01T00:39:31: > airbnb-job-supervisor@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/services/job-supervisor
+2026-04-01T00:39:31: > tsx watch src/index.ts
+2026-04-01T00:39:31: 
+2026-04-01T00:40:39:  ELIFECYCLE  Command failed with exit code 2.

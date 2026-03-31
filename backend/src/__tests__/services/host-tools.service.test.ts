@@ -37,7 +37,7 @@ jest.mock("../../config/database", () => ({
   },
 }));
 
-import { hostToolsService } from "../../modules/host-tools/services/host-tools.service";
+import { hostToolsService } from "../../domains/host-tools/services/host-tools.service";
 import { prisma } from "../../config/database";
 import { AppError } from "../../utils";
 

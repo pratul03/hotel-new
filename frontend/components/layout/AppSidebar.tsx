@@ -67,6 +67,14 @@ export function AppSidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const { user, logout } = useAuthStore();
+  const initials = user?.name
+    ? user.name
+        .split(" ")
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((part) => part[0]?.toUpperCase() || "")
+        .join("")
+    : "?";
 
   const handleLogout = () => {
     logout();
@@ -151,14 +159,11 @@ export function AppSidebar() {
               >
                 <Avatar className="h-8 w-8">
                   <AvatarImage src={user.avatar} />
-                  <AvatarFallback>
-                    {user.firstName?.charAt(0)}
-                    {user.lastName?.charAt(0)}
-                  </AvatarFallback>
+                  <AvatarFallback>{initials}</AvatarFallback>
                 </Avatar>
                 <div className="ml-2 flex-1 text-left">
                   <p className="text-sm font-medium leading-none">
-                    {user.firstName} {user.lastName}
+                    {user.name}
                   </p>
                   <Badge variant="outline" className="mt-1">
                     {user.role}

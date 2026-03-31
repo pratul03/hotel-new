@@ -1,6 +1,13 @@
 'use client'
 
-import { useForm, FieldValues } from 'react-hook-form'
+import {
+  useForm,
+  FieldValues,
+  type DefaultValues,
+  type Path,
+  type Resolver,
+  type SubmitHandler,
+} from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ZodSchema } from 'zod'
 import {
@@ -28,30 +35,34 @@ export function AppForm<T extends FieldValues>({
   columns = 1,
 }: AppFormProps<T>) {
   const form = useForm<T>({
-    resolver: zodResolver(schema),
-    defaultValues: defaultValues as T,
-  })
+    resolver: zodResolver(schema) as Resolver<T>,
+    defaultValues: defaultValues as DefaultValues<T>,
+  });
 
-  const handleSubmit = async (data: T) => {
+  const handleSubmit: SubmitHandler<T> = async (data) => {
     try {
-      await onSubmit(data)
+      await onSubmit(data);
     } catch (error) {
-      console.error('Form submission error:', error)
+      console.error("Form submission error:", error);
     }
-  }
+  };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-        <div className={`grid gap-6 ${columns === 2 ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'}`}>
+        <div
+          className={`grid gap-6 ${columns === 2 ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1"}`}
+        >
           {fields.map((fieldConfig) => (
             <div
               key={fieldConfig.name}
-              className={columns === 2 && fieldConfig.span === 2 ? 'md:col-span-2' : ''}
+              className={
+                columns === 2 && fieldConfig.span === 2 ? "md:col-span-2" : ""
+              }
             >
               <FormField
                 control={form.control}
-                name={fieldConfig.name}
+                name={fieldConfig.name as Path<T>}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>{fieldConfig.label}</FormLabel>
@@ -62,7 +73,9 @@ export function AppForm<T extends FieldValues>({
                       />
                     </FormControl>
                     {fieldConfig.description && (
-                      <FormDescription>{fieldConfig.description}</FormDescription>
+                      <FormDescription>
+                        {fieldConfig.description}
+                      </FormDescription>
                     )}
                     <FormMessage />
                   </FormItem>
@@ -73,12 +86,8 @@ export function AppForm<T extends FieldValues>({
         </div>
 
         <div className="flex gap-3 pt-6">
-          <Button
-            type="submit"
-            disabled={isLoading}
-            className="flex-1"
-          >
-            {isLoading ? 'Saving...' : submitLabel}
+          <Button type="submit" disabled={isLoading} className="flex-1">
+            {isLoading ? "Saving..." : submitLabel}
           </Button>
           {onCancel && (
             <Button
@@ -94,5 +103,5 @@ export function AppForm<T extends FieldValues>({
         </div>
       </form>
     </Form>
-  )
+  );
 }

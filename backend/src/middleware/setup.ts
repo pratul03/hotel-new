@@ -6,50 +6,10 @@ import morgan from "morgan";
 import { env } from "../config/environment";
 import { errorHandler } from "../middleware/errorHandler";
 import { requestLogger } from "../middleware/requestLogger";
-import authRoutes from "../modules/auth/routes/auth.routes";
-import hotelRoutes from "../modules/hotel/routes/hotel.routes";
-import roomRoutes from "../modules/room/routes/room.routes";
-import bookingRoutes from "../modules/booking/routes/booking.routes";
-import reviewRoutes from "../modules/review/routes/review.routes";
-import wishlistRoutes from "../modules/wishlist/routes/wishlist.routes";
-import usersRoutes from "../modules/users/routes/users.routes";
-import messagesRoutes from "../modules/messages/routes/messages.routes";
-import notificationsRoutes from "../modules/notifications/routes/notifications.routes";
-import supportRoutes from "../modules/support/routes/support.routes";
-import searchHistoryRoutes from "../modules/search-history/routes/search-history.routes";
-import reportsRoutes from "../modules/reports/routes/reports.routes";
-import paymentsRoutes from "../modules/payments/routes/payments.routes";
-import promotionsRoutes from "../modules/promotions/routes/promotions.routes";
-import hostProfileRoutes from "../modules/host-profile/routes/host-profile.routes";
-import hostFinanceRoutes from "../modules/host-finance/routes/host-finance.routes";
-import hostToolsRoutes from "../modules/host-tools/routes/host-tools.routes";
-import invoicesRoutes from "../modules/invoices/routes/invoices.routes";
+import { setupGraphQL } from "../graphql/server";
+import { setupSwaggerDocs } from "../docs/swagger";
 
-const API_V1_BASE = "/api/v1";
-
-const mountApiRoutes = (app: Express, prefix: string) => {
-  app.use(`${prefix}/auth`, authRoutes);
-  app.use(`${prefix}/hotels`, hotelRoutes);
-  app.use(`${prefix}/rooms`, roomRoutes);
-  app.use(`${prefix}/bookings`, bookingRoutes);
-  app.use(`${prefix}/reviews`, reviewRoutes);
-  app.use(`${prefix}/wishlist`, wishlistRoutes);
-  app.use(`${prefix}/wishlists`, wishlistRoutes);
-  app.use(`${prefix}/users`, usersRoutes);
-  app.use(`${prefix}/messages`, messagesRoutes);
-  app.use(`${prefix}/notifications`, notificationsRoutes);
-  app.use(`${prefix}/support`, supportRoutes);
-  app.use(`${prefix}/search-history`, searchHistoryRoutes);
-  app.use(`${prefix}/reports`, reportsRoutes);
-  app.use(`${prefix}/payments`, paymentsRoutes);
-  app.use(`${prefix}/invoices`, invoicesRoutes);
-  app.use(`${prefix}/promotions`, promotionsRoutes);
-  app.use(`${prefix}/host`, hostProfileRoutes);
-  app.use(`${prefix}/host/finance`, hostFinanceRoutes);
-  app.use(`${prefix}/host/tools`, hostToolsRoutes);
-};
-
-export const setupMiddleware = (app: Express) => {
+export const setupMiddleware = async (app: Express) => {
   // Trust proxy
   app.set("trust proxy", 1);
 
@@ -86,28 +46,13 @@ export const setupMiddleware = (app: Express) => {
   // Request logger middleware
   app.use(requestLogger);
 
-  // Health check (before other routes)
-  app.get("/health", (_req: Request, res: Response) => {
-    res.json({
-      status: "OK",
-      timestamp: new Date().toISOString(),
-      uptime: process.uptime(),
-      environment: env.NODE_ENV,
-    });
-  });
+  // API docs (Swagger/OpenAPI)
+  setupSwaggerDocs(app);
 
-  app.get(`${API_V1_BASE}/health`, (_req: Request, res: Response) => {
-    res.json({
-      status: "OK",
-      timestamp: new Date().toISOString(),
-      uptime: process.uptime(),
-      environment: env.NODE_ENV,
-      version: "v1",
-    });
-  });
+  // GraphQL-only mode: REST routes are no longer mounted.
 
-  // Primary versioned routes.
-  mountApiRoutes(app, API_V1_BASE);
+  // GraphQL endpoint.
+  await setupGraphQL(app);
 
   // 404 handler
   app.use((req: Request, res: Response) => {
@@ -122,6 +67,6 @@ export const setupMiddleware = (app: Express) => {
 
   // Error handler (must be last)
   app.use(errorHandler);
-};
+};;
 
 export default setupMiddleware;

@@ -30,7 +30,7 @@ jest.mock("../../utils/eventPublisher", () => ({
   publishEvent: jest.fn().mockResolvedValue(undefined),
 }));
 
-import { reviewService } from "../../modules/review/services/review.service";
+import { reviewService } from "../../domains/review/services/review.service";
 import { prisma } from "../../config/database";
 import { AppError } from "../../utils";
 

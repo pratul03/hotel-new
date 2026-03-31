@@ -77,7 +77,7 @@ jest.mock("../../utils/eventPublisher", () => ({
 }));
 
 import crypto from "crypto";
-import { paymentService } from "../../modules/payments/services/payment.service";
+import { paymentService } from "../../domains/payments/services/payment.service";
 import { prisma } from "../../config/database";
 import { AppError } from "../../utils";
 import { publishEvent } from "../../utils/eventPublisher";

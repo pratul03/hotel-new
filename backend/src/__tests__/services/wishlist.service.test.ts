@@ -41,7 +41,7 @@ jest.mock("../../config/database", () => {
   };
 });
 
-import { wishlistService } from "../../modules/wishlist/services/wishlist.service";
+import { wishlistService } from "../../domains/wishlist/services/wishlist.service";
 import { prisma } from "../../config/database";
 import { AppError } from "../../utils";
 

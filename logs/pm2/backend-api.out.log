@@ -1,0 +1,15 @@
+2026-04-01T00:36:27: 
+2026-04-01T00:36:27: > airbnb-backend@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/backend
+2026-04-01T00:36:27: > tsx watch src/index.ts
+2026-04-01T00:36:27: 
+2026-04-01T00:37:32:  ELIFECYCLE  Command failed with exit code 2.
+2026-04-01T00:37:32: 
+2026-04-01T00:37:32: > airbnb-backend@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/backend
+2026-04-01T00:37:32: > tsx watch src/index.ts
+2026-04-01T00:37:32: 
+2026-04-01T00:39:31:  ELIFECYCLE  Command failed with exit code 2.
+2026-04-01T00:39:31: 
+2026-04-01T00:39:31: > airbnb-backend@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/backend
+2026-04-01T00:39:31: > tsx watch src/index.ts
+2026-04-01T00:39:31: 
+2026-04-01T00:40:39:  ELIFECYCLE  Command failed with exit code 2.

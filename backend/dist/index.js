@@ -14,7 +14,7 @@ const startServer = async () => {
         console.log("🚀 Starting Airbnb Clone API Server...");
         console.log(`📝 Environment: ${environment_1.env.NODE_ENV}`);
         // Setup middleware
-        (0, setup_1.setupMiddleware)(app);
+        await (0, setup_1.setupMiddleware)(app);
         // Initialize database connection
         console.log("📚 Connecting to PostgreSQL...");
         try {
@@ -50,8 +50,9 @@ const startServer = async () => {
         // Start listening
         app.listen(environment_1.env.PORT, () => {
             console.log(`\n✅ Server running on http://localhost:${environment_1.env.PORT}`);
-            console.log(`🔗 Health check: http://localhost:${environment_1.env.PORT}/health\n`);
-            console.log(`🔗 Versioned health: http://localhost:${environment_1.env.PORT}/api/v1/health\n`);
+            console.log(`🔗 GraphQL endpoint: http://localhost:${environment_1.env.PORT}/api/graphql`);
+            console.log(`📚 Swagger UI: http://localhost:${environment_1.env.PORT}/api/docs`);
+            console.log(`📄 OpenAPI JSON: http://localhost:${environment_1.env.PORT}/api/docs.json\n`);
         });
         // Graceful shutdown
         const gracefulShutdown = async (signal) => {

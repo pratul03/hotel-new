@@ -1,0 +1,10 @@
+2026-04-01T00:37:33: 
+2026-04-01T00:37:33: > airbnb-notification-service@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/services/notification
+2026-04-01T00:37:33: > tsx watch src/index.ts
+2026-04-01T00:37:33: 
+2026-04-01T00:39:31:  ELIFECYCLE  Command failed with exit code 2.
+2026-04-01T00:39:32: 
+2026-04-01T00:39:32: > airbnb-notification-service@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/services/notification
+2026-04-01T00:39:32: > tsx watch src/index.ts
+2026-04-01T00:39:32: 
+2026-04-01T00:40:40:  ELIFECYCLE  Command failed with exit code 2.

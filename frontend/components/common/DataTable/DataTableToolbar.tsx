@@ -57,19 +57,19 @@ export function DataTableToolbar({
   )
 }
 
-function debounce<T extends (...args: unknown[]) => unknown>(
-  func: T,
-  wait: number
-): (...args: Parameters<T>) => void {
-  let timeout: NodeJS.Timeout
+function debounce(
+  func: (query: string) => void,
+  wait: number,
+): (query: string) => void {
+  let timeout: NodeJS.Timeout;
 
-  return function executedFunction(...args: Parameters<T>) {
+  return function executedFunction(query: string) {
     const later = () => {
-      clearTimeout(timeout)
-      func(...args)
-    }
+      clearTimeout(timeout);
+      func(query);
+    };
 
-    clearTimeout(timeout)
-    timeout = setTimeout(later, wait)
-  }
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
 }

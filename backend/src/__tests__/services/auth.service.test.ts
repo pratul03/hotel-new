@@ -32,7 +32,7 @@ jest.mock("../../utils/jwt", () => ({
   generateToken: jest.fn().mockReturnValue("mock_token"),
 }));
 
-import { authService } from "../../modules/auth/services/auth.service";
+import { authService } from "../../domains/auth/services/auth.service";
 import { prisma } from "../../config/database";
 import bcrypt from "bcrypt";
 import { generateToken } from "../../utils/jwt";

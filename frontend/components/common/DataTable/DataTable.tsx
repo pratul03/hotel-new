@@ -15,7 +15,12 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Skeleton } from '@/components/ui/skeleton'
-import { Empty } from '@/components/ui/empty'
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from "@/components/ui/empty";
 import { DataTableToolbar } from './DataTableToolbar'
 import { DataTablePagination } from './DataTablePagination'
 import { useState, useEffect } from 'react'
@@ -79,42 +84,56 @@ export function DataTable<TData>({
                   <TableHead key={header.id} className="text-xs font-medium">
                     {header.isPlaceholder
                       ? null
-                      : flexRender(header.column.columnDef.header, header.getContext())}
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
                   </TableHead>
                 ))}
               </TableRow>
             ))}
           </TableHeader>
           <TableBody>
-            {isLoading
-              ? Array(limit)
-                  .fill(0)
-                  .map((_, index) => (
-                    <TableRow key={index}>
-                      {columns.map((_, cellIndex) => (
-                        <TableCell key={cellIndex}>
-                          <Skeleton className="h-6 w-full" />
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))
-              : table.getRowModel().rows.length === 0
-              ? (
-                <TableRow>
-                  <TableCell colSpan={columns.length} className="text-center py-8">
-                    <Empty description="No data found" />
-                  </TableCell>
-                </TableRow>
-              )
-              : table.getRowModel().rows.map((row) => (
-                  <TableRow key={row.id}>
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} className="text-sm">
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+            {isLoading ? (
+              Array(limit)
+                .fill(0)
+                .map((_, index) => (
+                  <TableRow key={index}>
+                    {columns.map((_, cellIndex) => (
+                      <TableCell key={cellIndex}>
+                        <Skeleton className="h-6 w-full" />
                       </TableCell>
                     ))}
                   </TableRow>
-                ))}
+                ))
+            ) : table.getRowModel().rows.length === 0 ? (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="text-center py-8"
+                >
+                  <Empty>
+                    <EmptyHeader>
+                      <EmptyTitle>No data</EmptyTitle>
+                      <EmptyDescription>No data found</EmptyDescription>
+                    </EmptyHeader>
+                  </Empty>
+                </TableCell>
+              </TableRow>
+            ) : (
+              table.getRowModel().rows.map((row) => (
+                <TableRow key={row.id}>
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id} className="text-sm">
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </div>
@@ -126,5 +145,5 @@ export function DataTable<TData>({
         onPageChange={onPageChange}
       />
     </div>
-  )
+  );
 }
