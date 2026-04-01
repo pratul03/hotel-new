@@ -38,6 +38,7 @@ import {
 } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
 import Link from "next/link";
+import Image from "next/image";
 
 const NAV_ITEMS = [
   { label: "Home", href: "/", icon: Home },
@@ -63,10 +64,19 @@ const NAV_ITEMS = [
   { label: "Support", href: "/support", icon: LifeBuoy },
 ];
 
+const ADMIN_NAV_ITEMS = [
+  {
+    label: "Admin",
+    icon: Building2,
+    children: [{ label: "Registered Hotels", href: "/admin/hotels" }],
+  },
+];
+
 export function AppSidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const { user, logout } = useAuthStore();
+  const isAdmin = user?.role === "admin";
   const initials = user?.name
     ? user.name
         .split(" ")
@@ -81,20 +91,20 @@ export function AppSidebar() {
     router.push("/login");
   };
 
+  const sidebarItems = [...NAV_ITEMS, ...(isAdmin ? ADMIN_NAV_ITEMS : [])];
+
   return (
     <Sidebar>
       <SidebarHeader className="border-b p-4">
         <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold">
-            🏠
-          </div>
-          <span className="font-bold text-lg">Airbnb</span>
+          <Image src="/icon.svg" alt="App logo" width={32} height={32} />
+          <span className="font-bold text-lg">FND OUT SPACE</span>
         </Link>
       </SidebarHeader>
 
       <SidebarContent>
         <SidebarMenu>
-          {NAV_ITEMS.map((item) => {
+          {sidebarItems.map((item) => {
             const isActive =
               pathname === item.href || pathname.startsWith(item.href + "/");
             const Icon = item.icon;

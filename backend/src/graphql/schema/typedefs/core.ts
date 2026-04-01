@@ -26,6 +26,7 @@ export const coreTypeDefs = `#graphql
 
   type HotelRoomSummary {
     id: ID!
+    hotelId: ID
     roomType: String
     capacity: Int
     maxGuests: Int
@@ -33,6 +34,8 @@ export const coreTypeDefs = `#graphql
     isAvailable: Boolean
     amenities: [String!]!
     images: [String!]!
+    createdAt: String
+    updatedAt: String
   }
 
   type Hotel {
@@ -430,8 +433,8 @@ export const coreTypeDefs = `#graphql
   }
 
   input SearchHotelsInput {
-    latitude: Float!
-    longitude: Float!
+    latitude: Float
+    longitude: Float
     radiusKm: Float
     checkIn: String
     checkOut: String

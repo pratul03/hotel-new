@@ -39,6 +39,8 @@ export const coreTypeResolvers = {
     images: (room: { images?: unknown }) => toArray(room.images),
     isAvailable: (room: { isAvailable?: unknown }) =>
       typeof room.isAvailable === "boolean" ? room.isAvailable : true,
+    createdAt: (room: { createdAt?: unknown }) => toIsoString(room.createdAt),
+    updatedAt: (room: { updatedAt?: unknown }) => toIsoString(room.updatedAt),
   },
 
   Room: {

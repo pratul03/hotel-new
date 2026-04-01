@@ -17,6 +17,7 @@
     "db:generate": "prisma generate",
     "db:studio": "prisma studio",
     "db:seed": "ts-node src/prisma/seed.ts",
+    "db:seed-darjeeling-mirik": "ts-node src/prisma/seed-darjeeling-mirik.ts",
     "db:seed-courses": "ts-node src/prisma/seed-courses.ts",
     "loadtest": "artillery run loadtest/load-test.yml",
     "loadtest:report": "artillery run --output loadtest/report.json loadtest/load-test.yml && artillery report loadtest/report.json",

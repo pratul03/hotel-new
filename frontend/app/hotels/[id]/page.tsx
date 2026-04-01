@@ -28,6 +28,7 @@ import {
   useRemoveFromWishlist,
   useWishlistedItemByHotel,
 } from "@/hooks/useWishlist";
+import { useAuthStore } from "@/store/authStore";
 import { toast } from "sonner";
 
 function parseJsonArray(val: unknown): string[] {
@@ -48,12 +49,18 @@ export default function HotelDetailPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const { data: hotel, isLoading } = useHotel(id);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const isWishlisted = useIsWishlisted(id);
   const wishlistedItem = useWishlistedItemByHotel(id);
   const addToWishlist = useAddToWishlist();
   const removeFromWishlist = useRemoveFromWishlist();
 
   const handleWishlist = () => {
+    if (!isAuthenticated) {
+      toast.info("Login to save hotels to wishlist");
+      return;
+    }
+
     if (isWishlisted && wishlistedItem) {
       removeFromWishlist.mutate(wishlistedItem, {
         onSuccess: () => toast.success("Removed from wishlist"),
@@ -96,17 +103,19 @@ export default function HotelDetailPage() {
     );
   }
 
+  const rooms = hotel.rooms ?? [];
+  const reviews = hotel.reviews ?? [];
   const amenities = parseJsonArray(hotel.amenities);
   const rules = parseJsonArray(hotel.publicRules);
-  const allImages = hotel.rooms.flatMap((room) => parseJsonArray(room.images));
+  const allImages = rooms.flatMap((room) => parseJsonArray(room.images));
   const uniqueImages = Array.from(new Set(allImages.filter(Boolean)));
   const listingQualityScore =
     clamp(uniqueImages.length * 5, 0, 50) +
     clamp((hotel.description?.length || 0) / 8, 0, 25) +
     clamp(amenities.length * 2, 0, 15) +
-    clamp(hotel.reviews.length * 1.5, 0, 10);
-  const lowestPrice = hotel.rooms?.length
-    ? Math.min(...hotel.rooms.map((r) => r.basePrice))
+    clamp(reviews.length * 1.5, 0, 10);
+  const lowestPrice = rooms.length
+    ? Math.min(...rooms.map((r) => r.basePrice))
     : null;
 
   return (
@@ -146,17 +155,16 @@ export default function HotelDetailPage() {
               </div>
             </div>
             <div className="flex flex-col items-end gap-2">
-              {hotel.reviews?.length > 0 && (
+              {reviews.length > 0 && (
                 <div className="flex items-center gap-1.5">
                   <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                   <span className="font-semibold">
                     {(
-                      hotel.reviews.reduce((s, r) => s + r.rating, 0) /
-                      hotel.reviews.length
+                      reviews.reduce((s, r) => s + r.rating, 0) / reviews.length
                     ).toFixed(1)}
                   </span>
                   <span className="text-sm text-muted-foreground">
-                    ({hotel.reviews.length})
+                    ({reviews.length})
                   </span>
                 </div>
               )}
@@ -285,25 +293,29 @@ export default function HotelDetailPage() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs text-muted-foreground">
                 <p>{uniqueImages.length} photos</p>
                 <p>{amenities.length} amenities</p>
-                <p>{hotel.reviews.length} reviews</p>
+                <p>{reviews.length} reviews</p>
                 <p>{Math.round(listingQualityScore)}/100 quality</p>
               </div>
             </Card>
 
             {/* Available Rooms */}
-            {hotel.rooms?.length > 0 && (
+            {rooms.length > 0 && (
               <Card className="p-6 space-y-4">
                 <h2 className="text-xl font-bold">Available Rooms</h2>
                 <div className="space-y-4">
-                  {hotel.rooms.map((room) => {
+                  {rooms.map((room) => {
                     const roomAmenities = parseJsonArray(room.amenities);
+                    const roomTypeLabel = (room.roomType ?? "room").replace(
+                      /_/g,
+                      " ",
+                    );
                     return (
                       <Card key={room.id} className="p-4">
                         <div className="flex items-start justify-between gap-4">
                           <div className="flex-1 space-y-2">
                             <div className="flex items-center gap-2">
                               <h3 className="font-semibold capitalize">
-                                {room.roomType.replace(/_/g, " ")} Room
+                                {roomTypeLabel} Room
                               </h3>
                               {!room.isAvailable && (
                                 <Badge
@@ -322,7 +334,7 @@ export default function HotelDetailPage() {
                               <div className="flex items-center gap-1">
                                 <BedDouble className="h-3.5 w-3.5" />
                                 <span className="capitalize">
-                                  {room.roomType}
+                                  {roomTypeLabel}
                                 </span>
                               </div>
                             </div>
@@ -413,13 +425,13 @@ export default function HotelDetailPage() {
             )}
 
             {/* Reviews */}
-            {hotel.reviews?.length > 0 && (
+            {reviews.length > 0 && (
               <div className="space-y-4">
                 <h2 className="text-xl font-bold">
-                  Reviews ({hotel.reviews.length})
+                  Reviews ({reviews.length})
                 </h2>
                 <div className="space-y-4">
-                  {hotel.reviews.slice(0, 5).map((review) => (
+                  {reviews.slice(0, 5).map((review) => (
                     <Card key={review.id} className="p-4 space-y-2">
                       <div className="flex items-center gap-3">
                         <Avatar className="h-9 w-9">
@@ -473,12 +485,12 @@ export default function HotelDetailPage() {
               )}
               <Separator />
               <p className="text-sm">
-                <span className="font-medium">{hotel.rooms?.length ?? 0}</span>{" "}
-                room types available
+                <span className="font-medium">{rooms.length}</span> room types
+                available
               </p>
-              {hotel.rooms?.length > 0 && (
+              {rooms.length > 0 && (
                 <Button className="w-full" size="lg" asChild>
-                  <Link href={`/hotels/${hotel.id}/rooms/${hotel.rooms[0].id}`}>
+                  <Link href={`/hotels/${hotel.id}/rooms/${rooms[0].id}`}>
                     View Rooms & Book
                   </Link>
                 </Button>

@@ -23,7 +23,7 @@ export const env = {
 
   // App
   APP_NAME: process.env.APP_NAME || "My BnB",
-  APP_URL: process.env.APP_URL || "http://localhost:3001",
+  APP_URL: process.env.APP_URL || "http://localhost:3000",
   FROM_EMAIL_NAME: process.env.FROM_EMAIL_NAME || "My BnB",
   ADMIN_EMAIL: process.env.ADMIN_EMAIL || "",
 };

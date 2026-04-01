@@ -2,6 +2,7 @@
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "@/lib/axios";
+import { useAuthStore } from "@/store/authStore";
 import type { ApiResponse } from "@/types/api";
 
 export interface WishlistItem {
@@ -34,6 +35,8 @@ export interface WishlistInvite {
 }
 
 export function useWishlist(listName?: string) {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
   return useQuery({
     queryKey: ["wishlist", listName || "all"],
     queryFn: async () => {
@@ -47,10 +50,13 @@ export function useWishlist(listName?: string) {
       );
       return data.data ?? [];
     },
+    enabled: isAuthenticated,
   });
 }
 
 export function useWishlistCollections() {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
   return useQuery({
     queryKey: ["wishlist-collections"],
     queryFn: async () => {
@@ -60,6 +66,7 @@ export function useWishlistCollections() {
         );
       return data.data ?? [];
     },
+    enabled: isAuthenticated,
   });
 }
 
@@ -117,6 +124,8 @@ export function useInviteWishlistCollaborator() {
 }
 
 export function useWishlistInvites() {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
   return useQuery({
     queryKey: ["wishlist-invites"],
     queryFn: async () => {
@@ -125,6 +134,7 @@ export function useWishlistInvites() {
       );
       return data.data ?? [];
     },
+    enabled: isAuthenticated,
   });
 }
 

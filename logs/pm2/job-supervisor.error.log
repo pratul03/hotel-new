@@ -34,3 +34,75 @@
 2026-04-01T00:39:32:     at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
 2026-04-01T00:39:32: 
 2026-04-01T00:39:32: Node.js v25.8.1
+2026-04-01T20:12:56: /Users/pratulmakar/Developer/hotel-new/services/job-supervisor/node_modules/.pnpm/@prisma+client@7.4.2_prisma@7.4.2_@types+react@19.2.14_react-dom@19.2.4_react@19.2.4__r_49b4b128965f74ea9bbd7586bc0c7d7a/node_modules/@prisma/client/src/runtime/utils/validatePrismaClientOptions.ts:229
+2026-04-01T20:12:56:     throw new PrismaClientConstructorValidationError(
+2026-04-01T20:12:56:           ^
+2026-04-01T20:12:56: 
+2026-04-01T20:12:56: PrismaClientConstructorValidationError: Using engine type "client" requires either "adapter" or "accelerateUrl" to be provided to PrismaClient constructor.
+2026-04-01T20:12:56: Read more at https://pris.ly/d/client-constructor
+2026-04-01T20:12:56:     at validateDependentOptions (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/node_modules/.pnpm/@prisma+client@7.4.2_prisma@7.4.2_@types+react@19.2.14_react-dom@19.2.4_react@19.2.4__r_49b4b128965f74ea9bbd7586bc0c7d7a/node_modules/@prisma/client/src/runtime/utils/validatePrismaClientOptions.ts:229:11)
+2026-04-01T20:12:56:     at validatePrismaClientOptions (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/node_modules/.pnpm/@prisma+client@7.4.2_prisma@7.4.2_@types+react@19.2.14_react-dom@19.2.4_react@19.2.4__r_49b4b128965f74ea9bbd7586bc0c7d7a/node_modules/@prisma/client/src/runtime/utils/validatePrismaClientOptions.ts:246:3)
+2026-04-01T20:12:56:     at new t (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/node_modules/.pnpm/@prisma+client@7.4.2_prisma@7.4.2_@types+react@19.2.14_react-dom@19.2.4_react@19.2.4__r_49b4b128965f74ea9bbd7586bc0c7d7a/node_modules/@prisma/client/src/runtime/getPrismaClient.ts:282:7)
+2026-04-01T20:12:56:     at <anonymous> (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/src/config/database.ts:8:32)
+2026-04-01T20:12:56:     at Object.<anonymous> (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/src/config/database.ts:14:16)
+2026-04-01T20:12:56:     at Module._compile (node:internal/modules/cjs/loader:1829:14)
+2026-04-01T20:12:56:     at Object.transformer (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/node_modules/.pnpm/tsx@4.21.0/node_modules/tsx/dist/register-D46fvsV_.cjs:3:1104)
+2026-04-01T20:12:56:     at Module.load (node:internal/modules/cjs/loader:1552:32)
+2026-04-01T20:12:56:     at Module._load (node:internal/modules/cjs/loader:1354:12)
+2026-04-01T20:12:56:     at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+2026-04-01T20:12:56: 
+2026-04-01T20:12:56: Node.js v25.8.1
+2026-04-01T20:46:17: /Users/pratulmakar/Developer/hotel-new/services/job-supervisor/node_modules/.pnpm/@prisma+client@7.4.2_prisma@7.4.2_@types+react@19.2.14_react-dom@19.2.4_react@19.2.4__r_49b4b128965f74ea9bbd7586bc0c7d7a/node_modules/@prisma/client/src/runtime/utils/validatePrismaClientOptions.ts:229
+2026-04-01T20:46:17:     throw new PrismaClientConstructorValidationError(
+2026-04-01T20:46:17:           ^
+2026-04-01T20:46:17: 
+2026-04-01T20:46:17: PrismaClientConstructorValidationError: Using engine type "client" requires either "adapter" or "accelerateUrl" to be provided to PrismaClient constructor.
+2026-04-01T20:46:17: Read more at https://pris.ly/d/client-constructor
+2026-04-01T20:46:17:     at validateDependentOptions (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/node_modules/.pnpm/@prisma+client@7.4.2_prisma@7.4.2_@types+react@19.2.14_react-dom@19.2.4_react@19.2.4__r_49b4b128965f74ea9bbd7586bc0c7d7a/node_modules/@prisma/client/src/runtime/utils/validatePrismaClientOptions.ts:229:11)
+2026-04-01T20:46:17:     at validatePrismaClientOptions (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/node_modules/.pnpm/@prisma+client@7.4.2_prisma@7.4.2_@types+react@19.2.14_react-dom@19.2.4_react@19.2.4__r_49b4b128965f74ea9bbd7586bc0c7d7a/node_modules/@prisma/client/src/runtime/utils/validatePrismaClientOptions.ts:246:3)
+2026-04-01T20:46:17:     at new t (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/node_modules/.pnpm/@prisma+client@7.4.2_prisma@7.4.2_@types+react@19.2.14_react-dom@19.2.4_react@19.2.4__r_49b4b128965f74ea9bbd7586bc0c7d7a/node_modules/@prisma/client/src/runtime/getPrismaClient.ts:282:7)
+2026-04-01T20:46:17:     at <anonymous> (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/src/config/database.ts:8:32)
+2026-04-01T20:46:17:     at Object.<anonymous> (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/src/config/database.ts:14:16)
+2026-04-01T20:46:17:     at Module._compile (node:internal/modules/cjs/loader:1829:14)
+2026-04-01T20:46:17:     at Object.transformer (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/node_modules/.pnpm/tsx@4.21.0/node_modules/tsx/dist/register-D46fvsV_.cjs:3:1104)
+2026-04-01T20:46:17:     at Module.load (node:internal/modules/cjs/loader:1552:32)
+2026-04-01T20:46:17:     at Module._load (node:internal/modules/cjs/loader:1354:12)
+2026-04-01T20:46:17:     at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+2026-04-01T20:46:17: 
+2026-04-01T20:46:17: Node.js v25.8.1
+2026-04-01T20:57:22: /Users/pratulmakar/Developer/hotel-new/services/job-supervisor/node_modules/.pnpm/@prisma+client@7.4.2_prisma@7.4.2_@types+react@19.2.14_react-dom@19.2.4_react@19.2.4__r_49b4b128965f74ea9bbd7586bc0c7d7a/node_modules/@prisma/client/src/runtime/utils/validatePrismaClientOptions.ts:229
+2026-04-01T20:57:22:     throw new PrismaClientConstructorValidationError(
+2026-04-01T20:57:22:           ^
+2026-04-01T20:57:22: 
+2026-04-01T20:57:22: PrismaClientConstructorValidationError: Using engine type "client" requires either "adapter" or "accelerateUrl" to be provided to PrismaClient constructor.
+2026-04-01T20:57:22: Read more at https://pris.ly/d/client-constructor
+2026-04-01T20:57:22:     at validateDependentOptions (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/node_modules/.pnpm/@prisma+client@7.4.2_prisma@7.4.2_@types+react@19.2.14_react-dom@19.2.4_react@19.2.4__r_49b4b128965f74ea9bbd7586bc0c7d7a/node_modules/@prisma/client/src/runtime/utils/validatePrismaClientOptions.ts:229:11)
+2026-04-01T20:57:22:     at validatePrismaClientOptions (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/node_modules/.pnpm/@prisma+client@7.4.2_prisma@7.4.2_@types+react@19.2.14_react-dom@19.2.4_react@19.2.4__r_49b4b128965f74ea9bbd7586bc0c7d7a/node_modules/@prisma/client/src/runtime/utils/validatePrismaClientOptions.ts:246:3)
+2026-04-01T20:57:22:     at new t (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/node_modules/.pnpm/@prisma+client@7.4.2_prisma@7.4.2_@types+react@19.2.14_react-dom@19.2.4_react@19.2.4__r_49b4b128965f74ea9bbd7586bc0c7d7a/node_modules/@prisma/client/src/runtime/getPrismaClient.ts:282:7)
+2026-04-01T20:57:22:     at <anonymous> (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/src/config/database.ts:8:32)
+2026-04-01T20:57:22:     at Object.<anonymous> (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/src/config/database.ts:14:16)
+2026-04-01T20:57:22:     at Module._compile (node:internal/modules/cjs/loader:1829:14)
+2026-04-01T20:57:22:     at Object.transformer (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/node_modules/.pnpm/tsx@4.21.0/node_modules/tsx/dist/register-D46fvsV_.cjs:3:1104)
+2026-04-01T20:57:22:     at Module.load (node:internal/modules/cjs/loader:1552:32)
+2026-04-01T20:57:22:     at Module._load (node:internal/modules/cjs/loader:1354:12)
+2026-04-01T20:57:22:     at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+2026-04-01T20:57:22: 
+2026-04-01T20:57:22: Node.js v25.8.1
+2026-04-01T21:01:22: /Users/pratulmakar/Developer/hotel-new/services/job-supervisor/node_modules/.pnpm/@prisma+client@7.4.2_prisma@7.4.2_@types+react@19.2.14_react-dom@19.2.4_react@19.2.4__r_49b4b128965f74ea9bbd7586bc0c7d7a/node_modules/@prisma/client/src/runtime/utils/validatePrismaClientOptions.ts:229
+2026-04-01T21:01:22:     throw new PrismaClientConstructorValidationError(
+2026-04-01T21:01:22:           ^
+2026-04-01T21:01:22: 
+2026-04-01T21:01:22: PrismaClientConstructorValidationError: Using engine type "client" requires either "adapter" or "accelerateUrl" to be provided to PrismaClient constructor.
+2026-04-01T21:01:22: Read more at https://pris.ly/d/client-constructor
+2026-04-01T21:01:22:     at validateDependentOptions (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/node_modules/.pnpm/@prisma+client@7.4.2_prisma@7.4.2_@types+react@19.2.14_react-dom@19.2.4_react@19.2.4__r_49b4b128965f74ea9bbd7586bc0c7d7a/node_modules/@prisma/client/src/runtime/utils/validatePrismaClientOptions.ts:229:11)
+2026-04-01T21:01:22:     at validatePrismaClientOptions (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/node_modules/.pnpm/@prisma+client@7.4.2_prisma@7.4.2_@types+react@19.2.14_react-dom@19.2.4_react@19.2.4__r_49b4b128965f74ea9bbd7586bc0c7d7a/node_modules/@prisma/client/src/runtime/utils/validatePrismaClientOptions.ts:246:3)
+2026-04-01T21:01:22:     at new t (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/node_modules/.pnpm/@prisma+client@7.4.2_prisma@7.4.2_@types+react@19.2.14_react-dom@19.2.4_react@19.2.4__r_49b4b128965f74ea9bbd7586bc0c7d7a/node_modules/@prisma/client/src/runtime/getPrismaClient.ts:282:7)
+2026-04-01T21:01:22:     at <anonymous> (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/src/config/database.ts:8:32)
+2026-04-01T21:01:22:     at Object.<anonymous> (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/src/config/database.ts:14:16)
+2026-04-01T21:01:22:     at Module._compile (node:internal/modules/cjs/loader:1829:14)
+2026-04-01T21:01:22:     at Object.transformer (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/node_modules/.pnpm/tsx@4.21.0/node_modules/tsx/dist/register-D46fvsV_.cjs:3:1104)
+2026-04-01T21:01:22:     at Module.load (node:internal/modules/cjs/loader:1552:32)
+2026-04-01T21:01:22:     at Module._load (node:internal/modules/cjs/loader:1354:12)
+2026-04-01T21:01:22:     at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+2026-04-01T21:01:22: 
+2026-04-01T21:01:22: Node.js v25.8.1

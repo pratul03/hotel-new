@@ -33,7 +33,7 @@ export default function HostHotelIcalSyncPage() {
   const [sourceUrl, setSourceUrl] = useState("");
   const [icsContent, setIcsContent] = useState("");
 
-  const exportUrl = `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api"}/hotels/${id}/ical/export`;
+  const exportUrl = `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api"}/hotels/${id}/ical/export`;
 
   const handleAddSource = async () => {
     try {

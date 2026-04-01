@@ -1,5 +1,8 @@
 import { z, v } from "../../../utils/validation";
 
+const DEFAULT_SEARCH_LAT = 22.5726;
+const DEFAULT_SEARCH_LNG = 88.3639;
+
 export const createHotelSchema = z.object({
   name: z.coerce
     .string()
@@ -30,8 +33,20 @@ export const updateHotelSchema = createHotelSchema.partial();
 
 export const searchHotelsSchema = z
   .object({
-    latitude: z.coerce.number(),
-    longitude: z.coerce.number(),
+    latitude: z.preprocess(
+      (value) =>
+        value === null || value === undefined || value === ""
+          ? DEFAULT_SEARCH_LAT
+          : value,
+      z.coerce.number(),
+    ),
+    longitude: z.preprocess(
+      (value) =>
+        value === null || value === undefined || value === ""
+          ? DEFAULT_SEARCH_LNG
+          : value,
+      z.coerce.number(),
+    ),
     radiusKm: z.coerce.number().default(10),
     checkIn: v.isoDateTime().optional(),
     checkOut: v.isoDateTime().optional(),

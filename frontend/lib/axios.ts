@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useAuthStore } from "@/store/authStore";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api";
 
 const toIsoDateTime = (value?: unknown): string | undefined => {
   if (typeof value !== "string" || !value) return undefined;
@@ -72,6 +72,67 @@ const normalizePayment = (payment: Record<string, any>) => {
     userId: authUser?.id,
     currency: "INR",
   };
+};
+
+const asFiniteNumber = (
+  value: unknown,
+  fallback?: number,
+): number | undefined => {
+  if (value === null || value === undefined || value === "") {
+    return fallback;
+  }
+
+  const num = Number(value);
+  if (!Number.isFinite(num)) {
+    return fallback;
+  }
+
+  return num;
+};
+
+const DEFAULT_SEARCH_LAT = 22.5726;
+const DEFAULT_SEARCH_LNG = 88.3639;
+
+const toGraphqlPayload = (adapter: AdapterConfig) => {
+  const payload: {
+    query: string;
+    variables?: Record<string, unknown>;
+    operationName?: string;
+  } = {
+    query: adapter.query,
+    variables: adapter.variables,
+  };
+
+  const opName = String(adapter.operationName || "").trim();
+  if (!opName) {
+    return payload;
+  }
+
+  const declaredOperationMatch = adapter.query.match(
+    /\b(?:query|mutation|subscription)\s+([A-Za-z_][A-Za-z0-9_]*)\b/,
+  );
+  const declaredOperationName = declaredOperationMatch?.[1];
+
+  // If names differ only by casing, align with the declared operation name.
+  if (
+    declaredOperationName &&
+    opName.toLowerCase() === declaredOperationName.toLowerCase()
+  ) {
+    payload.operationName = declaredOperationName;
+    return payload;
+  }
+
+  const escaped = opName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const opPattern = new RegExp(
+    `\\b(?:query|mutation|subscription)\\s+${escaped}\\b`,
+  );
+
+  // Send operationName only when it matches the document operation name exactly.
+  if (opPattern.test(adapter.query)) {
+    payload.operationName = opName;
+  }
+
+  return payload;
 };
 
 type AdapterConfig = {
@@ -1067,36 +1128,37 @@ const buildAdapterConfig = (
   }
 
   if (method === "get" && path === "/hotels/search") {
+    const latitude = asFiniteNumber(params.latitude, DEFAULT_SEARCH_LAT);
+    const longitude = asFiniteNumber(params.longitude, DEFAULT_SEARCH_LNG);
+
     return {
       operationName: "searchHotels",
       query: `query SearchHotels($input: SearchHotelsInput!) { searchHotels(input: $input) { data { id ownerId name description location amenities publicRules checkInTime checkOutTime instantBooking isPromoted promotedUntil createdAt updatedAt owner { id name avatar superhost responseRate } rooms { id roomType capacity maxGuests basePrice isAvailable amenities images } } page limit total pages } }`,
       variables: {
         input: {
-          latitude: Number(params.latitude),
-          longitude: Number(params.longitude),
+          latitude,
+          longitude,
           radiusKm:
-            params.radiusKm !== undefined ? Number(params.radiusKm) : undefined,
+            asFiniteNumber(params.radiusKm),
           checkIn: toIsoDateTime(params.checkIn),
           checkOut: toIsoDateTime(params.checkOut),
           guests:
-            params.guests !== undefined ? Number(params.guests) : undefined,
+            asFiniteNumber(params.guests),
           minPrice:
-            params.minPrice !== undefined ? Number(params.minPrice) : undefined,
+            asFiniteNumber(params.minPrice),
           maxPrice:
-            params.maxPrice !== undefined ? Number(params.maxPrice) : undefined,
+            asFiniteNumber(params.maxPrice),
           instantBooking:
             typeof params.instantBooking === "boolean"
               ? params.instantBooking
               : undefined,
           minRating:
-            params.minRating !== undefined
-              ? Number(params.minRating)
-              : undefined,
+            asFiniteNumber(params.minRating),
           accessibility: params.accessibility,
-          north: params.north !== undefined ? Number(params.north) : undefined,
-          south: params.south !== undefined ? Number(params.south) : undefined,
-          east: params.east !== undefined ? Number(params.east) : undefined,
-          west: params.west !== undefined ? Number(params.west) : undefined,
+          north: asFiniteNumber(params.north),
+          south: asFiniteNumber(params.south),
+          east: asFiniteNumber(params.east),
+          west: asFiniteNumber(params.west),
           sortBy: params.sortBy,
           page,
           limit,
@@ -1318,7 +1380,7 @@ const buildAdapterConfig = (
   if (method === "get" && hotelRoomsMatch) {
     return {
       operationName: "hotelById",
-      query: `query HotelRooms($id: ID!) { hotelById(id: $id) { id rooms { id hotelId roomType capacity maxGuests basePrice isAvailable amenities images createdAt updatedAt } } }`,
+      query: `query HotelRooms($id: ID!) { hotelById(id: $id) { id rooms { id roomType capacity maxGuests basePrice isAvailable amenities images } } }`,
       variables: { id: hotelRoomsMatch[1] },
       transform: (result) => ({
         success: true,
@@ -1401,7 +1463,7 @@ const buildAdapterConfig = (
   if (method === "get" && hotelByIdMatch) {
     return {
       operationName: "hotelById",
-      query: `query HotelById($id: ID!) { hotelById(id: $id) { id ownerId name description location amenities publicRules checkInTime checkOutTime instantBooking isPromoted promotedUntil createdAt updatedAt owner { id name avatar superhost responseRate } rooms { id hotelId roomType capacity maxGuests basePrice isAvailable amenities images createdAt updatedAt } } }`,
+      query: `query HotelById($id: ID!) { hotelById(id: $id) { id ownerId name description location amenities publicRules checkInTime checkOutTime instantBooking isPromoted promotedUntil createdAt updatedAt owner { id name avatar superhost responseRate } rooms { id roomType capacity maxGuests basePrice isAvailable amenities images } } }`,
       variables: { id: hotelByIdMatch[1] },
       transform: (result) => result,
     };
@@ -1410,7 +1472,7 @@ const buildAdapterConfig = (
   if (method === "put" && hotelByIdMatch) {
     return {
       operationName: "updateHotel",
-      query: `mutation UpdateHotel($hotelId: ID!, $input: UpdateHotelInput!) { updateHotel(hotelId: $hotelId, input: $input) { id ownerId name description location amenities publicRules checkInTime checkOutTime instantBooking isPromoted promotedUntil createdAt updatedAt owner { id name avatar superhost responseRate } rooms { id hotelId roomType capacity maxGuests basePrice isAvailable amenities images createdAt updatedAt } } }`,
+      query: `mutation UpdateHotel($hotelId: ID!, $input: UpdateHotelInput!) { updateHotel(hotelId: $hotelId, input: $input) { id ownerId name description location amenities publicRules checkInTime checkOutTime instantBooking isPromoted promotedUntil createdAt updatedAt owner { id name avatar superhost responseRate } rooms { id roomType capacity maxGuests basePrice isAvailable amenities images } } }`,
       variables: { hotelId: hotelByIdMatch[1], input: body },
       transform: (result) => result,
     };
@@ -1463,11 +1525,7 @@ axiosInstance.interceptors.request.use(
     config.url = "/graphql";
     config.method = "post";
     config.params = undefined;
-    config.data = {
-      query: adapter.query,
-      variables: adapter.variables,
-      operationName: adapter.operationName,
-    };
+    config.data = toGraphqlPayload(adapter);
 
     return config;
   },

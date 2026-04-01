@@ -1,7 +1,7 @@
 type SearchHotelsArgs = {
   input: {
-    latitude: number;
-    longitude: number;
+    latitude?: number | null;
+    longitude?: number | null;
     radiusKm?: number;
     checkIn?: string;
     checkOut?: string;

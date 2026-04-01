@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { ThemeToggle } from "@/components/common/ThemeToggle";
 import { ResetPasswordForm } from "@/components/auth/ResetPasswordForm";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function ResetPasswordPage() {
   return (
@@ -19,10 +20,8 @@ export default function ResetPasswordPage() {
             href="/"
             className="flex items-center justify-center gap-2 font-bold text-2xl mb-6"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              🏠
-            </div>
-            <span>Airbnb Clone</span>
+            <Image src="/icon.svg" alt="App logo" width={40} height={40} />
+            <span>FND OUT SPACE</span>
           </Link>
           <h1 className="text-3xl font-bold">Set New Password</h1>
           <p className="text-muted-foreground">

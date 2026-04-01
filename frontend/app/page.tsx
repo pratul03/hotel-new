@@ -10,6 +10,7 @@ import { LogIn, User, Building2, Star, Loader2 } from "lucide-react";
 import { ThemeToggle } from "@/components/common/ThemeToggle";
 import { usePromotedHotels, useHotels } from "@/hooks/useHotels";
 import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
 
 export default function HomePage() {
   const { user, isAuthenticated } = useAuthStore();
@@ -40,10 +41,8 @@ export default function HomePage() {
       <nav className="sticky top-0 z-40 border-b bg-background/95 backdrop-blur">
         <div className="container max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 font-bold text-lg">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              🏠
-            </div>
-            <span>Airbnb Clone</span>
+            <Image src="/icon.svg" alt="App logo" width={32} height={32} />
+            <span>FND OUT SPACE</span>
           </Link>
 
           <div className="flex items-center gap-3">
@@ -190,7 +189,7 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="border-t bg-background/50 py-8">
         <div className="container max-w-7xl mx-auto px-4 text-center text-sm text-muted-foreground">
-          <p>&copy; 2024 Airbnb Clone. All rights reserved.</p>
+          <p>&copy; 2024 FND OUT SPACE. All rights reserved.</p>
         </div>
       </footer>
     </main>

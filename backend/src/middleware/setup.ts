@@ -4,6 +4,8 @@ import helmet from "helmet";
 import compression from "compression";
 import morgan from "morgan";
 import { env } from "../config/environment";
+import { pool } from "../config/database";
+import { getRedisClient } from "../config/redis";
 import { errorHandler } from "../middleware/errorHandler";
 import { requestLogger } from "../middleware/requestLogger";
 import { setupGraphQL } from "../graphql/server";
@@ -46,6 +48,53 @@ export const setupMiddleware = async (app: Express) => {
   // Request logger middleware
   app.use(requestLogger);
 
+  // Health endpoints for uptime/readiness checks.
+  app.get(["/health", "/api/health"], async (_req: Request, res: Response) => {
+    const [databaseCheck, redisCheck] = await Promise.all([
+      pool
+        .query("SELECT 1")
+        .then(() => ({ ok: true as const }))
+        .catch((error: unknown) => ({
+          ok: false as const,
+          error:
+            error instanceof Error ? error.message : "Database check failed",
+        })),
+      getRedisClient()
+        .then((client) => client.ping())
+        .then((reply) =>
+          reply === "PONG"
+            ? ({ ok: true as const })
+            : ({ ok: false as const, error: `Unexpected Redis ping reply: ${reply}` }),
+        )
+        .catch((error: unknown) => ({
+          ok: false as const,
+          error: error instanceof Error ? error.message : "Redis check failed",
+        })),
+    ]);
+
+    const database = databaseCheck.ok;
+    const redis = redisCheck.ok;
+    const healthy = database && redis;
+
+    res.status(healthy ? 200 : 503).json({
+      success: healthy,
+      status: healthy ? "ok" : "degraded",
+      service: "backend-api",
+      timestamp: new Date().toISOString(),
+      uptimeSeconds: Math.floor(process.uptime()),
+      checks: {
+        database,
+        redis,
+      },
+      errors: healthy
+        ? undefined
+        : {
+            database: databaseCheck.ok ? undefined : databaseCheck.error,
+            redis: redisCheck.ok ? undefined : redisCheck.error,
+          },
+    });
+  });
+
   // API docs (Swagger/OpenAPI)
   setupSwaggerDocs(app);
 
@@ -67,6 +116,6 @@ export const setupMiddleware = async (app: Express) => {
 
   // Error handler (must be last)
   app.use(errorHandler);
-};;
+};
 
 export default setupMiddleware;

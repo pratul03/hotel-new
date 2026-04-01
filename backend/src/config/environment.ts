@@ -20,7 +20,7 @@ if (missingVars.length > 0) {
 
 export const env = {
   // Server
-  PORT: parseInt(process.env.PORT || '3000', 10),
+  PORT: parseInt(process.env.PORT || '8080', 10),
   NODE_ENV: process.env.NODE_ENV || 'development',
 
   // Database
@@ -47,7 +47,7 @@ export const env = {
   RAZORPAY_KEY_SECRET: process.env.RAZORPAY_KEY_SECRET!,
 
   // Frontend
-  FRONTEND_URL: process.env.FRONTEND_URL || 'http://localhost:3001',
+  FRONTEND_URL: process.env.FRONTEND_URL || 'http://localhost:3000',
 
   // Features
   ENABLE_CRON_JOBS: process.env.ENABLE_CRON_JOBS !== 'false',

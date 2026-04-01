@@ -248,12 +248,15 @@ export const hotelService = {
         rooms: {
           select: {
             id: true,
+            hotelId: true,
             roomType: true,
             capacity: true,
             maxGuests: true,
             basePrice: true,
             amenities: true,
             images: true,
+            createdAt: true,
+            updatedAt: true,
           },
         },
         owner: {
