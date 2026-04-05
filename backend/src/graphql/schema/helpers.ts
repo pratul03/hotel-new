@@ -5,6 +5,9 @@ type SearchHotelsArgs = {
     radiusKm?: number;
     checkIn?: string;
     checkOut?: string;
+    adults?: number;
+    childCount?: number;
+    childAges?: number[];
     guests?: number;
     minPrice?: number;
     maxPrice?: number;
@@ -43,6 +46,8 @@ type CreateBookingArgs = {
     checkIn: string;
     checkOut: string;
     guestCount: number;
+    childCount?: number;
+    childAges?: number[];
     notes?: string;
   };
 };

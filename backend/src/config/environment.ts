@@ -28,7 +28,10 @@ export const env = {
 
   // JWT
   JWT_SECRET: process.env.JWT_SECRET!,
+  JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET!,
   JWT_EXPIRE: process.env.JWT_EXPIRE || '7d',
+  JWT_ACCESS_EXPIRE: process.env.JWT_ACCESS_EXPIRE || process.env.JWT_EXPIRE || '15m',
+  JWT_REFRESH_EXPIRE: process.env.JWT_REFRESH_EXPIRE || '30d',
 
   // Redis
   REDIS_URL: process.env.REDIS_URL!,
@@ -48,6 +51,16 @@ export const env = {
 
   // Frontend
   FRONTEND_URL: process.env.FRONTEND_URL || 'http://localhost:3000',
+
+  // Auth cookies
+  COOKIE_DOMAIN: process.env.COOKIE_DOMAIN,
+  COOKIE_SECURE:
+    process.env.COOKIE_SECURE !== undefined
+      ? process.env.COOKIE_SECURE === 'true'
+      : process.env.NODE_ENV === 'production',
+  COOKIE_SAME_SITE:
+    (process.env.COOKIE_SAME_SITE as 'lax' | 'strict' | 'none' | undefined) ||
+    'lax',
 
   // Features
   ENABLE_CRON_JOBS: process.env.ENABLE_CRON_JOBS !== 'false',

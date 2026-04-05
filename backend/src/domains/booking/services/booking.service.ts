@@ -11,6 +11,8 @@ type CreateBookingInput = {
   checkIn: Date;
   checkOut: Date;
   guestCount: number;
+  childCount: number;
+  childAges: number[];
   notes?: string;
 };
 
@@ -62,6 +64,32 @@ const computeBookingPricing = ({
   };
 };
 
+const assertValidChildGuestDetails = ({
+  guestCount,
+  childCount,
+  childAges,
+}: {
+  guestCount: number;
+  childCount: number;
+  childAges: number[];
+}) => {
+  if (childCount < 0) {
+    throw new AppError("Child count cannot be negative", 400);
+  }
+
+  if (childAges.some((age) => age < 0 || age > 16)) {
+    throw new AppError("Child ages must be between 0 and 16", 400);
+  }
+
+  if (childCount !== childAges.length) {
+    throw new AppError("Child ages count must match child count", 400);
+  }
+
+  if (childCount > guestCount) {
+    throw new AppError("Child count cannot exceed total guest count", 400);
+  }
+};
+
 export const bookingService = {
   async createBooking(userId: string, payload: CreateBookingInput) {
     if (payload.checkIn >= payload.checkOut) {
@@ -76,6 +104,12 @@ export const bookingService = {
     if (!room) {
       throw new AppError("Room not found", 404);
     }
+
+    assertValidChildGuestDetails({
+      guestCount: payload.guestCount,
+      childCount: payload.childCount,
+      childAges: payload.childAges,
+    });
 
     if (payload.guestCount > room.maxGuests) {
       throw new AppError(
@@ -159,6 +193,8 @@ export const bookingService = {
             checkIn: payload.checkIn,
             checkOut: payload.checkOut,
             guestCount: payload.guestCount,
+            childCount: payload.childCount,
+            childAges: payload.childAges,
             notes: payload.notes,
             amount,
             status: "pending",
@@ -207,6 +243,8 @@ export const bookingService = {
             checkOut: full.checkOut,
             amount: full.amount,
             guestCount: full.guestCount,
+            childCount: full.childCount,
+            childAges: full.childAges,
           });
         })
         .catch(() => {});
@@ -617,6 +655,8 @@ export const bookingService = {
     bookingId: string,
     payload: {
       guestCount?: number;
+      childCount?: number;
+      childAges?: number[];
       checkIn?: Date;
       checkOut?: Date;
       notes?: string;
@@ -624,6 +664,11 @@ export const bookingService = {
   ) {
     const booking = await prisma.booking.findUnique({
       where: { id: bookingId },
+      include: {
+        room: {
+          select: { maxGuests: true },
+        },
+      },
     });
     if (!booking) throw new AppError("Booking not found", 404);
     if (booking.userId !== userId) throw new AppError("Unauthorized", 403);
@@ -639,12 +684,47 @@ export const bookingService = {
       throw new AppError("Check-out must be after check-in", 400);
     }
 
+    const nextGuestCount = payload.guestCount ?? booking.guestCount;
+    if (nextGuestCount > booking.room.maxGuests) {
+      throw new AppError(
+        `Guest count exceeds room max limit (${booking.room.maxGuests})`,
+        400,
+      );
+    }
+
+    const hasChildUpdate =
+      typeof payload.childCount === "number" ||
+      Array.isArray(payload.childAges);
+
+    if (
+      hasChildUpdate &&
+      (typeof payload.childCount !== "number" || !Array.isArray(payload.childAges))
+    ) {
+      throw new AppError(
+        "childCount and childAges must be provided together",
+        400,
+      );
+    }
+
+    const nextChildCount = hasChildUpdate
+      ? (payload.childCount as number)
+      : booking.childCount;
+    const nextChildAges = hasChildUpdate
+      ? (payload.childAges as number[])
+      : booking.childAges;
+
+    assertValidChildGuestDetails({
+      guestCount: nextGuestCount,
+      childCount: nextChildCount,
+      childAges: nextChildAges,
+    });
+
     const updated = await prisma.booking.update({
       where: { id: bookingId },
       data: {
-        ...(typeof payload.guestCount === "number" && {
-          guestCount: payload.guestCount,
-        }),
+        guestCount: nextGuestCount,
+        childCount: nextChildCount,
+        childAges: nextChildAges,
         ...(payload.checkIn && { checkIn: payload.checkIn }),
         ...(payload.checkOut && { checkOut: payload.checkOut }),
         ...(typeof payload.notes === "string" && { notes: payload.notes }),
@@ -1022,6 +1102,8 @@ export const bookingService = {
       checkIn?: Date;
       checkOut?: Date;
       guestCount?: number;
+      childCount?: number;
+      childAges?: number[];
       notes?: string;
     },
   ) {
@@ -1048,6 +1130,25 @@ export const bookingService = {
     const nextCheckIn = payload.checkIn ?? booking.checkIn;
     const nextCheckOut = payload.checkOut ?? booking.checkOut;
     const nextGuestCount = payload.guestCount ?? booking.guestCount;
+    const hasChildUpdate =
+      typeof payload.childCount === "number" ||
+      Array.isArray(payload.childAges);
+    if (
+      hasChildUpdate &&
+      (typeof payload.childCount !== "number" || !Array.isArray(payload.childAges))
+    ) {
+      throw new AppError(
+        "childCount and childAges must be provided together",
+        400,
+      );
+    }
+
+    const nextChildCount = hasChildUpdate
+      ? (payload.childCount as number)
+      : booking.childCount;
+    const nextChildAges = hasChildUpdate
+      ? (payload.childAges as number[])
+      : booking.childAges;
 
     if (nextCheckIn >= nextCheckOut) {
       throw new AppError("Check-out must be after check-in", 400);
@@ -1058,6 +1159,12 @@ export const bookingService = {
         400,
       );
     }
+
+    assertValidChildGuestDetails({
+      guestCount: nextGuestCount,
+      childCount: nextChildCount,
+      childAges: nextChildAges,
+    });
 
     const blocked = await prisma.blockedDates.findFirst({
       where: {
@@ -1108,6 +1215,8 @@ export const bookingService = {
           checkIn: nextCheckIn,
           checkOut: nextCheckOut,
           guestCount: nextGuestCount,
+          childCount: nextChildCount,
+          childAges: nextChildAges,
           amount,
           notes: payload.notes !== undefined ? payload.notes : booking.notes,
           status: booking.status === "pending" ? "confirmed" : booking.status,

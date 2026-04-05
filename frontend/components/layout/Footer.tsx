@@ -135,7 +135,7 @@ export function Footer() {
 
         <div className="flex items-center justify-between text-sm text-muted-foreground">
           <p>&copy; {currentYear} FND OUT SPACE. All rights reserved.</p>
-          <p>Made with Next.js & shadcn/ui</p>
+          <p>Built for People & their space</p>
         </div>
       </div>
     </footer>

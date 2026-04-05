@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { toast } from "sonner";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { NumberInput } from "@/components/ui/number-input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import {
@@ -76,73 +76,114 @@ export default function HostHotelPricingRulesPage() {
           <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>Weekday multiplier</Label>
-              <Input
-                type="number"
+              <NumberInput
                 step="0.01"
                 min={0.5}
                 max={5}
-                value={weekdayMultiplier}
-                onChange={(e) => setWeekdayMultiplier(e.target.value)}
+                decimalScale={2}
+                value={
+                  weekdayMultiplier === ""
+                    ? undefined
+                    : Number(weekdayMultiplier)
+                }
+                onValueChange={(value) =>
+                  setWeekdayMultiplier(value === undefined ? "" : String(value))
+                }
               />
             </div>
             <div className="space-y-2">
               <Label>Weekend multiplier</Label>
-              <Input
-                type="number"
+              <NumberInput
                 step="0.01"
                 min={0.5}
                 max={5}
-                value={weekendMultiplier}
-                onChange={(e) => setWeekendMultiplier(e.target.value)}
+                decimalScale={2}
+                value={
+                  weekendMultiplier === ""
+                    ? undefined
+                    : Number(weekendMultiplier)
+                }
+                onValueChange={(value) =>
+                  setWeekendMultiplier(value === undefined ? "" : String(value))
+                }
               />
             </div>
             <div className="space-y-2">
               <Label>Weekly discount %</Label>
-              <Input
-                type="number"
+              <NumberInput
                 min={0}
                 max={100}
-                value={weeklyDiscountPercent}
-                onChange={(e) => setWeeklyDiscountPercent(e.target.value)}
+                value={
+                  weeklyDiscountPercent === ""
+                    ? undefined
+                    : Number(weeklyDiscountPercent)
+                }
+                onValueChange={(value) =>
+                  setWeeklyDiscountPercent(
+                    value === undefined ? "" : String(value),
+                  )
+                }
               />
             </div>
             <div className="space-y-2">
               <Label>Monthly discount %</Label>
-              <Input
-                type="number"
+              <NumberInput
                 min={0}
                 max={100}
-                value={monthlyDiscountPercent}
-                onChange={(e) => setMonthlyDiscountPercent(e.target.value)}
+                value={
+                  monthlyDiscountPercent === ""
+                    ? undefined
+                    : Number(monthlyDiscountPercent)
+                }
+                onValueChange={(value) =>
+                  setMonthlyDiscountPercent(
+                    value === undefined ? "" : String(value),
+                  )
+                }
               />
             </div>
             <div className="space-y-2">
               <Label>Early-bird discount %</Label>
-              <Input
-                type="number"
+              <NumberInput
                 min={0}
                 max={100}
-                value={earlyBirdDiscountPercent}
-                onChange={(e) => setEarlyBirdDiscountPercent(e.target.value)}
+                value={
+                  earlyBirdDiscountPercent === ""
+                    ? undefined
+                    : Number(earlyBirdDiscountPercent)
+                }
+                onValueChange={(value) =>
+                  setEarlyBirdDiscountPercent(
+                    value === undefined ? "" : String(value),
+                  )
+                }
               />
             </div>
             <div className="space-y-2">
               <Label>Last-minute discount %</Label>
-              <Input
-                type="number"
+              <NumberInput
                 min={0}
                 max={100}
-                value={lastMinuteDiscountPercent}
-                onChange={(e) => setLastMinuteDiscountPercent(e.target.value)}
+                value={
+                  lastMinuteDiscountPercent === ""
+                    ? undefined
+                    : Number(lastMinuteDiscountPercent)
+                }
+                onValueChange={(value) =>
+                  setLastMinuteDiscountPercent(
+                    value === undefined ? "" : String(value),
+                  )
+                }
               />
             </div>
             <div className="space-y-2 md:col-span-2">
               <Label>Cleaning fee</Label>
-              <Input
-                type="number"
+              <NumberInput
                 min={0}
-                value={cleaningFee}
-                onChange={(e) => setCleaningFee(e.target.value)}
+                value={cleaningFee === "" ? undefined : Number(cleaningFee)}
+                onValueChange={(value) =>
+                  setCleaningFee(value === undefined ? "" : String(value))
+                }
               />
             </div>
             <div className="md:col-span-2">

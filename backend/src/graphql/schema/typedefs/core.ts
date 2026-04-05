@@ -105,6 +105,8 @@ export const coreTypeDefs = `#graphql
     checkIn: String
     checkOut: String
     guestCount: Int
+    childCount: Int
+    childAges: [Int!]
     notes: String
     amount: Float
     status: String
@@ -438,6 +440,9 @@ export const coreTypeDefs = `#graphql
     radiusKm: Float
     checkIn: String
     checkOut: String
+    adults: Int
+    childCount: Int
+    childAges: [Int!]
     guests: Int
     minPrice: Float
     maxPrice: Float
@@ -458,11 +463,15 @@ export const coreTypeDefs = `#graphql
     checkIn: String!
     checkOut: String!
     guestCount: Int!
+    childCount: Int
+    childAges: [Int!]
     notes: String
   }
 
   input UpdateBookingInput {
     guestCount: Int
+    childCount: Int
+    childAges: [Int!]
     checkIn: String
     checkOut: String
     notes: String

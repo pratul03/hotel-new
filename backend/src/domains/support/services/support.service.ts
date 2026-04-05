@@ -105,15 +105,35 @@ export const supportService = {
     stage: EmergencyEscalationStage,
     notes?: string,
   ) {
+    const actor = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { id: true, role: true },
+    });
+
+    if (!actor) {
+      throw new AppError("Unauthorized", 403);
+    }
+
     const ticket = await prisma.supportTicket.findUnique({
       where: { id: ticketId },
     });
 
-    if (!ticket || ticket.userId !== userId) {
+    if (!ticket) {
       throw new AppError("Ticket not found", 404);
     }
 
-    if (ticket.subject !== "Emergency safety request") {
+    const isAdmin = actor.role === "admin";
+    const isOwner = ticket.userId === userId;
+
+    if (!isAdmin && !isOwner) {
+      throw new AppError("Unauthorized", 403);
+    }
+
+    const isEmergencyLikeTicket =
+      ticket.subject === "Emergency safety request" ||
+      ticket.priority === "urgent";
+
+    if (!isEmergencyLikeTicket && !isAdmin) {
       throw new AppError("Only emergency tickets can be escalated", 400);
     }
 

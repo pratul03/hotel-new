@@ -50,6 +50,9 @@ export const searchHotelsSchema = z
     radiusKm: z.coerce.number().default(10),
     checkIn: v.isoDateTime().optional(),
     checkOut: v.isoDateTime().optional(),
+    adults: v.positiveInt().optional(),
+    childCount: z.coerce.number().int().min(0).optional(),
+    childAges: z.array(z.coerce.number().int().min(0).max(16)).optional(),
     guests: v.positiveInt().optional(),
     minPrice: v.number(0).optional(),
     maxPrice: v.number(0).optional(),
@@ -76,6 +79,27 @@ export const searchHotelsSchema = z
     {
       message: "maxPrice must be greater than or equal to minPrice",
       path: ["maxPrice"],
+    },
+  )
+  .refine(
+    (v) =>
+      typeof v.childCount !== "number" ||
+      !Array.isArray(v.childAges) ||
+      v.childAges.length === v.childCount,
+    {
+      message: "childAges length must match childCount",
+      path: ["childAges"],
+    },
+  )
+  .refine(
+    (v) =>
+      typeof v.guests !== "number" ||
+      v.guests >=
+        ((typeof v.adults === "number" ? v.adults : 0) +
+          (typeof v.childCount === "number" ? v.childCount : 0)),
+    {
+      message: "guests must be greater than or equal to adults + childCount",
+      path: ["guests"],
     },
   );
 

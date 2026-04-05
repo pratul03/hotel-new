@@ -8,50 +8,50 @@ datasource db {
 
 // User & Authentication Models
 model User {
-  id                  String   @id @default(cuid())
-  email               String   @unique @db.VarChar(255)
-  password            String
-  name                String   @db.VarChar(255)
-  avatar              String?  @db.Text
-  role                String   @default("guest") @db.VarChar(50) // guest, host, admin
-  verified            Boolean  @default(false)
-  notificationPreferences String @default("{}") @db.Text
-  superhost           Boolean  @default(false)
-  responseRate        Int      @default(0) // 0-100
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  id                      String   @id @default(cuid())
+  email                   String   @unique @db.VarChar(255)
+  password                String
+  name                    String   @db.VarChar(255)
+  avatar                  String?  @db.Text
+  role                    String   @default("guest") @db.VarChar(50) // guest, host, admin
+  verified                Boolean  @default(false)
+  notificationPreferences String   @default("{}") @db.Text
+  superhost               Boolean  @default(false)
+  responseRate            Int      @default(0) // 0-100
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
 
   // Relations
-  hotels              Hotel[]
-  bookingsAsGuest     Booking[] @relation("guest")
-  reviewsReceived     Review[] @relation("receivedReviews")
-  reviewsSent         Review[] @relation("sentReviews")
-  messagesReceived    Message[] @relation("receiver")
-  messagesSent        Message[] @relation("sender")
-  wishlists           Wishlist[]
-  documents           UserDocument[]
-  hostVerification    HostVerification?
-  hostProfile         HostProfile?
-  hostPayoutAccount   HostPayoutAccount?
-  hostPayouts         HostPayout[]
-  quickReplyTemplates QuickReplyTemplate[] @relation("QuickReplyOwner")
-  scheduledMessages   ScheduledMessage[] @relation("ScheduledMessageSender")
-  receivedScheduledMessages ScheduledMessage[] @relation("ScheduledMessageReceiver")
-  cohostAssignmentsAsHost CoHostAssignment[] @relation("HostAssignments")
-  cohostAssignmentsAsCohost CoHostAssignment[] @relation("CoHostAssignments")
-  hostClaims          HostClaim[]
-  notifications       Notification[]
-  incidentReports     IncidentReport[]
-  supportTickets      SupportTicket[]
-  searchHistory       SearchHistory[]
-  chargebackCases     ChargebackCase[]
-  settlementQuotes    SettlementQuote[]
-  invoiceDocuments    InvoiceDocument[]
-  offPlatformFeeCases OffPlatformFeeCase[]
-  travelDisruptionCases TravelDisruptionCase[]
-  experiences         Experience[] @relation("ExperienceHost")
-  serviceListings     ServiceListing[] @relation("ServiceProvider")
-  rankingExperiments  RankingExperiment[] @relation("ExperimentOwner")
+  hotels                    Hotel[]
+  bookingsAsGuest           Booking[]              @relation("guest")
+  reviewsReceived           Review[]               @relation("receivedReviews")
+  reviewsSent               Review[]               @relation("sentReviews")
+  messagesReceived          Message[]              @relation("receiver")
+  messagesSent              Message[]              @relation("sender")
+  wishlists                 Wishlist[]
+  documents                 UserDocument[]
+  hostVerification          HostVerification?
+  hostProfile               HostProfile?
+  hostPayoutAccount         HostPayoutAccount?
+  hostPayouts               HostPayout[]
+  quickReplyTemplates       QuickReplyTemplate[]   @relation("QuickReplyOwner")
+  scheduledMessages         ScheduledMessage[]     @relation("ScheduledMessageSender")
+  receivedScheduledMessages ScheduledMessage[]     @relation("ScheduledMessageReceiver")
+  cohostAssignmentsAsHost   CoHostAssignment[]     @relation("HostAssignments")
+  cohostAssignmentsAsCohost CoHostAssignment[]     @relation("CoHostAssignments")
+  hostClaims                HostClaim[]
+  notifications             Notification[]
+  incidentReports           IncidentReport[]
+  supportTickets            SupportTicket[]
+  searchHistory             SearchHistory[]
+  chargebackCases           ChargebackCase[]
+  settlementQuotes          SettlementQuote[]
+  invoiceDocuments          InvoiceDocument[]
+  offPlatformFeeCases       OffPlatformFeeCase[]
+  travelDisruptionCases     TravelDisruptionCase[]
+  experiences               Experience[]           @relation("ExperienceHost")
+  serviceListings           ServiceListing[]       @relation("ServiceProvider")
+  rankingExperiments        RankingExperiment[]    @relation("ExperimentOwner")
 
   @@index([email])
   @@index([role])
@@ -74,13 +74,13 @@ model HostProfile {
 }
 
 model UserDocument {
-  id            String   @id @default(cuid())
-  userId        String
-  documentType  String   @db.VarChar(100) // passport, aadhaar, drivers_license
-  docUrl        String   @db.Text
-  status        String   @default("pending") @db.VarChar(50) // pending, verified, rejected
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id           String   @id @default(cuid())
+  userId       String
+  documentType String   @db.VarChar(100) // passport, aadhaar, drivers_license
+  docUrl       String   @db.Text
+  status       String   @default("pending") @db.VarChar(50) // pending, verified, rejected
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -89,48 +89,48 @@ model UserDocument {
 
 // Hotel & Room Models
 model Hotel {
-  id              String   @id @default(cuid())
-  ownerId         String
-  name            String   @db.VarChar(255)
-  description     String?  @db.Text
-  location        String   @db.VarChar(500) // "latitude,longitude,address"
-  amenities       String   @db.Text @default("[]") // JSON array
-  publicRules     String?  @db.Text
-  checkInTime     String   @default("14:00") // HH:mm format
-  checkOutTime    String   @default("10:00") // HH:mm format
-  instantBooking  Boolean  @default(false)
-  isPromoted      Boolean  @default(false)
-  promotedUntil   DateTime?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id             String    @id @default(cuid())
+  ownerId        String
+  name           String    @db.VarChar(255)
+  description    String?   @db.Text
+  location       String    @db.VarChar(500) // "latitude,longitude,address"
+  amenities      String    @default("[]") @db.Text // JSON array
+  publicRules    String?   @db.Text
+  checkInTime    String    @default("14:00") // HH:mm format
+  checkOutTime   String    @default("10:00") // HH:mm format
+  instantBooking Boolean   @default(false)
+  isPromoted     Boolean   @default(false)
+  promotedUntil  DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
-  owner           User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  rooms           Room[]
-  blockedDates    BlockedDates[]
-  reviews         Review[]
-  calendarRule    HotelCalendarRule?
-  pricingRule     HotelPricingRule?
-  cancellationPolicy HotelCancellationPolicy?
-  listingToolkit  HotelListingToolkit?
-  iCalSources     HotelIcalSource[]
-  cohostAssignments CoHostAssignment[]
+  owner               User                      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  rooms               Room[]
+  blockedDates        BlockedDates[]
+  reviews             Review[]
+  calendarRule        HotelCalendarRule?
+  pricingRule         HotelPricingRule?
+  cancellationPolicy  HotelCancellationPolicy?
+  listingToolkit      HotelListingToolkit?
+  iCalSources         HotelIcalSource[]
+  cohostAssignments   CoHostAssignment[]
   complianceChecklist HotelComplianceChecklist?
-  hostClaims      HostClaim[]
-  experiences     Experience[]
-  serviceListings ServiceListing[]
+  hostClaims          HostClaim[]
+  experiences         Experience[]
+  serviceListings     ServiceListing[]
 
   @@index([ownerId])
 }
 
 model HotelIcalSource {
-  id           String   @id @default(cuid())
+  id           String    @id @default(cuid())
   hotelId      String
-  name         String   @db.VarChar(255)
-  url          String   @db.VarChar(1000)
-  enabled      Boolean  @default(true)
+  name         String    @db.VarChar(255)
+  url          String    @db.VarChar(1000)
+  enabled      Boolean   @default(true)
   lastSyncedAt DateTime?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 
   hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
 
@@ -139,55 +139,57 @@ model HotelIcalSource {
 }
 
 model Room {
-  id              String   @id @default(cuid())
-  hotelId         String
-  roomType        String   @db.VarChar(100) // apartment, house, villa, boutique
-  capacity        Int      @default(2)
-  maxGuests       Int      @default(2)
-  basePrice       Float    @default(0) // per night in INR
-  amenities       String   @db.Text @default("[]") // JSON array
-  images          String   @db.Text @default("[]") // JSON array of image URLs
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id        String   @id @default(cuid())
+  hotelId   String
+  roomType  String   @db.VarChar(100) // apartment, house, villa, boutique
+  capacity  Int      @default(2)
+  maxGuests Int      @default(2)
+  basePrice Float    @default(0) // per night in INR
+  amenities String   @default("[]") @db.Text // JSON array
+  images    String   @default("[]") @db.Text // JSON array of image URLs
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  hotel           Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
-  bookings        Booking[]
-  availability    RoomAvailability[]
-  blockedDates    BlockedDates[]
-  wishlists       Wishlist[]
+  hotel        Hotel              @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  bookings     Booking[]
+  availability RoomAvailability[]
+  blockedDates BlockedDates[]
+  wishlists    Wishlist[]
 
   @@index([hotelId])
 }
 
 // Booking & Availability Models
 model Booking {
-  id                    String   @id @default(cuid())
-  userId                String
-  roomId                String
-  checkIn               DateTime
-  checkOut              DateTime
-  status                String   @default("pending") @db.VarChar(50) // pending, confirmed, checked_in, checked_out, cancelled, expired
-  amount                Float    // Total amount including taxes & fees
-  guestCount            Int      @default(1)
-  cancellationPolicy    String   @default("moderate") @db.VarChar(50) // flexible, moderate, strict
-  notes                 String?  @db.Text
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
-  expiresAt             DateTime? // For PENDING bookings, auto-expire after 10 mins
+  id                 String    @id @default(cuid())
+  userId             String
+  roomId             String
+  checkIn            DateTime
+  checkOut           DateTime
+  status             String    @default("pending") @db.VarChar(50) // pending, confirmed, checked_in, checked_out, cancelled, expired
+  amount             Float // Total amount including taxes & fees
+  guestCount         Int       @default(1)
+  childCount         Int       @default(0)
+  childAges          Int[]     @default([])
+  cancellationPolicy String    @default("moderate") @db.VarChar(50) // flexible, moderate, strict
+  notes              String?   @db.Text
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  expiresAt          DateTime? // For PENDING bookings, auto-expire after 10 mins
 
-  guest               User @relation("guest", fields: [userId], references: [id], onDelete: Cascade)
-  room                Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
-  payment             Payment?
-  history             BookingHistory[]
-  reviews             Review[]
-  messages            Message[]
-  scheduledMessages   ScheduledMessage[]
-  incidentReports     IncidentReport[]
-  hostClaims          HostClaim[]
-  taxInvoices         TaxInvoice[]
-  invoiceDocuments    InvoiceDocument[]
-  settlementQuotes    SettlementQuote[]
-  offPlatformFeeCases OffPlatformFeeCase[]
+  guest                 User                   @relation("guest", fields: [userId], references: [id], onDelete: Cascade)
+  room                  Room                   @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  payment               Payment?
+  history               BookingHistory[]
+  reviews               Review[]
+  messages              Message[]
+  scheduledMessages     ScheduledMessage[]
+  incidentReports       IncidentReport[]
+  hostClaims            HostClaim[]
+  taxInvoices           TaxInvoice[]
+  invoiceDocuments      InvoiceDocument[]
+  settlementQuotes      SettlementQuote[]
+  offPlatformFeeCases   OffPlatformFeeCase[]
   travelDisruptionCases TravelDisruptionCase[]
 
   @@index([userId])
@@ -197,12 +199,12 @@ model Booking {
 }
 
 model BookingHistory {
-  id              String   @id @default(cuid())
-  bookingId       String
-  status          String   @db.VarChar(50)
-  changedAt       DateTime @default(now())
-  updatedBy       String   @default("system") @db.VarChar(100)
-  notes           String?  @db.Text
+  id        String   @id @default(cuid())
+  bookingId String
+  status    String   @db.VarChar(50)
+  changedAt DateTime @default(now())
+  updatedBy String   @default("system") @db.VarChar(100)
+  notes     String?  @db.Text
 
   booking Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
 
@@ -210,13 +212,13 @@ model BookingHistory {
 }
 
 model RoomAvailability {
-  id              String   @id @default(cuid())
-  roomId          String
-  date            DateTime @db.Date
-  isAvailable     Boolean  @default(true)
-  blockedReason   String?  @db.VarChar(255)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id            String   @id @default(cuid())
+  roomId        String
+  date          DateTime @db.Date
+  isAvailable   Boolean  @default(true)
+  blockedReason String?  @db.VarChar(255)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
 
@@ -225,33 +227,33 @@ model RoomAvailability {
 }
 
 model BlockedDates {
-  id              String   @id @default(cuid())
-  hotelId         String?
-  roomId          String
-  startDate       DateTime @db.Date
-  endDate         DateTime @db.Date
-  reason          String   @db.VarChar(255) // "maintenance", "personal", "blocked"
-  createdAt       DateTime @default(now())
+  id        String   @id @default(cuid())
+  hotelId   String?
+  roomId    String
+  startDate DateTime @db.Date
+  endDate   DateTime @db.Date
+  reason    String   @db.VarChar(255) // "maintenance", "personal", "blocked"
+  createdAt DateTime @default(now())
 
   hotel Hotel? @relation(fields: [hotelId], references: [id], onDelete: SetNull)
-  room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  room  Room   @relation(fields: [roomId], references: [id], onDelete: Cascade)
 
   @@index([hotelId])
   @@index([roomId])
 }
 
 model HotelCalendarRule {
-  id                 String   @id @default(cuid())
-  hotelId            String   @unique
-  minStayNights      Int      @default(1)
-  maxStayNights      Int      @default(30)
-  advanceNoticeHours Int      @default(24)
-  prepTimeHours      Int      @default(0)
-  allowSameDayCheckIn Boolean @default(false)
-  checkInStartTime   String?  @db.VarChar(5) // HH:mm
-  checkInEndTime     String?  @db.VarChar(5) // HH:mm
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  id                  String   @id @default(cuid())
+  hotelId             String   @unique
+  minStayNights       Int      @default(1)
+  maxStayNights       Int      @default(30)
+  advanceNoticeHours  Int      @default(24)
+  prepTimeHours       Int      @default(0)
+  allowSameDayCheckIn Boolean  @default(false)
+  checkInStartTime    String?  @db.VarChar(5) // HH:mm
+  checkInEndTime      String?  @db.VarChar(5) // HH:mm
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 
   hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
 
@@ -277,14 +279,14 @@ model HotelPricingRule {
 }
 
 model HotelCancellationPolicy {
-  id                     String   @id @default(cuid())
-  hotelId                String   @unique
-  policyType             String   @default("moderate") @db.VarChar(50) // flexible, moderate, strict
-  freeCancellationHours  Int      @default(24)
-  partialRefundPercent   Int      @default(50)
-  noShowPenaltyPercent   Int      @default(100)
-  createdAt              DateTime @default(now())
-  updatedAt              DateTime @updatedAt
+  id                    String   @id @default(cuid())
+  hotelId               String   @unique
+  policyType            String   @default("moderate") @db.VarChar(50) // flexible, moderate, strict
+  freeCancellationHours Int      @default(24)
+  partialRefundPercent  Int      @default(50)
+  noShowPenaltyPercent  Int      @default(100)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
 
   hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
 
@@ -293,15 +295,15 @@ model HotelCancellationPolicy {
 }
 
 model HotelListingToolkit {
-  id              String   @id @default(cuid())
-  hotelId         String   @unique
-  coverImageUrl   String?  @db.VarChar(1000)
-  guidebook       String?  @db.Text
-  houseManual     String?  @db.Text
-  checkInSteps    String?  @db.Text
-  completenessScore Int    @default(0)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id                String   @id @default(cuid())
+  hotelId           String   @unique
+  coverImageUrl     String?  @db.VarChar(1000)
+  guidebook         String?  @db.Text
+  houseManual       String?  @db.Text
+  checkInSteps      String?  @db.Text
+  completenessScore Int      @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
   hotel Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
 
@@ -310,13 +312,13 @@ model HotelListingToolkit {
 }
 
 model QuickReplyTemplate {
-  id          String   @id @default(cuid())
-  userId      String
-  title       String   @db.VarChar(150)
-  content     String   @db.Text
-  category    String   @default("general") @db.VarChar(50) // general, pre_checkin, checkout, support
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        String   @id @default(cuid())
+  userId    String
+  title     String   @db.VarChar(150)
+  content   String   @db.Text
+  category  String   @default("general") @db.VarChar(50) // general, pre_checkin, checkout, support
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   user User @relation("QuickReplyOwner", fields: [userId], references: [id], onDelete: Cascade)
 
@@ -325,19 +327,19 @@ model QuickReplyTemplate {
 }
 
 model ScheduledMessage {
-  id             String   @id @default(cuid())
+  id             String    @id @default(cuid())
   senderUserId   String
   receiverUserId String
   bookingId      String?
-  content        String   @db.Text
+  content        String    @db.Text
   sendAt         DateTime
   sentAt         DateTime?
-  status         String   @default("scheduled") @db.VarChar(50) // scheduled, sent, cancelled
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  status         String    @default("scheduled") @db.VarChar(50) // scheduled, sent, cancelled
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
-  sender   User    @relation("ScheduledMessageSender", fields: [senderUserId], references: [id], onDelete: Cascade)
-  receiver User    @relation("ScheduledMessageReceiver", fields: [receiverUserId], references: [id], onDelete: Cascade)
+  sender   User     @relation("ScheduledMessageSender", fields: [senderUserId], references: [id], onDelete: Cascade)
+  receiver User     @relation("ScheduledMessageReceiver", fields: [receiverUserId], references: [id], onDelete: Cascade)
   booking  Booking? @relation(fields: [bookingId], references: [id], onDelete: SetNull)
 
   @@index([senderUserId])
@@ -347,14 +349,14 @@ model ScheduledMessage {
 }
 
 model CoHostAssignment {
-  id                 String   @id @default(cuid())
-  hotelId            String
-  hostUserId         String
-  cohostUserId       String
-  permissions        String   @db.Text @default("[]") // JSON array
-  revenueSplitPercent Int     @default(0)
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  id                  String   @id @default(cuid())
+  hotelId             String
+  hostUserId          String
+  cohostUserId        String
+  permissions         String   @default("[]") @db.Text // JSON array
+  revenueSplitPercent Int      @default(0)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 
   hotel  Hotel @relation(fields: [hotelId], references: [id], onDelete: Cascade)
   host   User  @relation("HostAssignments", fields: [hostUserId], references: [id], onDelete: Cascade)
@@ -370,7 +372,7 @@ model HotelComplianceChecklist {
   id               String   @id @default(cuid())
   hotelId          String   @unique
   jurisdictionCode String   @db.VarChar(120)
-  checklistItems   String   @db.Text @default("[]") // JSON array
+  checklistItems   String   @default("[]") @db.Text // JSON array
   status           String   @default("incomplete") @db.VarChar(50) // incomplete, in_review, completed
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
@@ -389,7 +391,7 @@ model HostClaim {
   title          String   @db.VarChar(255)
   description    String   @db.Text
   amountClaimed  Float    @default(0)
-  evidenceUrls   String   @db.Text @default("[]") // JSON array
+  evidenceUrls   String   @default("[]") @db.Text // JSON array
   status         String   @default("open") @db.VarChar(50) // open, reviewing, approved, rejected, settled
   resolutionNote String?  @db.Text
   createdAt      DateTime @default(now())
@@ -407,21 +409,21 @@ model HostClaim {
 
 // Review & Rating Models
 model Review {
-  id              String   @id @default(cuid())
-  senderId        String
-  receiverId      String
-  bookingId       String
-  rating          Int      @default(5) // 1-5 stars
-  comment         String?  @db.Text
-  categories      String   @db.Text @default("{}") // JSON object with category ratings
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id         String   @id @default(cuid())
+  senderId   String
+  receiverId String
+  bookingId  String
+  rating     Int      @default(5) // 1-5 stars
+  comment    String?  @db.Text
+  categories String   @default("{}") @db.Text // JSON object with category ratings
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
-  sender          User @relation("sentReviews", fields: [senderId], references: [id], onDelete: Cascade)
-  receiver        User @relation("receivedReviews", fields: [receiverId], references: [id], onDelete: Cascade)
-  booking         Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
-  hotel           Hotel? @relation(fields: [hotelId], references: [id], onDelete: SetNull)
-  hotelId         String?
+  sender   User    @relation("sentReviews", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver User    @relation("receivedReviews", fields: [receiverId], references: [id], onDelete: Cascade)
+  booking  Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  hotel    Hotel?  @relation(fields: [hotelId], references: [id], onDelete: SetNull)
+  hotelId  String?
 
   @@unique([bookingId, senderId])
   @@index([senderId])
@@ -431,18 +433,18 @@ model Review {
 
 // Payment Models
 model Payment {
-  id                        String   @id @default(cuid())
-  bookingId                 String   @unique
-  razorpayOrderId           String?  @unique @db.VarChar(255)
-  razorpayPaymentId         String?  @unique @db.VarChar(255)
-  amount                    Float
-  tax                       Float    @default(0)
-  serviceFee                Float    @default(0)
-  status                    String   @default("pending") @db.VarChar(50) // pending, processing, completed, failed, refunded
-  createdAt                 DateTime @default(now())
-  updatedAt                 DateTime @updatedAt
+  id                String   @id @default(cuid())
+  bookingId         String   @unique
+  razorpayOrderId   String?  @unique @db.VarChar(255)
+  razorpayPaymentId String?  @unique @db.VarChar(255)
+  amount            Float
+  tax               Float    @default(0)
+  serviceFee        Float    @default(0)
+  status            String   @default("pending") @db.VarChar(50) // pending, processing, completed, failed, refunded
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
-  booking          Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  booking          Booking           @relation(fields: [bookingId], references: [id], onDelete: Cascade)
   chargebackCases  ChargebackCase[]
   taxInvoices      TaxInvoice[]
   invoiceDocuments InvoiceDocument[]
@@ -454,15 +456,15 @@ model Payment {
 }
 
 model ChargebackCase {
-  id            String   @id @default(cuid())
-  paymentId     String
-  userId        String
-  reason        String   @db.Text
-  evidenceUrls  String   @db.Text @default("[]")
-  status        String   @default("submitted") @db.VarChar(50)
-  timeline      String   @db.Text @default("[]")
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id           String   @id @default(cuid())
+  paymentId    String
+  userId       String
+  reason       String   @db.Text
+  evidenceUrls String   @default("[]") @db.Text
+  status       String   @default("submitted") @db.VarChar(50)
+  timeline     String   @default("[]") @db.Text
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   payment Payment @relation(fields: [paymentId], references: [id], onDelete: Cascade)
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -473,20 +475,20 @@ model ChargebackCase {
 }
 
 model TaxInvoice {
-  id             String   @id @default(cuid())
-  bookingId      String
-  paymentId      String
-  invoiceNumber  String   @unique @db.VarChar(120)
-  currency       String   @default("INR") @db.VarChar(10)
-  lineItems      String   @db.Text
-  subtotal       Float
-  tax            Float
-  total          Float
-  regime         String   @db.VarChar(50)
-  placeOfSupply  String   @db.VarChar(120)
-  issuedAt       DateTime @default(now())
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id            String   @id @default(cuid())
+  bookingId     String
+  paymentId     String
+  invoiceNumber String   @unique @db.VarChar(120)
+  currency      String   @default("INR") @db.VarChar(10)
+  lineItems     String   @db.Text
+  subtotal      Float
+  tax           Float
+  total         Float
+  regime        String   @db.VarChar(50)
+  placeOfSupply String   @db.VarChar(120)
+  issuedAt      DateTime @default(now())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   booking Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
   payment Payment @relation(fields: [paymentId], references: [id], onDelete: Cascade)
@@ -497,25 +499,25 @@ model TaxInvoice {
 }
 
 model InvoiceDocument {
-  id             String   @id @default(cuid())
+  id             String    @id @default(cuid())
   userId         String
   bookingId      String?
   paymentId      String?
-  type           String   @db.VarChar(50) // order, payment, refund, revoke, other
-  status         String   @default("issued") @db.VarChar(50) // issued, revoked
-  title          String   @db.VarChar(160)
-  documentNumber String   @unique @db.VarChar(120)
-  currency       String   @default("INR") @db.VarChar(10)
+  type           String    @db.VarChar(50) // order, payment, refund, revoke, other
+  status         String    @default("issued") @db.VarChar(50) // issued, revoked
+  title          String    @db.VarChar(160)
+  documentNumber String    @unique @db.VarChar(120)
+  currency       String    @default("INR") @db.VarChar(10)
   amount         Float
-  fileUrl        String?  @db.Text
-  storageBucket  String?  @db.VarChar(120)
-  storageKey     String?  @db.VarChar(500)
-  lineItems      String   @db.Text @default("[]")
-  metadata       String   @db.Text @default("{}")
-  issuedAt       DateTime @default(now())
+  fileUrl        String?   @db.Text
+  storageBucket  String?   @db.VarChar(120)
+  storageKey     String?   @db.VarChar(500)
+  lineItems      String    @default("[]") @db.Text
+  metadata       String    @default("{}") @db.Text
+  issuedAt       DateTime  @default(now())
   revokedAt      DateTime?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
   user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   booking Booking? @relation(fields: [bookingId], references: [id], onDelete: SetNull)
@@ -573,23 +575,23 @@ model SettlementQuote {
 }
 
 model CancellationPolicy {
-  id                  String   @id @default(cuid())
-  name                String   @unique @db.VarChar(255)
-  type                String   @unique @db.VarChar(50) // flexible, moderate, strict
-  refundPercentage    Int      @default(100) // 0-100
-  description         String?  @db.Text
-  createdAt           DateTime @default(now())
+  id               String   @id @default(cuid())
+  name             String   @unique @db.VarChar(255)
+  type             String   @unique @db.VarChar(50) // flexible, moderate, strict
+  refundPercentage Int      @default(100) // 0-100
+  description      String?  @db.Text
+  createdAt        DateTime @default(now())
 
   @@index([type])
 }
 
 // Wishlist Model
 model Wishlist {
-  id              String   @id @default(cuid())
-  userId          String
-  roomId          String
-  listName        String   @default("Favorites") @db.VarChar(120)
-  addedAt         DateTime @default(now())
+  id       String   @id @default(cuid())
+  userId   String
+  roomId   String
+  listName String   @default("Favorites") @db.VarChar(120)
+  addedAt  DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
@@ -601,18 +603,18 @@ model Wishlist {
 
 // Messaging Model
 model Message {
-  id              String   @id @default(cuid())
-  senderUserId    String
-  receiverUserId  String
-  bookingId       String?
-  content         String   @db.Text
-  read            Boolean  @default(false)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id             String   @id @default(cuid())
+  senderUserId   String
+  receiverUserId String
+  bookingId      String?
+  content        String   @db.Text
+  read           Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
-  sender          User @relation("sender", fields: [senderUserId], references: [id], onDelete: Cascade)
-  receiver        User @relation("receiver", fields: [receiverUserId], references: [id], onDelete: Cascade)
-  booking         Booking? @relation(fields: [bookingId], references: [id], onDelete: SetNull)
+  sender   User     @relation("sender", fields: [senderUserId], references: [id], onDelete: Cascade)
+  receiver User     @relation("receiver", fields: [receiverUserId], references: [id], onDelete: Cascade)
+  booking  Booking? @relation(fields: [bookingId], references: [id], onDelete: SetNull)
 
   @@index([senderUserId])
   @@index([receiverUserId])
@@ -622,14 +624,14 @@ model Message {
 
 // Notification Model
 model Notification {
-  id              String   @id @default(cuid())
-  userId          String
-  type            String   @db.VarChar(100) // booking_confirmation, payment_receipt, check_in, message, review, etc.
-  content         String   @db.Text
-  link            String?  @db.VarChar(500)
-  read            Boolean  @default(false)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id        String   @id @default(cuid())
+  userId    String
+  type      String   @db.VarChar(100) // booking_confirmation, payment_receipt, check_in, message, review, etc.
+  content   String   @db.Text
+  link      String?  @db.VarChar(500)
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -640,18 +642,18 @@ model Notification {
 
 // Incident Report Model
 model IncidentReport {
-  id              String   @id @default(cuid())
-  bookingId       String
+  id               String    @id @default(cuid())
+  bookingId        String
   reportedByUserId String
-  description     String   @db.Text
-  status          String   @default("open") @db.VarChar(50) // open, investigating, resolved, closed
-  resolution      String?  @db.Text
-  resolvedAt      DateTime?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  description      String    @db.Text
+  status           String    @default("open") @db.VarChar(50) // open, investigating, resolved, closed
+  resolution       String?   @db.Text
+  resolvedAt       DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 
-  booking         Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
-  reportedBy      User @relation(fields: [reportedByUserId], references: [id], onDelete: Cascade)
+  booking    Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  reportedBy User    @relation(fields: [reportedByUserId], references: [id], onDelete: Cascade)
 
   @@index([bookingId])
   @@index([status])
@@ -662,7 +664,7 @@ model OffPlatformFeeCase {
   bookingId      String
   reporterUserId String
   description    String   @db.Text
-  evidenceUrls   String   @db.Text @default("[]")
+  evidenceUrls   String   @default("[]") @db.Text
   status         String   @default("open") @db.VarChar(50)
   resolutionNote String?  @db.Text
   createdAt      DateTime @default(now())
@@ -715,7 +717,7 @@ model Experience {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  host  User  @relation("ExperienceHost", fields: [hostUserId], references: [id], onDelete: Cascade)
+  host  User   @relation("ExperienceHost", fields: [hostUserId], references: [id], onDelete: Cascade)
   hotel Hotel? @relation(fields: [hotelId], references: [id], onDelete: SetNull)
 
   @@index([hostUserId])
@@ -739,7 +741,7 @@ model ServiceListing {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
-  provider User  @relation("ServiceProvider", fields: [providerUserId], references: [id], onDelete: Cascade)
+  provider User   @relation("ServiceProvider", fields: [providerUserId], references: [id], onDelete: Cascade)
   hotel    Hotel? @relation(fields: [hotelId], references: [id], onDelete: SetNull)
 
   @@index([providerUserId])
@@ -765,15 +767,15 @@ model RankingExperiment {
 
 // Support Ticket Model
 model SupportTicket {
-  id              String   @id @default(cuid())
-  userId          String
-  subject         String   @db.VarChar(255)
-  description     String   @db.Text
-  status          String   @default("open") @db.VarChar(50) // open, in_progress, resolved, closed
-  priority        String   @default("medium") @db.VarChar(50) // low, medium, high, urgent
-  reply           String?  @db.Text
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id          String   @id @default(cuid())
+  userId      String
+  subject     String   @db.VarChar(255)
+  description String   @db.Text
+  status      String   @default("open") @db.VarChar(50) // open, in_progress, resolved, closed
+  priority    String   @default("medium") @db.VarChar(50) // low, medium, high, urgent
+  reply       String?  @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -783,13 +785,13 @@ model SupportTicket {
 
 // Search History Model
 model SearchHistory {
-  id              String   @id @default(cuid())
-  userId          String
-  queryLocation   String   @db.VarChar(500)
-  checkIn         DateTime?
-  checkOut        DateTime?
-  guests          Int      @default(1)
-  createdAt       DateTime @default(now())
+  id            String    @id @default(cuid())
+  userId        String
+  queryLocation String    @db.VarChar(500)
+  checkIn       DateTime?
+  checkOut      DateTime?
+  guests        Int       @default(1)
+  createdAt     DateTime  @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -799,16 +801,16 @@ model SearchHistory {
 
 // Host Verification Model
 model HostVerification {
-  id                  String   @id @default(cuid())
-  userId              String   @unique
-  accountAge          DateTime @default(now())
-  bookingsCompleted   Int      @default(0)
-  avgRating           Float    @default(0)
-  responseRate        Int      @default(0) // 0-100
-  cancellationRate    Int      @default(0) // 0-100
-  status              String   @default("pending") @db.VarChar(50) // pending, verified, superhost
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  accountAge        DateTime @default(now())
+  bookingsCompleted Int      @default(0)
+  avgRating         Float    @default(0)
+  responseRate      Int      @default(0) // 0-100
+  cancellationRate  Int      @default(0) // 0-100
+  status            String   @default("pending") @db.VarChar(50) // pending, verified, superhost
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -817,17 +819,17 @@ model HostVerification {
 }
 
 model HostPayoutAccount {
-  id                String   @id @default(cuid())
-  userId            String   @unique
-  accountHolderName String   @db.VarChar(255)
-  bankName          String   @db.VarChar(255)
-  accountNumberLast4 String  @db.VarChar(4)
-  ifscCode          String   @db.VarChar(20)
-  upiId             String?  @db.VarChar(255)
-  payoutMethod      String   @default("bank_transfer") @db.VarChar(50) // bank_transfer, upi
-  isVerified        Boolean  @default(false)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  id                 String   @id @default(cuid())
+  userId             String   @unique
+  accountHolderName  String   @db.VarChar(255)
+  bankName           String   @db.VarChar(255)
+  accountNumberLast4 String   @db.VarChar(4)
+  ifscCode           String   @db.VarChar(20)
+  upiId              String?  @db.VarChar(255)
+  payoutMethod       String   @default("bank_transfer") @db.VarChar(50) // bank_transfer, upi
+  isVerified         Boolean  @default(false)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -836,19 +838,19 @@ model HostPayoutAccount {
 }
 
 model HostPayout {
-  id            String   @id @default(cuid())
-  userId        String
-  amount        Float
-  currency      String   @default("INR") @db.VarChar(10)
-  status        String   @default("requested") @db.VarChar(50) // requested, processing, paid, failed
-  periodStart   DateTime?
-  periodEnd     DateTime?
-  notes         String?  @db.Text
-  referenceId   String?  @db.VarChar(255)
-  requestedAt   DateTime @default(now())
-  processedAt   DateTime?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id          String    @id @default(cuid())
+  userId      String
+  amount      Float
+  currency    String    @default("INR") @db.VarChar(10)
+  status      String    @default("requested") @db.VarChar(50) // requested, processing, paid, failed
+  periodStart DateTime?
+  periodEnd   DateTime?
+  notes       String?   @db.Text
+  referenceId String?   @db.VarChar(255)
+  requestedAt DateTime  @default(now())
+  processedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -859,21 +861,21 @@ model HostPayout {
 
 // Configuration Models
 model ServiceFeeConfig {
-  id              String   @id @default(cuid())
-  percentage      Float    @default(13) // Default 13%
-  cap             Float    @default(0) // 0 means no cap
-  description     String?  @db.Text
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id          String   @id @default(cuid())
+  percentage  Float    @default(13) // Default 13%
+  cap         Float    @default(0) // 0 means no cap
+  description String?  @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model TaxConfiguration {
-  id              String   @id @default(cuid())
-  region          String   @unique @db.VarChar(255) // country or state
-  taxPercentage   Float    @default(5)
-  description     String?  @db.Text
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id            String   @id @default(cuid())
+  region        String   @unique @db.VarChar(255) // country or state
+  taxPercentage Float    @default(5)
+  description   String?  @db.Text
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   @@index([region])
 }

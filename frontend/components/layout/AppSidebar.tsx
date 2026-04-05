@@ -6,77 +6,54 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Home,
-  Search,
-  CalendarDays,
-  MessageSquare,
-  Heart,
-  Bell,
-  Building2,
-  User,
-  LifeBuoy,
-  LogOut,
-  ChevronRight,
-} from "lucide-react";
+import { LogOut, User } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
+import axiosInstance from "@/lib/axios";
 import Link from "next/link";
 import Image from "next/image";
-
-const NAV_ITEMS = [
-  { label: "Home", href: "/", icon: Home },
-  { label: "Search", href: "/search", icon: Search },
-  { label: "Bookings", href: "/bookings", icon: CalendarDays },
-  { label: "Messages", href: "/messages", icon: MessageSquare, badge: "3" },
-  { label: "Wishlist", href: "/wishlist", icon: Heart },
-  { label: "Notifications", href: "/notifications", icon: Bell, badge: "2" },
-  {
-    label: "Host",
-    icon: Building2,
-    children: [
-      { label: "Dashboard", href: "/host" },
-      { label: "My Hotels", href: "/host/hotels" },
-      { label: "Bookings", href: "/host/bookings" },
-      { label: "Earnings", href: "/host/earnings" },
-      { label: "Payouts", href: "/host/payouts" },
-      { label: "Tools", href: "/host/tools" },
-      { label: "Verification", href: "/host/verification" },
-    ],
-  },
-  { label: "Profile", href: "/profile", icon: User },
-  { label: "Support", href: "/support", icon: LifeBuoy },
-];
-
-const ADMIN_NAV_ITEMS = [
-  {
-    label: "Admin",
-    icon: Building2,
-    children: [{ label: "Registered Hotels", href: "/admin/hotels" }],
-  },
-];
+import { useUIStore } from "@/store/uiStore";
+import {
+  getAllowedWorkspaces,
+  getWorkspaceHomePath,
+  getWorkspaceLabel,
+  isRouteActive,
+  NAV_BY_WORKSPACE,
+  resolveWorkspaceMode,
+  type WorkspaceMode,
+} from "@/lib/crmNavigation";
 
 export function AppSidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const { user, logout } = useAuthStore();
-  const isAdmin = user?.role === "admin";
+  const setWorkspacePreference = useUIStore(
+    (state) => state.setWorkspacePreference,
+  );
+  const role = user?.role;
+  const preferredWorkspace = useUIStore((state) =>
+    role ? state.workspacePreference[role] : undefined,
+  );
   const initials = user?.name
     ? user.name
         .split(" ")
@@ -87,76 +64,105 @@ export function AppSidebar() {
     : "?";
 
   const handleLogout = () => {
+    axiosInstance.post("/auth/logout").catch(() => {});
     logout();
     router.push("/login");
   };
 
-  const sidebarItems = [...NAV_ITEMS, ...(isAdmin ? ADMIN_NAV_ITEMS : [])];
+  const currentWorkspace = role
+    ? resolveWorkspaceMode(role, pathname, preferredWorkspace)
+    : undefined;
+
+  const allowedWorkspaces = role ? getAllowedWorkspaces(role) : [];
+  const sections = currentWorkspace ? NAV_BY_WORKSPACE[currentWorkspace] : [];
+
+  const profileHref =
+    currentWorkspace === "host" ? "/host/profile" : "/profile";
+
+  const handleWorkspaceChange = (workspace: WorkspaceMode) => {
+    if (!role) return;
+
+    setWorkspacePreference(role, workspace);
+    router.push(getWorkspaceHomePath(workspace));
+  };
 
   return (
     <Sidebar>
       <SidebarHeader className="border-b p-4">
-        <Link href="/" className="flex items-center gap-2">
-          <Image src="/icon.svg" alt="App logo" width={32} height={32} />
-          <span className="font-bold text-lg">FND OUT SPACE</span>
-        </Link>
+        <div className="space-y-3">
+          <Link href="/" className="flex items-center gap-2">
+            <Image src="/icon.svg" alt="App logo" width={32} height={32} />
+            <span className="font-bold text-lg">FND OUT SPACE</span>
+          </Link>
+
+          {role && allowedWorkspaces.length > 1 && currentWorkspace ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="h-8 w-full justify-start px-2 text-xs"
+                >
+                  {getWorkspaceLabel(currentWorkspace)}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-56">
+                <DropdownMenuLabel>Switch Workspace</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuRadioGroup
+                  value={currentWorkspace}
+                  onValueChange={(value) =>
+                    handleWorkspaceChange(value as WorkspaceMode)
+                  }
+                >
+                  {allowedWorkspaces.map((workspace) => (
+                    <DropdownMenuRadioItem key={workspace} value={workspace}>
+                      {getWorkspaceLabel(workspace)}
+                    </DropdownMenuRadioItem>
+                  ))}
+                </DropdownMenuRadioGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : null}
+        </div>
       </SidebarHeader>
 
       <SidebarContent>
-        <SidebarMenu>
-          {sidebarItems.map((item) => {
-            const isActive =
-              pathname === item.href || pathname.startsWith(item.href + "/");
-            const Icon = item.icon;
+        {sections.map((section) => (
+          <SidebarGroup key={section.label}>
+            <SidebarGroupLabel>{section.label}</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {section.items.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = isRouteActive(
+                    pathname,
+                    item.href,
+                    item.exact,
+                  );
 
-            if (item.children) {
-              return (
-                <SidebarMenuItem key={item.label}>
-                  <SidebarMenuButton asChild>
-                    <div className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-2 hover:bg-accent">
-                      <Icon className="h-4 w-4" />
-                      <span>{item.label}</span>
-                      <ChevronRight className="ml-auto h-4 w-4" />
-                    </div>
-                  </SidebarMenuButton>
-                  <SidebarMenuSub>
-                    {item.children.map((child) => {
-                      const childIsActive = pathname === child.href;
-                      return (
-                        <SidebarMenuSubItem key={child.label}>
-                          <SidebarMenuSubButton
-                            asChild
-                            isActive={childIsActive}
-                          >
-                            <Link href={child.href}>
-                              <span>{child.label}</span>
-                            </Link>
-                          </SidebarMenuSubButton>
-                        </SidebarMenuSubItem>
-                      );
-                    })}
-                  </SidebarMenuSub>
-                </SidebarMenuItem>
-              );
-            }
-
-            return (
-              <SidebarMenuItem key={item.label}>
-                <SidebarMenuButton asChild isActive={isActive}>
-                  <Link href={item.href!} className="flex items-center gap-2">
-                    <Icon className="h-4 w-4" />
-                    <span>{item.label}</span>
-                    {item.badge && (
-                      <Badge variant="secondary" className="ml-auto">
-                        {item.badge}
-                      </Badge>
-                    )}
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            );
-          })}
-        </SidebarMenu>
+                  return (
+                    <SidebarMenuItem key={`${section.label}-${item.href}`}>
+                      <SidebarMenuButton asChild isActive={isActive}>
+                        <Link
+                          href={item.href}
+                          className="flex items-center gap-2"
+                        >
+                          <Icon className="h-4 w-4" />
+                          <span>{item.label}</span>
+                          {item.badge && (
+                            <Badge variant="secondary" className="ml-auto">
+                              {item.badge}
+                            </Badge>
+                          )}
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  );
+                })}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        ))}
       </SidebarContent>
 
       <SidebarFooter className="border-t p-4">
@@ -183,7 +189,7 @@ export function AppSidebar() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuItem asChild>
-                <Link href="/profile">
+                <Link href={profileHref}>
                   <User className="mr-2 h-4 w-4" />
                   <span>Profile</span>
                 </Link>

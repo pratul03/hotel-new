@@ -12,6 +12,8 @@ export interface Booking {
   checkIn: string;
   checkOut: string;
   guestCount: number;
+  childCount?: number;
+  childAges?: number[];
   amount: number;
   status: BookingStatus;
   notes?: string;

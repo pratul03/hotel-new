@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { env } from "../config/environment";
 import { sessionService } from "../domains/auth/services/session.service";
+import { readAccessTokenFromRequest } from "../domains/auth/services/authCookies.service";
 
 export interface AuthenticatedRequest extends Request {
   userId?: string;
@@ -20,18 +21,22 @@ export const authenticate = (
 ) => {
   try {
     const authHeader = req.headers.authorization;
+    const cookieToken = readAccessTokenFromRequest(req);
+    const bearerToken =
+      authHeader && authHeader.startsWith("Bearer ")
+        ? authHeader.slice(7)
+        : undefined;
+    const token = bearerToken || cookieToken;
 
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    if (!token) {
       return res.status(401).json({
         success: false,
         error: {
           code: "UNAUTHORIZED",
-          message: "Missing or invalid authorization token",
+          message: "Missing or invalid authentication token",
         },
       });
     }
-
-    const token = authHeader.slice(7);
 
     const verifyAndAttach = async () => {
       const decoded = jwt.verify(token, env.JWT_SECRET) as {

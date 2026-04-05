@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton as UISkeleton } from "@/components/ui/skeleton";
 import { formatDate } from "@/lib/format";
 import {
   useCreateHotelIcalSource,
@@ -19,6 +20,7 @@ import {
   useImportHotelIcal,
   useSyncHotelIcalSource,
 } from "@/hooks/useHotels";
+import { Skeleton as BoneyardSkeleton } from "boneyard-js/react";
 
 export default function HostHotelIcalSyncPage() {
   const { id } = useParams<{ id: string }>();
@@ -152,11 +154,19 @@ export default function HostHotelIcalSyncPage() {
             <CardTitle>Saved Sources</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            {isLoading && (
-              <p className="text-sm text-muted-foreground">
-                Loading sources...
-              </p>
-            )}
+            {isLoading &&
+              Array.from({ length: 3 }).map((_, index) => (
+                <div key={index} className="rounded-md border p-3 space-y-3">
+                  <UISkeleton className="h-5 w-32" />
+                  <UISkeleton className="h-4 w-full" />
+                  <UISkeleton className="h-4 w-40" />
+                  <div className="flex gap-2">
+                    <UISkeleton className="h-8 w-20" />
+                    <UISkeleton className="h-8 w-16" />
+                    <UISkeleton className="h-8 w-20" />
+                  </div>
+                </div>
+              ))}
             {!isLoading && (sources?.length ?? 0) === 0 && (
               <p className="text-sm text-muted-foreground">
                 No iCal sources added yet.
@@ -209,18 +219,29 @@ export default function HostHotelIcalSyncPage() {
             <CardTitle>Manual iCal Import</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            <Textarea
-              value={icsContent}
-              onChange={(e) => setIcsContent(e.target.value)}
-              placeholder="Paste .ics content here"
-              rows={8}
-            />
-            <Button
-              onClick={handleManualImport}
-              disabled={importIcal.isPending}
+            <BoneyardSkeleton
+              loading={isLoading}
+              name="host-ical-manual-import"
+              fallback={
+                <div className="space-y-3">
+                  <UISkeleton className="h-36 w-full" />
+                  <UISkeleton className="h-10 w-44" />
+                </div>
+              }
             >
-              Import iCal Content
-            </Button>
+              <Textarea
+                value={icsContent}
+                onChange={(e) => setIcsContent(e.target.value)}
+                placeholder="Paste .ics content here"
+                rows={8}
+              />
+              <Button
+                onClick={handleManualImport}
+                disabled={importIcal.isPending}
+              >
+                Import iCal Content
+              </Button>
+            </BoneyardSkeleton>
           </CardContent>
         </Card>
       </div>

@@ -28,3 +28,73 @@
 2026-04-01T21:01:22: > tsx watch src/index.ts
 2026-04-01T21:01:22: 
 2026-04-02T01:13:20:  ELIFECYCLE  Command failed with exit code 2.
+2026-04-05T16:10:11: 
+2026-04-05T16:10:11: > airbnb-notification-service@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/services/notification
+2026-04-05T16:10:11: > tsx watch src/index.ts
+2026-04-05T16:10:11: 
+2026-04-05T16:18:43:  ELIFECYCLE  Command failed with exit code 2.
+2026-04-05T16:23:19: 
+2026-04-05T16:23:19: > airbnb-notification-service@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/services/notification
+2026-04-05T16:23:19: > tsx watch src/index.ts
+2026-04-05T16:23:19: 
+2026-04-05T16:24:57:  ELIFECYCLE  Command failed with exit code 2.
+2026-04-05T16:30:07: 
+2026-04-05T16:30:07: > airbnb-notification-service@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/services/notification
+2026-04-05T16:30:07: > tsx watch src/index.ts
+2026-04-05T16:30:07: 
+2026-04-05T16:33:41:  ELIFECYCLE  Command failed with exit code 2.
+2026-04-05T16:33:52: 
+2026-04-05T16:33:52: > airbnb-notification-service@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/services/notification
+2026-04-05T16:33:52: > tsx watch src/index.ts
+2026-04-05T16:33:52: 
+2026-04-05T16:44:26:  ELIFECYCLE  Command failed with exit code 2.
+2026-04-05T16:44:27: 
+2026-04-05T16:44:27: > airbnb-notification-service@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/services/notification
+2026-04-05T16:44:27: > tsx watch src/index.ts
+2026-04-05T16:44:27: 
+2026-04-05T16:48:07:  ELIFECYCLE  Command failed with exit code 2.
+2026-04-05T16:48:07: 
+2026-04-05T16:48:07: > airbnb-notification-service@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/services/notification
+2026-04-05T16:48:07: > tsx watch src/index.ts
+2026-04-05T16:48:07: 
+2026-04-05T16:48:09: 🚀 Starting Notification Service...
+2026-04-05T16:48:09: 📚 Connecting to PostgreSQL...
+2026-04-05T16:48:09: ✅ PostgreSQL connected
+2026-04-05T16:48:09: 📧 Verifying Gmail SMTP...
+2026-04-05T16:52:05:  ELIFECYCLE  Command failed with exit code 2.
+2026-04-05T16:52:25: 
+2026-04-05T16:52:25: > airbnb-notification-service@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/services/notification
+2026-04-05T16:52:25: > tsx watch src/index.ts
+2026-04-05T16:52:25: 
+2026-04-05T16:52:26: 🚀 Starting Notification Service...
+2026-04-05T16:52:26: 📚 Connecting to PostgreSQL...
+2026-04-05T16:52:26: ✅ PostgreSQL connected
+2026-04-05T16:52:26: 📧 Verifying Gmail SMTP...
+2026-04-05T17:09:09:  ELIFECYCLE  Command failed with exit code 2.
+2026-04-05T17:09:16: 
+2026-04-05T17:09:16: > airbnb-notification-service@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/services/notification
+2026-04-05T17:09:16: > tsx watch src/index.ts
+2026-04-05T17:09:16: 
+2026-04-05T17:09:17: 🚀 Starting Notification Service...
+2026-04-05T17:09:17: 📚 Connecting to PostgreSQL...
+2026-04-05T17:09:17: ✅ PostgreSQL connected
+2026-04-05T17:09:17: 📧 Verifying Gmail SMTP...
+2026-04-05T19:57:21:  ELIFECYCLE  Command failed with exit code 2.
+2026-04-05T19:57:28: 
+2026-04-05T19:57:28: > airbnb-notification-service@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/services/notification
+2026-04-05T19:57:28: > tsx watch src/index.ts
+2026-04-05T19:57:28: 
+2026-04-05T19:57:29: 🚀 Starting Notification Service...
+2026-04-05T19:57:29: 📚 Connecting to PostgreSQL...
+2026-04-05T19:57:29: ✅ PostgreSQL connected
+2026-04-05T19:57:29: 📧 Verifying Gmail SMTP...
+2026-04-05T23:15:14:  ELIFECYCLE  Command failed with exit code 2.
+2026-04-05T23:15:19: 
+2026-04-05T23:15:19: > airbnb-notification-service@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/services/notification
+2026-04-05T23:15:19: > tsx watch src/index.ts
+2026-04-05T23:15:19: 
+2026-04-05T23:15:20: 🚀 Starting Notification Service...
+2026-04-05T23:15:20: 📚 Connecting to PostgreSQL...
+2026-04-05T23:15:20: ✅ PostgreSQL connected
+2026-04-05T23:15:20: 📧 Verifying Gmail SMTP...
+2026-04-06T00:38:26:  ELIFECYCLE  Command failed with exit code 2.

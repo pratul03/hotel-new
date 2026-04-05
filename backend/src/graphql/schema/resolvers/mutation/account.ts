@@ -7,13 +7,46 @@ import {
 import { authService } from "../../../../domains/auth/services/auth.service";
 import {
   addDocumentSchema,
+  adminUpdateUserSchema,
   updateProfileSchema as userUpdateProfileSchema,
 } from "../../../../domains/users/schemas/users.schema";
 import { userService } from "../../../../domains/users/services/users.service";
-import { GraphQLContext, requireAuth } from "../../../context";
+import { GraphQLContext, requireAuth, requireRole } from "../../../context";
+import {
+  clearAuthCookies,
+  readRefreshTokenFromRequest,
+  setAuthCookies,
+} from "../../../../domains/auth/services/authCookies.service";
+import { verifyRefreshToken } from "../../../../utils/jwt";
+import { GraphQLError } from "graphql";
 
 export const accountMutationResolvers = {
-  logout: async () => ({ success: true, message: "Logout successful" }),
+  logout: async (
+    _parent: unknown,
+    _args: unknown,
+    context: GraphQLContext,
+  ) => {
+    const refreshToken = readRefreshTokenFromRequest(context.req);
+
+    try {
+      if (context.authUser?.sessionId) {
+        await authService.revokeSession(
+          context.authUser.userId,
+          context.authUser.sessionId,
+        );
+      } else if (refreshToken) {
+        const decoded = verifyRefreshToken(refreshToken);
+        if (decoded.sid) {
+          await authService.revokeSession(decoded.userId, decoded.sid);
+        }
+      }
+    } catch {
+      // Best-effort revoke; cookie clear is still required.
+    }
+
+    clearAuthCookies(context.res);
+    return { success: true, message: "Logout successful" };
+  },
 
   updateMyProfile: async (
     _parent: unknown,
@@ -23,6 +56,16 @@ export const accountMutationResolvers = {
     const auth = requireAuth(context);
     const parsed = authUpdateProfileSchema.parse(args.input);
     return authService.updateProfile(auth.userId, parsed);
+  },
+
+  adminUpdateUser: async (
+    _parent: unknown,
+    args: { userId: string; input: unknown },
+    context: GraphQLContext,
+  ) => {
+    const auth = requireRole(context, ["admin"]);
+    const parsed = adminUpdateUserSchema.parse(args.input);
+    return userService.updateUserByAdmin(auth.userId, args.userId, parsed);
   },
 
   verifyEmail: async (
@@ -39,8 +82,24 @@ export const accountMutationResolvers = {
     _args: unknown,
     context: GraphQLContext,
   ) => {
-    const auth = requireAuth(context);
-    return authService.refreshToken(auth.userId);
+    const refreshToken = readRefreshTokenFromRequest(context.req);
+
+    if (!refreshToken) {
+      throw new GraphQLError("Refresh token is missing", {
+        extensions: {
+          code: "UNAUTHORIZED",
+          http: { status: 401 },
+        },
+      });
+    }
+
+    const result = await authService.refreshSessionFromToken(refreshToken);
+    setAuthCookies(context.res, {
+      accessToken: result.accessToken,
+      refreshToken: result.refreshToken,
+    });
+
+    return { token: result.token };
   },
 
   forgotPassword: async (_parent: unknown, args: { email: string }) => {

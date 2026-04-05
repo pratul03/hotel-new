@@ -1,45 +1,55 @@
-'use client'
+"use client";
 
-import { ControllerRenderProps, FieldValues, FieldPath } from 'react-hook-form'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
+import { ControllerRenderProps, FieldValues, FieldPath } from "react-hook-form";
+import { Input } from "@/components/ui/input";
+import { NumberInput } from "@/components/ui/number-input";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Button } from '@/components/ui/button'
-import { Calendar } from 'lucide-react'
-import { FieldConfig } from './types'
-import { useCallback } from 'react'
+} from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "lucide-react";
+import { FieldConfig } from "./types";
+import { useCallback } from "react";
 
 interface FormFieldComponentProps<
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > {
-  field: ControllerRenderProps<TFieldValues, TName>
-  fieldConfig: FieldConfig
+  field: ControllerRenderProps<TFieldValues, TName>;
+  fieldConfig: FieldConfig;
 }
 
 export function FormFieldComponent<
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({ field, fieldConfig }: FormFieldComponentProps<TFieldValues, TName>) {
-  const { type, placeholder, options, disabled } = fieldConfig
+  const { type, placeholder, options, disabled } = fieldConfig;
+
+  const getNumericValue = (input: unknown): number | undefined => {
+    if (input === "" || input === null || input === undefined) {
+      return undefined;
+    }
+
+    const parsed = Number(input);
+    return Number.isFinite(parsed) ? parsed : undefined;
+  };
 
   const handleFileChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0]
-      field.onChange(file)
+      const file = event.target.files?.[0];
+      field.onChange(file);
     },
-    [field]
-  )
+    [field],
+  );
 
   switch (type) {
-    case 'email':
+    case "email":
       return (
         <Input
           {...field}
@@ -47,9 +57,9 @@ export function FormFieldComponent<
           placeholder={placeholder}
           disabled={disabled}
         />
-      )
+      );
 
-    case 'password':
+    case "password":
       return (
         <Input
           {...field}
@@ -57,19 +67,22 @@ export function FormFieldComponent<
           placeholder={placeholder}
           disabled={disabled}
         />
-      )
+      );
 
-    case 'number':
+    case "number":
       return (
-        <Input
-          {...field}
-          type="number"
+        <NumberInput
+          name={field.name}
+          ref={field.ref}
+          value={getNumericValue(field.value)}
+          onValueChange={field.onChange}
+          onBlur={field.onBlur}
           placeholder={placeholder}
           disabled={disabled}
         />
-      )
+      );
 
-    case 'textarea':
+    case "textarea":
       return (
         <Textarea
           {...field}
@@ -77,11 +90,15 @@ export function FormFieldComponent<
           disabled={disabled}
           rows={4}
         />
-      )
+      );
 
-    case 'select':
+    case "select":
       return (
-        <Select value={field.value || ''} onValueChange={field.onChange} disabled={disabled}>
+        <Select
+          value={field.value || ""}
+          onValueChange={field.onChange}
+          disabled={disabled}
+        >
           <SelectTrigger>
             <SelectValue placeholder={placeholder} />
           </SelectTrigger>
@@ -93,9 +110,9 @@ export function FormFieldComponent<
             ))}
           </SelectContent>
         </Select>
-      )
+      );
 
-    case 'checkbox':
+    case "checkbox":
       return (
         <div className="flex items-center space-x-2">
           <Checkbox
@@ -104,9 +121,9 @@ export function FormFieldComponent<
             disabled={disabled}
           />
         </div>
-      )
+      );
 
-    case 'file':
+    case "file":
       return (
         <Input
           type="file"
@@ -114,18 +131,12 @@ export function FormFieldComponent<
           disabled={disabled}
           accept="image/*"
         />
-      )
+      );
 
-    case 'date':
-      return (
-        <Input
-          {...field}
-          type="date"
-          disabled={disabled}
-        />
-      )
+    case "date":
+      return <Input {...field} type="date" disabled={disabled} />;
 
-    case 'text':
+    case "text":
     default:
       return (
         <Input
@@ -134,6 +145,6 @@ export function FormFieldComponent<
           placeholder={placeholder}
           disabled={disabled}
         />
-      )
+      );
   }
 }

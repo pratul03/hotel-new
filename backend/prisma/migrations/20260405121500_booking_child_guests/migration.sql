@@ -1,0 +1,4 @@
+-- Add child guest details to bookings
+ALTER TABLE "Booking"
+ADD COLUMN IF NOT EXISTS "childCount" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN IF NOT EXISTS "childAges" INTEGER[] NOT NULL DEFAULT ARRAY[]::INTEGER[];

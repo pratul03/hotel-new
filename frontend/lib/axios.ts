@@ -225,6 +225,30 @@ const buildAdapterConfig = (
     };
   }
 
+  if (method === "post" && path === "/auth/refresh") {
+    return {
+      operationName: "refreshToken",
+      query: `mutation RefreshToken { refreshToken { token } }`,
+      transform: (result) => ({
+        success: true,
+        data: result,
+        statusCode: 200,
+      }),
+    };
+  }
+
+  if (method === "get" && path === "/auth/me") {
+    return {
+      operationName: "me",
+      query: `query Me { me { id email name avatar role verified superhost responseRate createdAt } }`,
+      transform: (result) => ({
+        success: true,
+        data: result,
+        statusCode: 200,
+      }),
+    };
+  }
+
   if (method === "post" && path === "/auth/forgot-password") {
     return {
       operationName: "forgotPassword",
@@ -626,7 +650,7 @@ const buildAdapterConfig = (
   if (method === "get" && path === "/bookings") {
     return {
       operationName: "myBookings",
-      query: `query MyBookings { myBookings { id userId roomId checkIn checkOut guestCount notes amount status expiresAt createdAt updatedAt room { id roomType maxGuests basePrice amenities images isAvailable hotel { id name location } } history { id bookingId status updatedBy notes changedAt } } }`,
+      query: `query MyBookings { myBookings { id userId roomId checkIn checkOut guestCount childCount childAges notes amount status expiresAt createdAt updatedAt room { id roomType maxGuests basePrice amenities images isAvailable hotel { id name location } } history { id bookingId status updatedBy notes changedAt } } }`,
       transform: (result) => asPagination(result ?? [], page, limit),
     };
   }
@@ -634,7 +658,7 @@ const buildAdapterConfig = (
   if (method === "get" && path === "/bookings/host") {
     return {
       operationName: "hostBookings",
-      query: `query HostBookings { hostBookings { id userId roomId checkIn checkOut guestCount notes amount status expiresAt createdAt updatedAt room { id roomType maxGuests basePrice amenities images isAvailable hotel { id name location } } history { id bookingId status updatedBy notes changedAt } } }`,
+      query: `query HostBookings { hostBookings { id userId roomId checkIn checkOut guestCount childCount childAges notes amount status expiresAt createdAt updatedAt room { id roomType maxGuests basePrice amenities images isAvailable hotel { id name location } } history { id bookingId status updatedBy notes changedAt } } }`,
       transform: (result) => asPagination(result ?? [], page, limit),
     };
   }
@@ -655,7 +679,7 @@ const buildAdapterConfig = (
   if (method === "get" && bookingByIdMatch) {
     return {
       operationName: "bookingById",
-      query: `query BookingById($bookingId: ID!) { bookingById(bookingId: $bookingId) { id userId roomId checkIn checkOut guestCount notes amount status expiresAt createdAt updatedAt room { id roomType maxGuests basePrice amenities images isAvailable hotel { id name location } } history { id bookingId status updatedBy notes changedAt } } }`,
+      query: `query BookingById($bookingId: ID!) { bookingById(bookingId: $bookingId) { id userId roomId checkIn checkOut guestCount childCount childAges notes amount status expiresAt createdAt updatedAt room { id roomType maxGuests basePrice amenities images isAvailable hotel { id name location } } history { id bookingId status updatedBy notes changedAt } } }`,
       variables: { bookingId: bookingByIdMatch[1] },
       transform: (result) => result,
     };
@@ -664,13 +688,17 @@ const buildAdapterConfig = (
   if (method === "post" && path === "/bookings") {
     return {
       operationName: "createBooking",
-      query: `mutation CreateBooking($input: CreateBookingInput!) { createBooking(input: $input) { id userId roomId checkIn checkOut guestCount notes amount status expiresAt createdAt updatedAt } }`,
+      query: `mutation CreateBooking($input: CreateBookingInput!) { createBooking(input: $input) { id userId roomId checkIn checkOut guestCount childCount childAges notes amount status expiresAt createdAt updatedAt } }`,
       variables: {
         input: {
           roomId: body.roomId,
           checkIn: toIsoDateTime(body.checkIn),
           checkOut: toIsoDateTime(body.checkOut),
           guestCount: Number(body.guestCount || 1),
+          childCount: Number(body.childCount || 0),
+          childAges: Array.isArray(body.childAges)
+            ? body.childAges.map((age: unknown) => Number(age)).filter(Number.isFinite)
+            : undefined,
           notes: body.notes,
         },
       },
@@ -724,11 +752,15 @@ const buildAdapterConfig = (
   if (method === "patch" && hostAlterMatch) {
     return {
       operationName: "hostAlterBooking",
-      query: `mutation HostAlterBooking($bookingId: ID!, $input: UpdateBookingInput!) { hostAlterBooking(bookingId: $bookingId, input: $input) { id status checkIn checkOut guestCount notes updatedAt } }`,
+      query: `mutation HostAlterBooking($bookingId: ID!, $input: UpdateBookingInput!) { hostAlterBooking(bookingId: $bookingId, input: $input) { id status checkIn checkOut guestCount childCount childAges notes updatedAt } }`,
       variables: {
         bookingId: hostAlterMatch[1],
         input: {
           guestCount: body.guestCount,
+          childCount: body.childCount,
+          childAges: Array.isArray(body.childAges)
+            ? body.childAges.map((age: unknown) => Number(age)).filter(Number.isFinite)
+            : undefined,
           checkIn: toIsoDateTime(body.checkIn),
           checkOut: toIsoDateTime(body.checkOut),
           notes: body.notes,
@@ -1142,6 +1174,20 @@ const buildAdapterConfig = (
             asFiniteNumber(params.radiusKm),
           checkIn: toIsoDateTime(params.checkIn),
           checkOut: toIsoDateTime(params.checkOut),
+          adults:
+            asFiniteNumber(params.adults),
+          childCount:
+            asFiniteNumber(params.childCount),
+          childAges: Array.isArray(params.childAges)
+            ? params.childAges
+                .map((age: unknown) => Number(age))
+                .filter((age: number) => Number.isFinite(age))
+            : typeof params.childAges === "string"
+              ? params.childAges
+                  .split(",")
+                  .map((age: string) => Number(age))
+                  .filter((age: number) => Number.isFinite(age))
+              : undefined,
           guests:
             asFiniteNumber(params.guests),
           minPrice:
@@ -1497,18 +1543,49 @@ const buildAdapterConfig = (
 const axiosInstance = axios.create({
   baseURL: API_URL,
   timeout: 15000,
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
+const refreshClient = axios.create({
+  baseURL: API_URL,
+  timeout: 15000,
+  withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+let refreshPromise: Promise<void> | null = null;
+
+const refreshAccessToken = async () => {
+  if (!refreshPromise) {
+    refreshPromise = refreshClient
+      .post("/graphql", {
+        operationName: "RefreshToken",
+        query: `mutation RefreshToken { refreshToken { token } }`,
+      })
+      .then(() => undefined)
+      .finally(() => {
+        refreshPromise = null;
+      });
+  }
+
+  return refreshPromise;
+};
+
+const NON_REFRESHABLE_OPERATIONS = new Set([
+  "login",
+  "register",
+  "refreshToken",
+  "forgotPassword",
+  "resetPassword",
+]);
+
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = useAuthStore.getState().token;
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-
     const method = String(config.method || "get").toLowerCase();
     const path = toPath(config.url);
     const params = (config.params || {}) as Record<string, any>;
@@ -1580,13 +1657,38 @@ axiosInstance.interceptors.response.use(
     response.data = transform(result);
     return response;
   },
-  (error) => {
-    if (error.response?.status === 401) {
-      useAuthStore.getState().logout();
-      if (typeof window !== "undefined") {
-        window.location.href = "/login";
+  async (error) => {
+    const responseStatus = error?.response?.status;
+    const originalRequest = error?.config as
+      | (Record<string, any> & { __authRetry?: boolean })
+      | undefined;
+    const operationName = originalRequest?.__gqlOperationName as
+      | string
+      | undefined;
+
+    const shouldSkipRefresh =
+      !operationName || NON_REFRESHABLE_OPERATIONS.has(operationName);
+
+    if (
+      responseStatus === 401 &&
+      originalRequest &&
+      !originalRequest.__authRetry &&
+      !shouldSkipRefresh
+    ) {
+      originalRequest.__authRetry = true;
+
+      try {
+        await refreshAccessToken();
+        return axiosInstance(originalRequest as any);
+      } catch {
+        useAuthStore.getState().logout();
       }
     }
+
+    if (responseStatus === 401 && shouldSkipRefresh) {
+      useAuthStore.getState().logout();
+    }
+
     return Promise.reject(error);
   },
 );

@@ -1611,3 +1611,327 @@
 2026-04-02T01:13:19:     at disconnectRedis (/Users/pratulmakar/Developer/hotel-new/backend/src/config/redis.ts:43:23)
 2026-04-02T01:13:19:     at gracefulShutdown (/Users/pratulmakar/Developer/hotel-new/backend/src/index.ts:76:15)
 2026-04-02T01:13:19:     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+2026-04-05T16:10:13: ❌ Redis client error: AggregateError [ECONNREFUSED]: 
+2026-04-05T16:10:13:     at internalConnectMultiple (node:net:1193:18)
+2026-04-05T16:10:13:     at afterConnectMultiple (node:net:1783:7) {
+2026-04-05T16:10:13:   code: 'ECONNREFUSED',
+2026-04-05T16:10:13:   [errors]: [
+2026-04-05T16:10:13:     Error: connect ECONNREFUSED ::1:6379
+2026-04-05T16:10:13:         at createConnectionError (node:net:1746:14)
+2026-04-05T16:10:13:         at afterConnectMultiple (node:net:1776:16) {
+2026-04-05T16:10:13:       errno: -61,
+2026-04-05T16:10:13:       code: 'ECONNREFUSED',
+2026-04-05T16:10:13:       syscall: 'connect',
+2026-04-05T16:10:13:       address: '::1',
+2026-04-05T16:10:13:       port: 6379
+2026-04-05T16:10:13:     },
+2026-04-05T16:10:13:     Error: connect ECONNREFUSED 127.0.0.1:6379
+2026-04-05T16:10:13:         at createConnectionError (node:net:1746:14)
+2026-04-05T16:10:13:         at afterConnectMultiple (node:net:1776:16) {
+2026-04-05T16:10:13:       errno: -61,
+2026-04-05T16:10:13:       code: 'ECONNREFUSED',
+2026-04-05T16:10:13:       syscall: 'connect',
+2026-04-05T16:10:13:       address: '127.0.0.1',
+2026-04-05T16:10:13:       port: 6379
+2026-04-05T16:10:13:     }
+2026-04-05T16:10:13:   ]
+2026-04-05T16:10:13: }
+2026-04-05T16:10:13: ❌ Redis client error: AggregateError [ECONNREFUSED]: 
+2026-04-05T16:10:13:     at internalConnectMultiple (node:net:1193:18)
+2026-04-05T16:10:13:     at afterConnectMultiple (node:net:1783:7) {
+2026-04-05T16:10:13:   code: 'ECONNREFUSED',
+2026-04-05T16:10:13:   [errors]: [
+2026-04-05T16:10:13:     Error: connect ECONNREFUSED ::1:6379
+2026-04-05T16:10:13:         at createConnectionError (node:net:1746:14)
+2026-04-05T16:10:13:         at afterConnectMultiple (node:net:1776:16) {
+2026-04-05T16:10:13:       errno: -61,
+2026-04-05T16:10:13:       code: 'ECONNREFUSED',
+2026-04-05T16:10:13:       syscall: 'connect',
+2026-04-05T16:10:13:       address: '::1',
+2026-04-05T16:10:13:       port: 6379
+2026-04-05T16:10:13:     },
+2026-04-05T16:10:13:     Error: connect ECONNREFUSED 127.0.0.1:6379
+2026-04-05T16:10:13:         at createConnectionError (node:net:1746:14)
+2026-04-05T16:10:13:         at afterConnectMultiple (node:net:1776:16) {
+2026-04-05T16:10:13:       errno: -61,
+2026-04-05T16:10:13:       code: 'ECONNREFUSED',
+2026-04-05T16:10:13:       syscall: 'connect',
+2026-04-05T16:10:13:       address: '127.0.0.1',
+2026-04-05T16:10:13:       port: 6379
+2026-04-05T16:10:13:     }
+2026-04-05T16:10:13:   ]
+2026-04-05T16:10:13: }
+2026-04-05T16:10:13: ❌ Redis client error: AggregateError [ECONNREFUSED]: 
+2026-04-05T16:10:13:     at internalConnectMultiple (node:net:1193:18)
+2026-04-05T16:10:13:     at afterConnectMultiple (node:net:1783:7) {
+2026-04-05T16:10:13:   code: 'ECONNREFUSED',
+2026-04-05T16:10:13:   [errors]: [
+2026-04-05T16:10:13:     Error: connect ECONNREFUSED ::1:6379
+2026-04-05T16:10:13:         at createConnectionError (node:net:1746:14)
+2026-04-05T16:10:13:         at afterConnectMultiple (node:net:1776:16) {
+2026-04-05T16:10:13:       errno: -61,
+2026-04-05T16:10:13:       code: 'ECONNREFUSED',
+2026-04-05T16:10:13:       syscall: 'connect',
+2026-04-05T16:10:13:       address: '::1',
+2026-04-05T16:10:13:       port: 6379
+2026-04-05T16:10:13:     },
+2026-04-05T16:10:13:     Error: connect ECONNREFUSED 127.0.0.1:6379
+2026-04-05T16:10:13:         at createConnectionError (node:net:1746:14)
+2026-04-05T16:10:13:         at afterConnectMultiple (node:net:1776:16) {
+2026-04-05T16:10:13:       errno: -61,
+2026-04-05T16:10:13:       code: 'ECONNREFUSED',
+2026-04-05T16:10:13:       syscall: 'connect',
+2026-04-05T16:10:13:       address: '127.0.0.1',
+2026-04-05T16:10:13:       port: 6379
+2026-04-05T16:10:13:     }
+2026-04-05T16:10:13:   ]
+2026-04-05T16:10:13: }
+2026-04-05T16:10:13: ❌ Redis client error: AggregateError [ECONNREFUSED]: 
+2026-04-05T16:10:13:     at internalConnectMultiple (node:net:1193:18)
+2026-04-05T16:10:13:     at afterConnectMultiple (node:net:1783:7) {
+2026-04-05T16:10:13:   code: 'ECONNREFUSED',
+2026-04-05T16:10:13:   [errors]: [
+2026-04-05T16:10:13:     Error: connect ECONNREFUSED ::1:6379
+2026-04-05T16:10:13:         at createConnectionError (node:net:1746:14)
+2026-04-05T16:10:13:         at afterConnectMultiple (node:net:1776:16) {
+2026-04-05T16:10:13:       errno: -61,
+2026-04-05T16:10:13:       code: 'ECONNREFUSED',
+2026-04-05T16:10:13:       syscall: 'connect',
+2026-04-05T16:10:13:       address: '::1',
+2026-04-05T16:10:13:       port: 6379
+2026-04-05T16:10:13:     },
+2026-04-05T16:10:13:     Error: connect ECONNREFUSED 127.0.0.1:6379
+2026-04-05T16:10:13:         at createConnectionError (node:net:1746:14)
+2026-04-05T16:10:13:         at afterConnectMultiple (node:net:1776:16) {
+2026-04-05T16:10:13:       errno: -61,
+2026-04-05T16:10:13:       code: 'ECONNREFUSED',
+2026-04-05T16:10:13:       syscall: 'connect',
+2026-04-05T16:10:13:       address: '127.0.0.1',
+2026-04-05T16:10:13:       port: 6379
+2026-04-05T16:10:13:     }
+2026-04-05T16:10:13:   ]
+2026-04-05T16:10:13: }
+2026-04-05T16:10:13: ❌ Redis client error: AggregateError [ECONNREFUSED]: 
+2026-04-05T16:10:13:     at internalConnectMultiple (node:net:1193:18)
+2026-04-05T16:10:13:     at afterConnectMultiple (node:net:1783:7) {
+2026-04-05T16:10:13:   code: 'ECONNREFUSED',
+2026-04-05T16:10:13:   [errors]: [
+2026-04-05T16:10:13:     Error: connect ECONNREFUSED ::1:6379
+2026-04-05T16:10:13:         at createConnectionError (node:net:1746:14)
+2026-04-05T16:10:13:         at afterConnectMultiple (node:net:1776:16) {
+2026-04-05T16:10:13:       errno: -61,
+2026-04-05T16:10:13:       code: 'ECONNREFUSED',
+2026-04-05T16:10:13:       syscall: 'connect',
+2026-04-05T16:10:13:       address: '::1',
+2026-04-05T16:10:13:       port: 6379
+2026-04-05T16:10:13:     },
+2026-04-05T16:10:13:     Error: connect ECONNREFUSED 127.0.0.1:6379
+2026-04-05T16:10:13:         at createConnectionError (node:net:1746:14)
+2026-04-05T16:10:13:         at afterConnectMultiple (node:net:1776:16) {
+2026-04-05T16:10:13:       errno: -61,
+2026-04-05T16:10:13:       code: 'ECONNREFUSED',
+2026-04-05T16:10:13:       syscall: 'connect',
+2026-04-05T16:10:13:       address: '127.0.0.1',
+2026-04-05T16:10:13:       port: 6379
+2026-04-05T16:10:13:     }
+2026-04-05T16:10:13:   ]
+2026-04-05T16:10:13: }
+2026-04-05T16:10:13: ❌ Redis client error: AggregateError [ECONNREFUSED]: 
+2026-04-05T16:10:13:     at internalConnectMultiple (node:net:1193:18)
+2026-04-05T16:10:13:     at afterConnectMultiple (node:net:1783:7) {
+2026-04-05T16:10:13:   code: 'ECONNREFUSED',
+2026-04-05T16:10:13:   [errors]: [
+2026-04-05T16:10:13:     Error: connect ECONNREFUSED ::1:6379
+2026-04-05T16:10:13:         at createConnectionError (node:net:1746:14)
+2026-04-05T16:10:13:         at afterConnectMultiple (node:net:1776:16) {
+2026-04-05T16:10:13:       errno: -61,
+2026-04-05T16:10:13:       code: 'ECONNREFUSED',
+2026-04-05T16:10:13:       syscall: 'connect',
+2026-04-05T16:10:13:       address: '::1',
+2026-04-05T16:10:13:       port: 6379
+2026-04-05T16:10:13:     },
+2026-04-05T16:10:13:     Error: connect ECONNREFUSED 127.0.0.1:6379
+2026-04-05T16:10:13:         at createConnectionError (node:net:1746:14)
+2026-04-05T16:10:13:         at afterConnectMultiple (node:net:1776:16) {
+2026-04-05T16:10:13:       errno: -61,
+2026-04-05T16:10:13:       code: 'ECONNREFUSED',
+2026-04-05T16:10:13:       syscall: 'connect',
+2026-04-05T16:10:13:       address: '127.0.0.1',
+2026-04-05T16:10:13:       port: 6379
+2026-04-05T16:10:13:     }
+2026-04-05T16:10:13:   ]
+2026-04-05T16:10:13: }
+2026-04-05T16:10:13: ❌ Redis client error: AggregateError [ECONNREFUSED]: 
+2026-04-05T16:10:13:     at internalConnectMultiple (node:net:1193:18)
+2026-04-05T16:10:13:     at afterConnectMultiple (node:net:1783:7) {
+2026-04-05T16:10:13:   code: 'ECONNREFUSED',
+2026-04-05T16:10:13:   [errors]: [
+2026-04-05T16:10:13:     Error: connect ECONNREFUSED ::1:6379
+2026-04-05T16:10:13:         at createConnectionError (node:net:1746:14)
+2026-04-05T16:10:13:         at afterConnectMultiple (node:net:1776:16) {
+2026-04-05T16:10:13:       errno: -61,
+2026-04-05T16:10:13:       code: 'ECONNREFUSED',
+2026-04-05T16:10:13:       syscall: 'connect',
+2026-04-05T16:10:13:       address: '::1',
+2026-04-05T16:10:13:       port: 6379
+2026-04-05T16:10:13:     },
+2026-04-05T16:10:13:     Error: connect ECONNREFUSED 127.0.0.1:6379
+2026-04-05T16:10:13:         at createConnectionError (node:net:1746:14)
+2026-04-05T16:10:13:         at afterConnectMultiple (node:net:1776:16) {
+2026-04-05T16:10:13:       errno: -61,
+2026-04-05T16:10:13:       code: 'ECONNREFUSED',
+2026-04-05T16:10:13:       syscall: 'connect',
+2026-04-05T16:10:13:       address: '127.0.0.1',
+2026-04-05T16:10:13:       port: 6379
+2026-04-05T16:10:13:     }
+2026-04-05T16:10:13:   ]
+2026-04-05T16:10:13: }
+2026-04-05T16:10:14: ❌ Redis client error: AggregateError [ECONNREFUSED]: 
+2026-04-05T16:10:14:     at internalConnectMultiple (node:net:1193:18)
+2026-04-05T16:10:14:     at afterConnectMultiple (node:net:1783:7) {
+2026-04-05T16:10:14:   code: 'ECONNREFUSED',
+2026-04-05T16:10:14:   [errors]: [
+2026-04-05T16:10:14:     Error: connect ECONNREFUSED ::1:6379
+2026-04-05T16:10:14:         at createConnectionError (node:net:1746:14)
+2026-04-05T16:10:14:         at afterConnectMultiple (node:net:1776:16) {
+2026-04-05T16:10:14:       errno: -61,
+2026-04-05T16:10:14:       code: 'ECONNREFUSED',
+2026-04-05T16:10:14:       syscall: 'connect',
+2026-04-05T16:10:14:       address: '::1',
+2026-04-05T16:10:14:       port: 6379
+2026-04-05T16:10:14:     },
+2026-04-05T16:10:14:     Error: connect ECONNREFUSED 127.0.0.1:6379
+2026-04-05T16:10:14:         at createConnectionError (node:net:1746:14)
+2026-04-05T16:10:14:         at afterConnectMultiple (node:net:1776:16) {
+2026-04-05T16:10:14:       errno: -61,
+2026-04-05T16:10:14:       code: 'ECONNREFUSED',
+2026-04-05T16:10:14:       syscall: 'connect',
+2026-04-05T16:10:14:       address: '127.0.0.1',
+2026-04-05T16:10:14:       port: 6379
+2026-04-05T16:10:14:     }
+2026-04-05T16:10:14:   ]
+2026-04-05T16:10:14: }
+2026-04-05T16:10:14: ❌ Redis client error: AggregateError [ECONNREFUSED]: 
+2026-04-05T16:10:14:     at internalConnectMultiple (node:net:1193:18)
+2026-04-05T16:10:14:     at afterConnectMultiple (node:net:1783:7) {
+2026-04-05T16:10:14:   code: 'ECONNREFUSED',
+2026-04-05T16:10:14:   [errors]: [
+2026-04-05T16:10:14:     Error: connect ECONNREFUSED ::1:6379
+2026-04-05T16:10:14:         at createConnectionError (node:net:1746:14)
+2026-04-05T16:10:14:         at afterConnectMultiple (node:net:1776:16) {
+2026-04-05T16:10:14:       errno: -61,
+2026-04-05T16:10:14:       code: 'ECONNREFUSED',
+2026-04-05T16:10:14:       syscall: 'connect',
+2026-04-05T16:10:14:       address: '::1',
+2026-04-05T16:10:14:       port: 6379
+2026-04-05T16:10:14:     },
+2026-04-05T16:10:14:     Error: connect ECONNREFUSED 127.0.0.1:6379
+2026-04-05T16:10:14:         at createConnectionError (node:net:1746:14)
+2026-04-05T16:10:14:         at afterConnectMultiple (node:net:1776:16) {
+2026-04-05T16:10:14:       errno: -61,
+2026-04-05T16:10:14:       code: 'ECONNREFUSED',
+2026-04-05T16:10:14:       syscall: 'connect',
+2026-04-05T16:10:14:       address: '127.0.0.1',
+2026-04-05T16:10:14:       port: 6379
+2026-04-05T16:10:14:     }
+2026-04-05T16:10:14:   ]
+2026-04-05T16:10:14: }
+2026-04-05T16:10:14: ❌ Redis client error: AggregateError [ECONNREFUSED]: 
+2026-04-05T16:10:14:     at internalConnectMultiple (node:net:1193:18)
+2026-04-05T16:10:14:     at afterConnectMultiple (node:net:1783:7) {
+2026-04-05T16:10:14:   code: 'ECONNREFUSED',
+2026-04-05T16:10:14:   [errors]: [
+2026-04-05T16:10:14:     Error: connect ECONNREFUSED ::1:6379
+2026-04-05T16:10:14:         at createConnectionError (node:net:1746:14)
+2026-04-05T16:10:14:         at afterConnectMultiple (node:net:1776:16) {
+2026-04-05T16:10:14:       errno: -61,
+2026-04-05T16:10:14:       code: 'ECONNREFUSED',
+2026-04-05T16:10:14:       syscall: 'connect',
+2026-04-05T16:10:14:       address: '::1',
+2026-04-05T16:10:14:       port: 6379
+2026-04-05T16:10:14:     },
+2026-04-05T16:10:14:     Error: connect ECONNREFUSED 127.0.0.1:6379
+2026-04-05T16:10:14:         at createConnectionError (node:net:1746:14)
+2026-04-05T16:10:14:         at afterConnectMultiple (node:net:1776:16) {
+2026-04-05T16:10:14:       errno: -61,
+2026-04-05T16:10:14:       code: 'ECONNREFUSED',
+2026-04-05T16:10:14:       syscall: 'connect',
+2026-04-05T16:10:14:       address: '127.0.0.1',
+2026-04-05T16:10:14:       port: 6379
+2026-04-05T16:10:14:     }
+2026-04-05T16:10:14:   ]
+2026-04-05T16:10:14: }
+2026-04-05T16:10:15: ❌ Redis client error: AggregateError [ECONNREFUSED]: 
+2026-04-05T16:10:15:     at internalConnectMultiple (node:net:1193:18)
+2026-04-05T16:10:15:     at afterConnectMultiple (node:net:1783:7) {
+2026-04-05T16:10:15:   code: 'ECONNREFUSED',
+2026-04-05T16:10:15:   [errors]: [
+2026-04-05T16:10:15:     Error: connect ECONNREFUSED ::1:6379
+2026-04-05T16:10:15:         at createConnectionError (node:net:1746:14)
+2026-04-05T16:10:15:         at afterConnectMultiple (node:net:1776:16) {
+2026-04-05T16:10:15:       errno: -61,
+2026-04-05T16:10:15:       code: 'ECONNREFUSED',
+2026-04-05T16:10:15:       syscall: 'connect',
+2026-04-05T16:10:15:       address: '::1',
+2026-04-05T16:10:15:       port: 6379
+2026-04-05T16:10:15:     },
+2026-04-05T16:10:15:     Error: connect ECONNREFUSED 127.0.0.1:6379
+2026-04-05T16:10:15:         at createConnectionError (node:net:1746:14)
+2026-04-05T16:10:15:         at afterConnectMultiple (node:net:1776:16) {
+2026-04-05T16:10:15:       errno: -61,
+2026-04-05T16:10:15:       code: 'ECONNREFUSED',
+2026-04-05T16:10:15:       syscall: 'connect',
+2026-04-05T16:10:15:       address: '127.0.0.1',
+2026-04-05T16:10:15:       port: 6379
+2026-04-05T16:10:15:     }
+2026-04-05T16:10:15:   ]
+2026-04-05T16:10:15: }
+2026-04-05T16:10:15: ❌ Redis reconnection failed after 10 retries
+2026-04-05T16:10:15: ❌ Redis client error: AggregateError [ECONNREFUSED]: 
+2026-04-05T16:10:15:     at internalConnectMultiple (node:net:1193:18)
+2026-04-05T16:10:15:     at afterConnectMultiple (node:net:1783:7) {
+2026-04-05T16:10:15:   code: 'ECONNREFUSED',
+2026-04-05T16:10:15:   [errors]: [
+2026-04-05T16:10:15:     Error: connect ECONNREFUSED ::1:6379
+2026-04-05T16:10:15:         at createConnectionError (node:net:1746:14)
+2026-04-05T16:10:15:         at afterConnectMultiple (node:net:1776:16) {
+2026-04-05T16:10:15:       errno: -61,
+2026-04-05T16:10:15:       code: 'ECONNREFUSED',
+2026-04-05T16:10:15:       syscall: 'connect',
+2026-04-05T16:10:15:       address: '::1',
+2026-04-05T16:10:15:       port: 6379
+2026-04-05T16:10:15:     },
+2026-04-05T16:10:15:     Error: connect ECONNREFUSED 127.0.0.1:6379
+2026-04-05T16:10:15:         at createConnectionError (node:net:1746:14)
+2026-04-05T16:10:15:         at afterConnectMultiple (node:net:1776:16) {
+2026-04-05T16:10:15:       errno: -61,
+2026-04-05T16:10:15:       code: 'ECONNREFUSED',
+2026-04-05T16:10:15:       syscall: 'connect',
+2026-04-05T16:10:15:       address: '127.0.0.1',
+2026-04-05T16:10:15:       port: 6379
+2026-04-05T16:10:15:     }
+2026-04-05T16:10:15:   ]
+2026-04-05T16:10:15: }
+2026-04-05T16:10:15: ❌ Redis connection failed: ReconnectStrategyError: Redis retry strategy exhausted
+2026-04-05T16:10:15:     at RedisSocket._RedisSocket_shouldReconnect (/Users/pratulmakar/Developer/hotel-new/backend/node_modules/.pnpm/@redis+client@1.6.1/node_modules/@redis/client/dist/lib/client/socket.js:140:16)
+2026-04-05T16:10:15:     at RedisSocket._RedisSocket_connect (/Users/pratulmakar/Developer/hotel-new/backend/node_modules/.pnpm/@redis+client@1.6.1/node_modules/@redis/client/dist/lib/client/socket.js:162:117)
+2026-04-05T16:10:15:     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+2026-04-05T16:10:15:     at async Commander.connect (/Users/pratulmakar/Developer/hotel-new/backend/node_modules/.pnpm/@redis+client@1.6.1/node_modules/@redis/client/dist/lib/client/index.js:185:9)
+2026-04-05T16:10:15:     at async getRedisClient (/Users/pratulmakar/Developer/hotel-new/backend/src/config/redis.ts:37:3)
+2026-04-05T16:10:15:     at async startServer (/Users/pratulmakar/Developer/hotel-new/backend/src/index.ts:32:7) {
+2026-04-05T16:10:15:   originalError: Error: Redis retry strategy exhausted
+2026-04-05T16:10:15:       at Object.reconnectStrategy (/Users/pratulmakar/Developer/hotel-new/backend/src/config/redis.ts:18:18)
+2026-04-05T16:10:15:       at RedisSocket._RedisSocket_reconnectStrategy (/Users/pratulmakar/Developer/hotel-new/backend/node_modules/.pnpm/@redis+client@1.6.1/node_modules/@redis/client/dist/lib/client/socket.js:119:85)
+2026-04-05T16:10:15:       at RedisSocket._RedisSocket_shouldReconnect (/Users/pratulmakar/Developer/hotel-new/backend/node_modules/.pnpm/@redis+client@1.6.1/node_modules/@redis/client/dist/lib/client/socket.js:131:111)
+2026-04-05T16:10:15:       at RedisSocket._RedisSocket_connect (/Users/pratulmakar/Developer/hotel-new/backend/node_modules/.pnpm/@redis+client@1.6.1/node_modules/@redis/client/dist/lib/client/socket.js:162:117)
+2026-04-05T16:10:15:       at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+2026-04-05T16:10:15:       at async Commander.connect (/Users/pratulmakar/Developer/hotel-new/backend/node_modules/.pnpm/@redis+client@1.6.1/node_modules/@redis/client/dist/lib/client/index.js:185:9)
+2026-04-05T16:10:15:       at async getRedisClient (/Users/pratulmakar/Developer/hotel-new/backend/src/config/redis.ts:37:3)
+2026-04-05T16:10:15:       at async startServer (/Users/pratulmakar/Developer/hotel-new/backend/src/index.ts:32:7),
+2026-04-05T16:10:15:   socketError: AggregateError [ECONNREFUSED]: 
+2026-04-05T16:10:15:       at internalConnectMultiple (node:net:1193:18)
+2026-04-05T16:10:15:       at afterConnectMultiple (node:net:1783:7) {
+2026-04-05T16:10:15:     code: 'ECONNREFUSED',
+2026-04-05T16:10:15:     [errors]: [ [Error], [Error] ]
+2026-04-05T16:10:15:   }
+2026-04-05T16:10:15: }

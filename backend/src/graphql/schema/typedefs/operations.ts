@@ -30,6 +30,7 @@ export const operationsTypeDefs = `
     unreadNotificationsCount: UnreadCount!
     notificationPreferences: NotificationPreferences!
     authSessions: [SessionRecord!]!
+    adminUsers(input: AdminUsersFilterInput): AdminUsersConnection!
     userDocuments: [UserDocument!]!
     hostVerification: HostVerification!
     loyaltySummary: LoyaltySummary!
@@ -110,6 +111,7 @@ export const operationsTypeDefs = `
     deleteNotification(notificationId: ID!): DeleteResult!
     logout: SimpleResult!
     updateMyProfile(input: AuthProfileUpdateInput!): User!
+    adminUpdateUser(userId: ID!, input: AdminUpdateUserInput!): AdminUserManagementRow!
     verifyEmail: User!
     refreshToken: TokenResult!
     forgotPassword(email: String!): ForgotPasswordResult!

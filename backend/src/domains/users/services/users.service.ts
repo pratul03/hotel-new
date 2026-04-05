@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { prisma } from "../../../config/database";
 import { AppError } from "../../../utils";
 
@@ -39,6 +40,58 @@ const LOYALTY_TIERS = [
     ],
   },
 ] as const;
+
+const adminUserSelect = {
+  id: true,
+  name: true,
+  email: true,
+  avatar: true,
+  role: true,
+  verified: true,
+  superhost: true,
+  responseRate: true,
+  createdAt: true,
+  updatedAt: true,
+} satisfies Prisma.UserSelect;
+
+type AdminUserRecord = Prisma.UserGetPayload<{ select: typeof adminUserSelect }>;
+
+const getAdminHealthStatus = (
+  verified: boolean,
+  superhost: boolean,
+  responseRate: number | null,
+) => {
+  if (superhost || (verified && typeof responseRate === "number" && responseRate >= 80)) {
+    return "healthy" as const;
+  }
+
+  if (verified || (typeof responseRate === "number" && responseRate >= 70)) {
+    return "watch" as const;
+  }
+
+  return "needs_attention" as const;
+};
+
+const mapAdminUserRow = (
+  user: AdminUserRecord,
+  metrics: {
+    listingsCount: number;
+    promotedListingsCount: number;
+    lastActivityAt: Date | null;
+  },
+) => {
+  const responseRate =
+    typeof user.responseRate === "number" ? user.responseRate : null;
+
+  return {
+    ...user,
+    responseRate,
+    listingsCount: metrics.listingsCount,
+    promotedListingsCount: metrics.promotedListingsCount,
+    lastActivityAt: (metrics.lastActivityAt ?? user.updatedAt).toISOString(),
+    health: getAdminHealthStatus(user.verified, user.superhost, responseRate),
+  };
+};
 
 export const userService = {
   async getProfile(userId: string) {
@@ -109,6 +162,179 @@ export const userService = {
 
     await prisma.userDocument.delete({ where: { id: docId } });
     return { deleted: true };
+  },
+
+  async listUsersForAdmin(input: {
+    search?: string;
+    role?: "guest" | "host" | "admin";
+    verified?: boolean;
+    superhost?: boolean;
+    page?: number;
+    limit?: number;
+  }) {
+    const page = input.page ?? 1;
+    const limit = input.limit ?? 100;
+    const search = input.search?.trim();
+
+    const where: Prisma.UserWhereInput = {};
+
+    if (search) {
+      where.OR = [
+        { id: { contains: search, mode: "insensitive" } },
+        { name: { contains: search, mode: "insensitive" } },
+        { email: { contains: search, mode: "insensitive" } },
+      ];
+    }
+
+    if (input.role) {
+      where.role = input.role;
+    }
+
+    if (typeof input.verified === "boolean") {
+      where.verified = input.verified;
+    }
+
+    if (typeof input.superhost === "boolean") {
+      where.superhost = input.superhost;
+    }
+
+    const [total, users] = await prisma.$transaction([
+      prisma.user.count({ where }),
+      prisma.user.findMany({
+        where,
+        select: adminUserSelect,
+        orderBy: [{ updatedAt: "desc" }, { createdAt: "desc" }],
+        skip: (page - 1) * limit,
+        take: limit,
+      }),
+    ]);
+
+    const pages = total === 0 ? 0 : Math.ceil(total / limit);
+
+    if (users.length === 0) {
+      return {
+        data: [],
+        total,
+        page,
+        limit,
+        pages,
+      };
+    }
+
+    const userIds = users.map((user) => user.id);
+
+    const [listingStats, promotedListingStats] = await Promise.all([
+      prisma.hotel.groupBy({
+        by: ["ownerId"],
+        where: { ownerId: { in: userIds } },
+        _count: { _all: true },
+        _max: { updatedAt: true },
+      }),
+      prisma.hotel.groupBy({
+        by: ["ownerId"],
+        where: {
+          ownerId: { in: userIds },
+          isPromoted: true,
+        },
+        _count: { _all: true },
+      }),
+    ]);
+
+    const listingMap = new Map(
+      listingStats.map((item) => [
+        item.ownerId,
+        {
+          listingsCount: item._count._all,
+          lastActivityAt: item._max.updatedAt,
+        },
+      ]),
+    );
+
+    const promotedMap = new Map(
+      promotedListingStats.map((item) => [item.ownerId, item._count._all]),
+    );
+
+    return {
+      data: users.map((user) => {
+        const listingMetrics = listingMap.get(user.id);
+
+        return mapAdminUserRow(user, {
+          listingsCount: listingMetrics?.listingsCount ?? 0,
+          promotedListingsCount: promotedMap.get(user.id) ?? 0,
+          lastActivityAt: listingMetrics?.lastActivityAt ?? null,
+        });
+      }),
+      total,
+      page,
+      limit,
+      pages,
+    };
+  },
+
+  async updateUserByAdmin(
+    adminUserId: string,
+    userId: string,
+    input: {
+      role?: "guest" | "host" | "admin";
+      verified?: boolean;
+      superhost?: boolean;
+    },
+  ) {
+    const existing = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { id: true },
+    });
+
+    if (!existing) {
+      throw new AppError("User not found", 404);
+    }
+
+    if (
+      adminUserId === userId &&
+      typeof input.role === "string" &&
+      input.role !== "admin"
+    ) {
+      throw new AppError("You cannot remove your own admin access", 400);
+    }
+
+    const data: Prisma.UserUpdateInput = {
+      ...(typeof input.role === "string" && { role: input.role }),
+      ...(typeof input.verified === "boolean" && { verified: input.verified }),
+      ...(typeof input.superhost === "boolean" && {
+        superhost: input.superhost,
+      }),
+    };
+
+    if (Object.keys(data).length === 0) {
+      throw new AppError("No user moderation changes supplied", 400);
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data,
+      select: adminUserSelect,
+    });
+
+    const [listingsCount, promotedListingsCount, listingAggregate] =
+      await Promise.all([
+        prisma.hotel.count({ where: { ownerId: userId } }),
+        prisma.hotel.count({
+          where: {
+            ownerId: userId,
+            isPromoted: true,
+          },
+        }),
+        prisma.hotel.aggregate({
+          where: { ownerId: userId },
+          _max: { updatedAt: true },
+        }),
+      ]);
+
+    return mapAdminUserRow(updatedUser, {
+      listingsCount,
+      promotedListingsCount,
+      lastActivityAt: listingAggregate._max.updatedAt,
+    });
   },
 
   async getHostVerification(userId: string) {

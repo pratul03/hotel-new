@@ -1,4 +1,44 @@
 export const accountTypeDefs = `
+  type AdminUserManagementRow {
+    id: ID!
+    name: String!
+    email: String!
+    avatar: String
+    role: String!
+    verified: Boolean!
+    superhost: Boolean!
+    responseRate: Float
+    listingsCount: Int!
+    promotedListingsCount: Int!
+    lastActivityAt: String!
+    health: String!
+    createdAt: String
+    updatedAt: String
+  }
+
+  type AdminUsersConnection {
+    data: [AdminUserManagementRow!]!
+    total: Int!
+    page: Int!
+    limit: Int!
+    pages: Int!
+  }
+
+  input AdminUsersFilterInput {
+    search: String
+    role: String
+    verified: Boolean
+    superhost: Boolean
+    page: Int
+    limit: Int
+  }
+
+  input AdminUpdateUserInput {
+    role: String
+    verified: Boolean
+    superhost: Boolean
+  }
+
   type SessionRecord {
     sessionId: String!
     userId: String!

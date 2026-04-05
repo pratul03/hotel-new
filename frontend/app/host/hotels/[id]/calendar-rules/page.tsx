@@ -7,6 +7,7 @@ import { AppLayout } from "@/components/layout/AppLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { NumberInput } from "@/components/ui/number-input";
 import { Button } from "@/components/ui/button";
 import {
   useHotel,
@@ -76,38 +77,54 @@ export default function HostHotelCalendarRulesPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Minimum stay nights</Label>
-                <Input
-                  type="number"
+                <NumberInput
                   min={1}
-                  value={minStayNights}
-                  onChange={(e) => setMinStayNights(e.target.value)}
+                  value={
+                    minStayNights === "" ? undefined : Number(minStayNights)
+                  }
+                  onValueChange={(value) =>
+                    setMinStayNights(value === undefined ? "" : String(value))
+                  }
                 />
               </div>
               <div className="space-y-2">
                 <Label>Maximum stay nights</Label>
-                <Input
-                  type="number"
+                <NumberInput
                   min={1}
-                  value={maxStayNights}
-                  onChange={(e) => setMaxStayNights(e.target.value)}
+                  value={
+                    maxStayNights === "" ? undefined : Number(maxStayNights)
+                  }
+                  onValueChange={(value) =>
+                    setMaxStayNights(value === undefined ? "" : String(value))
+                  }
                 />
               </div>
               <div className="space-y-2">
                 <Label>Advance notice (hours)</Label>
-                <Input
-                  type="number"
+                <NumberInput
                   min={0}
-                  value={advanceNoticeHours}
-                  onChange={(e) => setAdvanceNoticeHours(e.target.value)}
+                  value={
+                    advanceNoticeHours === ""
+                      ? undefined
+                      : Number(advanceNoticeHours)
+                  }
+                  onValueChange={(value) =>
+                    setAdvanceNoticeHours(
+                      value === undefined ? "" : String(value),
+                    )
+                  }
                 />
               </div>
               <div className="space-y-2">
                 <Label>Preparation time (hours)</Label>
-                <Input
-                  type="number"
+                <NumberInput
                   min={0}
-                  value={prepTimeHours}
-                  onChange={(e) => setPrepTimeHours(e.target.value)}
+                  value={
+                    prepTimeHours === "" ? undefined : Number(prepTimeHours)
+                  }
+                  onValueChange={(value) =>
+                    setPrepTimeHours(value === undefined ? "" : String(value))
+                  }
                 />
               </div>
               <div className="space-y-2">

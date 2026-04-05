@@ -1,0 +1,96 @@
+
+> airbnb-backend@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/backend
+> tsx watch src/index.ts
+
+🚀 Starting Airbnb Clone API Server...
+📝 Environment: development
+📚 Connecting to PostgreSQL...
+✅ PostgreSQL connected
+⚡ Connecting to Redis...
+✅ Redis connected
+✅ Redis connected
+🪣 Initializing MinIO buckets...
+✅ MinIO bucket exists: airbnb-room-images
+✅ MinIO public read policy applied: airbnb-room-images
+✅ MinIO bucket exists: airbnb-hotel-images
+✅ MinIO public read policy applied: airbnb-hotel-images
+✅ MinIO bucket exists: airbnb-user-avatars
+✅ MinIO public read policy applied: airbnb-user-avatars
+✅ MinIO bucket exists: airbnb-invoices
+✅ MinIO initialized
+
+✅ Server running on http://localhost:8080
+🔗 GraphQL endpoint: http://localhost:8080/api/graphql
+📚 Swagger UI: http://localhost:8080/api/docs
+📄 OpenAPI JSON: http://localhost:8080/api/docs.json
+
+[REQ] [mnln3fbj-ygws9v] POST /api/graphql
+[REQ] [mnln3fbq-149bqi] POST /api/graphql
+::1 - - [05/Apr/2026:10:49:44 +0000] "POST /api/graphql HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+✅ [HTTP] [mnln3fbq-149bqi] POST /api/graphql op=SearchHotels - 200 (153ms)
+::1 - - [05/Apr/2026:10:49:44 +0000] "POST /api/graphql HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+✅ [HTTP] [mnln3fbj-ygws9v] POST /api/graphql op=PromotedHotels - 200 (160ms)
+[REQ] [mnln3y0d-ib6a80] POST /api/graphql
+[REQ] [mnln3y0g-oe4oti] POST /api/graphql
+::1 - - [05/Apr/2026:10:50:08 +0000] "POST /api/graphql HTTP/1.1" 200 25 "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+✅ [HTTP] [mnln3y0g-oe4oti] POST /api/graphql op=Wishlist - 200 (28ms)
+::1 - - [05/Apr/2026:10:50:08 +0000] "POST /api/graphql HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+✅ [HTTP] [mnln3y0d-ib6a80] POST /api/graphql op=HotelById - 200 (56ms)
+[REQ] [mnln493e-j7ultt] POST /api/graphql
+[REQ] [mnln493g-hopnrp] POST /api/graphql
+::1 - - [05/Apr/2026:10:50:23 +0000] "POST /api/graphql HTTP/1.1" 200 199 "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+✅ [HTTP] [mnln493e-j7ultt] POST /api/graphql op=Me - 200 (20ms)
+::1 - - [05/Apr/2026:10:50:23 +0000] "POST /api/graphql HTTP/1.1" 200 199 "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+✅ [HTTP] [mnln493g-hopnrp] POST /api/graphql op=Me - 200 (18ms)
+[REQ] [mnln5hc5-olxq2j] POST /api/graphql
+[REQ] [mnln5hc9-48soph] POST /api/graphql
+::1 - - [05/Apr/2026:10:51:20 +0000] "POST /api/graphql HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+✅ [HTTP] [mnln5hc9-48soph] POST /api/graphql op=SearchHotels - 200 (25ms)
+::1 - - [05/Apr/2026:10:51:20 +0000] "POST /api/graphql HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+✅ [HTTP] [mnln5hc5-olxq2j] POST /api/graphql op=PromotedHotels - 200 (30ms)
+[REQ] [mnln71r7-flvuwa] POST /api/graphql
+[REQ] [mnln71rq-sufjnj] POST /api/graphql
+::1 - - [05/Apr/2026:10:52:33 +0000] "POST /api/graphql HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+✅ [HTTP] [mnln71r7-flvuwa] POST /api/graphql op=PromotedHotels - 200 (58ms)
+::1 - - [05/Apr/2026:10:52:33 +0000] "POST /api/graphql HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+✅ [HTTP] [mnln71rq-sufjnj] POST /api/graphql op=SearchHotels - 200 (40ms)
+[REQ] [mnln9cfn-f5jx09] POST /api/graphql
+[REQ] [mnln9cfw-xotv31] POST /api/graphql
+::1 - - [05/Apr/2026:10:54:20 +0000] "POST /api/graphql HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+✅ [HTTP] [mnln9cfw-xotv31] POST /api/graphql op=SearchHotels - 200 (49ms)
+::1 - - [05/Apr/2026:10:54:20 +0000] "POST /api/graphql HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+✅ [HTTP] [mnln9cfn-f5jx09] POST /api/graphql op=PromotedHotels - 200 (59ms)
+[REQ] [mnlnhy7l-4ba2wc] POST /api/graphql
+[REQ] [mnlnhy80-ymyhip] POST /api/graphql
+::1 - - [05/Apr/2026:11:01:02 +0000] "POST /api/graphql HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+✅ [HTTP] [mnlnhy80-ymyhip] POST /api/graphql op=SearchHotels - 200 (32ms)
+::1 - - [05/Apr/2026:11:01:02 +0000] "POST /api/graphql HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+✅ [HTTP] [mnlnhy7l-4ba2wc] POST /api/graphql op=PromotedHotels - 200 (47ms)
+[REQ] [mnlniuf0-1xtffl] POST /api/graphql
+[REQ] [mnlniufq-7er22w] POST /api/graphql
+::1 - - [05/Apr/2026:11:01:43 +0000] "POST /api/graphql HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+✅ [HTTP] [mnlniuf0-1xtffl] POST /api/graphql op=PromotedHotels - 200 (52ms)
+::1 - - [05/Apr/2026:11:01:43 +0000] "POST /api/graphql HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+✅ [HTTP] [mnlniufq-7er22w] POST /api/graphql op=SearchHotels - 200 (26ms)
+[REQ] [mnlnkg7k-cw77t8] POST /api/graphql
+::1 - - [05/Apr/2026:11:02:58 +0000] "POST /api/graphql HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+✅ [HTTP] [mnlnkg7k-cw77t8] POST /api/graphql op=HotelById - 200 (26ms)
+[REQ] [mnlnm8f2-75qet5] POST /api/graphql
+[REQ] [mnlnm8ff-6rvyyu] POST /api/graphql
+::1 - - [05/Apr/2026:11:04:22 +0000] "POST /api/graphql HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+✅ [HTTP] [mnlnm8ff-6rvyyu] POST /api/graphql op=SearchHotels - 200 (36ms)
+::1 - - [05/Apr/2026:11:04:22 +0000] "POST /api/graphql HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+✅ [HTTP] [mnlnm8f2-75qet5] POST /api/graphql op=PromotedHotels - 200 (49ms)
+[REQ] [mnlnpli2-t50sy2] POST /api/graphql
+::1 - - [05/Apr/2026:11:06:59 +0000] "POST /api/graphql HTTP/1.1" 200 334 "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
+✅ [HTTP] [mnlnpli2-t50sy2] POST /api/graphql op=Login - 200 (89ms)
+[REQ] [mnlnt74n-q4g4c1] POST /api/graphql
+::1 - - [05/Apr/2026:11:09:46 +0000] "POST /api/graphql HTTP/1.1" 400 1979 "-" "curl/8.7.1"
+⚠️ [HTTP] [mnlnt74n-q4g4c1] POST /api/graphql op=login - 400 (11ms)
+[REQ] [mnlntozk-i6ck9v] GET /health
+::1 - - [05/Apr/2026:11:10:10 +0000] "GET /health HTTP/1.1" 200 154 "-" "curl/8.7.1"
+✅ [HTTP] [mnlntozk-i6ck9v] GET /health - 200 (3ms)
+
+SIGTERM received, shutting down gracefully...
+✅ PostgreSQL disconnected
+✅ Redis disconnected

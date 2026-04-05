@@ -156,6 +156,8 @@ export function useHostAlterBooking() {
       checkIn?: string;
       checkOut?: string;
       guestCount?: number;
+      childCount?: number;
+      childAges?: number[];
       notes?: string;
     }) => {
       const { data } = await axiosInstance.patch(
@@ -164,6 +166,8 @@ export function useHostAlterBooking() {
           checkIn: payload.checkIn,
           checkOut: payload.checkOut,
           guestCount: payload.guestCount,
+          childCount: payload.childCount,
+          childAges: payload.childAges,
           notes: payload.notes,
         },
       );

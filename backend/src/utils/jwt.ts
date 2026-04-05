@@ -1,15 +1,31 @@
 import jwt from "jsonwebtoken";
 import { env } from "../config/environment";
 
-export const generateToken = (
+type TokenPayload = {
+  userId: string;
+  email: string;
+  role: string;
+  sid?: string;
+};
+
+const signToken = (
+  payload: TokenPayload,
+  secret: string,
+  expiresIn: jwt.SignOptions["expiresIn"],
+) =>
+  jwt.sign(payload, secret, {
+    expiresIn,
+    algorithm: "HS256",
+  });
+
+export const generateAccessToken = (
   userId: string,
   email: string,
   role: string,
   sessionId?: string,
 ) => {
-  const expiresIn = env.JWT_EXPIRE as jwt.SignOptions["expiresIn"];
-
-  return jwt.sign(
+  const expiresIn = env.JWT_ACCESS_EXPIRE as jwt.SignOptions["expiresIn"];
+  return signToken(
     {
       userId,
       email,
@@ -17,14 +33,30 @@ export const generateToken = (
       sid: sessionId,
     },
     env.JWT_SECRET,
-    {
-      expiresIn,
-      algorithm: "HS256",
-    },
+    expiresIn,
   );
 };
 
-export const verifyToken = (token: string) => {
+export const generateRefreshToken = (
+  userId: string,
+  email: string,
+  role: string,
+  sessionId?: string,
+) => {
+  const expiresIn = env.JWT_REFRESH_EXPIRE as jwt.SignOptions["expiresIn"];
+  return signToken(
+    {
+      userId,
+      email,
+      role,
+      sid: sessionId,
+    },
+    env.JWT_REFRESH_SECRET,
+    expiresIn,
+  );
+};
+
+export const verifyAccessToken = (token: string) => {
   try {
     return jwt.verify(token, env.JWT_SECRET) as {
       userId: string;
@@ -37,4 +69,28 @@ export const verifyToken = (token: string) => {
   }
 };
 
-export default { generateToken, verifyToken };
+export const verifyRefreshToken = (token: string) => {
+  try {
+    return jwt.verify(token, env.JWT_REFRESH_SECRET) as {
+      userId: string;
+      email: string;
+      role: string;
+      sid?: string;
+    };
+  } catch (error) {
+    throw new Error("Invalid refresh token");
+  }
+};
+
+// Backward-compatible aliases used across existing code paths.
+export const generateToken = generateAccessToken;
+export const verifyToken = verifyAccessToken;
+
+export default {
+  generateToken,
+  verifyToken,
+  generateAccessToken,
+  verifyAccessToken,
+  generateRefreshToken,
+  verifyRefreshToken,
+};

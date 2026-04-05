@@ -2,11 +2,14 @@ import { prisma } from "../../../config/database";
 import { AppError } from "../../../utils";
 
 interface GeoSearchParams {
-  latitude: number;
-  longitude: number;
-  radiusKm: number;
+  latitude?: number;
+  longitude?: number;
+  radiusKm?: number;
   checkIn?: Date;
   checkOut?: Date;
+  adults?: number;
+  childCount?: number;
+  childAges?: number[];
   guests?: number;
   minPrice?: number;
   maxPrice?: number;
@@ -305,10 +308,12 @@ export const hotelService = {
 
   async searchHotels(params: GeoSearchParams) {
     const {
-      latitude,
-      longitude,
-      radiusKm,
-      guests = 1,
+      latitude = 22.5726,
+      longitude = 88.3639,
+      radiusKm = 10,
+      adults,
+      childCount = 0,
+      guests,
       minPrice,
       maxPrice,
       instantBooking,
@@ -323,6 +328,11 @@ export const hotelService = {
       page = 1,
       limit = 10,
     } = params;
+
+    const effectiveGuests =
+      typeof guests === "number" && guests > 0
+        ? guests
+        : Math.max(1, (adults ?? 1) + childCount);
 
     const personalization = {
       wishlistedHotelIds: new Set<string>(),
@@ -419,7 +429,7 @@ export const hotelService = {
     const capacityFiltered = nearby.filter(
       (hotel: { rooms: Array<{ maxGuests: number }> }) =>
         hotel.rooms.some(
-          (room: { maxGuests: number }) => room.maxGuests >= guests,
+          (room: { maxGuests: number }) => room.maxGuests >= effectiveGuests,
         ),
     );
 

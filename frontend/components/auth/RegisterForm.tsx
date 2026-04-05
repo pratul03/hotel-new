@@ -41,7 +41,7 @@ type RegisterFormData = z.infer<typeof registerSchema>;
 
 export function RegisterForm() {
   const router = useRouter();
-  const { setUser, setToken } = useAuthStore();
+  const { setUser } = useAuthStore();
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<RegisterFormData>({
@@ -65,9 +65,8 @@ export function RegisterForm() {
         password: data.password,
         role: data.role,
       });
-      const { user, token } = response.data.data;
+      const { user } = response.data.data;
       setUser(user);
-      setToken(token);
       toast.success("Account created successfully!");
       router.push(data.role === "host" ? "/host" : "/bookings");
     } catch (error) {

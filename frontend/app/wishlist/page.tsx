@@ -14,6 +14,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { formatPrice } from "@/lib/format";
+import { Skeleton as BoneyardSkeleton } from "boneyard-js/react";
 import {
   useAcceptWishlistInvite,
   useCreateWishlistShareLink,
@@ -32,9 +33,21 @@ export default function WishlistPage() {
     <Suspense
       fallback={
         <AppLayout>
-          <div className="py-12 text-center text-muted-foreground">
-            Loading wishlist...
-          </div>
+          <BoneyardSkeleton
+            loading
+            name="wishlist-page"
+            fallback={
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-4">
+                {Array.from({ length: 3 }).map((_, index) => (
+                  <Skeleton key={index} className="h-48 rounded-xl" />
+                ))}
+              </div>
+            }
+          >
+            <div className="py-12 text-center text-muted-foreground">
+              Loading wishlist...
+            </div>
+          </BoneyardSkeleton>
         </AppLayout>
       }
     >

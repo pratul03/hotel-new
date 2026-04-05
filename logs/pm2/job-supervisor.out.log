@@ -28,3 +28,524 @@
 2026-04-01T21:01:21: > tsx watch src/index.ts
 2026-04-01T21:01:21: 
 2026-04-02T01:13:19:  ELIFECYCLE  Command failed with exit code 2.
+2026-04-05T16:10:11: 
+2026-04-05T16:10:11: > airbnb-job-supervisor@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/services/job-supervisor
+2026-04-05T16:10:11: > tsx watch src/index.ts
+2026-04-05T16:10:11: 
+2026-04-05T16:18:43:  ELIFECYCLE  Command failed with exit code 2.
+2026-04-05T16:23:19: 
+2026-04-05T16:23:19: > airbnb-job-supervisor@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/services/job-supervisor
+2026-04-05T16:23:19: > tsx watch src/index.ts
+2026-04-05T16:23:19: 
+2026-04-05T16:24:57:  ELIFECYCLE  Command failed with exit code 2.
+2026-04-05T16:30:07: 
+2026-04-05T16:30:07: > airbnb-job-supervisor@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/services/job-supervisor
+2026-04-05T16:30:07: > tsx watch src/index.ts
+2026-04-05T16:30:07: 
+2026-04-05T16:33:41:  ELIFECYCLE  Command failed with exit code 2.
+2026-04-05T16:33:51: 
+2026-04-05T16:33:51: > airbnb-job-supervisor@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/services/job-supervisor
+2026-04-05T16:33:51: > tsx watch src/index.ts
+2026-04-05T16:33:51: 
+2026-04-05T16:44:26:  ELIFECYCLE  Command failed with exit code 2.
+2026-04-05T16:44:26: 
+2026-04-05T16:44:26: > airbnb-job-supervisor@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/services/job-supervisor
+2026-04-05T16:44:26: > tsx watch src/index.ts
+2026-04-05T16:44:26: 
+2026-04-05T16:48:07:  ELIFECYCLE  Command failed with exit code 2.
+2026-04-05T16:48:07: 
+2026-04-05T16:48:07: > airbnb-job-supervisor@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/services/job-supervisor
+2026-04-05T16:48:07: > tsx watch src/index.ts
+2026-04-05T16:48:07: 
+2026-04-05T16:48:08: 🚀 Starting Job Supervisor Service...
+2026-04-05T16:48:08: 📝 Environment: development
+2026-04-05T16:48:08: 📚 Connecting to PostgreSQL...
+2026-04-05T16:48:09: ✅ PostgreSQL connected
+2026-04-05T16:48:09: ⚡ Connecting to Redis...
+2026-04-05T16:48:09: ✅ Redis publisher connected
+2026-04-05T16:48:09: ✅ Redis publisher connected
+2026-04-05T16:48:09: 
+2026-04-05T16:48:09: ✅ All CRON jobs initialized:
+2026-04-05T16:48:09:    • BookingExpiry      — every 5 minutes
+2026-04-05T16:48:09:    • CheckoutReminder   — every hour
+2026-04-05T16:48:09:    • RoomCleaning       — every 30 minutes
+2026-04-05T16:48:09:    • SuperhostCalc      — daily at 02:00
+2026-04-05T16:48:09:    • IncidentEscalation — every 4 hours
+2026-04-05T16:48:09: 
+2026-04-05T16:48:09: ✅ Job Supervisor is running
+2026-04-05T16:48:09: 
+2026-04-05T16:50:00: 
+2026-04-05T16:50:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T16:50:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 82ms
+2026-04-05T16:50:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T16:52:05: 
+2026-04-05T16:52:05: SIGINT received — shutting down job supervisor...
+2026-04-05T16:52:05: 4:52:05 PM [tsx] Previous process hasn't exited yet. Force killing...
+2026-04-05T16:52:25: 
+2026-04-05T16:52:25: > airbnb-job-supervisor@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/services/job-supervisor
+2026-04-05T16:52:25: > tsx watch src/index.ts
+2026-04-05T16:52:25: 
+2026-04-05T16:52:25: 🚀 Starting Job Supervisor Service...
+2026-04-05T16:52:25: 📝 Environment: development
+2026-04-05T16:52:25: 📚 Connecting to PostgreSQL...
+2026-04-05T16:52:26: ✅ PostgreSQL connected
+2026-04-05T16:52:26: ⚡ Connecting to Redis...
+2026-04-05T16:52:26: ✅ Redis publisher connected
+2026-04-05T16:52:26: ✅ Redis publisher connected
+2026-04-05T16:52:26: 
+2026-04-05T16:52:26: ✅ All CRON jobs initialized:
+2026-04-05T16:52:26:    • BookingExpiry      — every 5 minutes
+2026-04-05T16:52:26:    • CheckoutReminder   — every hour
+2026-04-05T16:52:26:    • RoomCleaning       — every 30 minutes
+2026-04-05T16:52:26:    • SuperhostCalc      — daily at 02:00
+2026-04-05T16:52:26:    • IncidentEscalation — every 4 hours
+2026-04-05T16:52:26: 
+2026-04-05T16:52:26: ✅ Job Supervisor is running
+2026-04-05T16:52:26: 
+2026-04-05T16:55:00: 
+2026-04-05T16:55:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T16:55:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 41ms
+2026-04-05T16:55:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T17:00:00: 
+2026-04-05T17:00:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T17:00:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 10ms
+2026-04-05T17:00:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T17:00:00: 
+2026-04-05T17:00:00: [CRON] ▶ Starting: CheckoutReminder
+2026-04-05T17:00:00: 
+2026-04-05T17:00:00: [CRON] ▶ Starting: RoomCleaning
+2026-04-05T17:00:00: [CRON] RoomCleaning — processed: 0, failed: 0, duration: 2ms
+2026-04-05T17:00:00: [CRON] ✅ Completed: RoomCleaning
+2026-04-05T17:00:00: [CRON] CheckoutReminder — processed: 0, failed: 0, duration: 12ms
+2026-04-05T17:00:00: [CRON] ✅ Completed: CheckoutReminder
+2026-04-05T17:05:00: 
+2026-04-05T17:05:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T17:05:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 17ms
+2026-04-05T17:05:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T17:09:08: 
+2026-04-05T17:09:08: SIGINT received — shutting down job supervisor...
+2026-04-05T17:09:08: 5:09:08 PM [tsx] Previous process hasn't exited yet. Force killing...
+2026-04-05T17:09:16: 
+2026-04-05T17:09:16: > airbnb-job-supervisor@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/services/job-supervisor
+2026-04-05T17:09:16: > tsx watch src/index.ts
+2026-04-05T17:09:16: 
+2026-04-05T17:09:17: 🚀 Starting Job Supervisor Service...
+2026-04-05T17:09:17: 📝 Environment: development
+2026-04-05T17:09:17: 📚 Connecting to PostgreSQL...
+2026-04-05T17:09:17: ✅ PostgreSQL connected
+2026-04-05T17:09:17: ⚡ Connecting to Redis...
+2026-04-05T17:09:17: ✅ Redis publisher connected
+2026-04-05T17:09:17: ✅ Redis publisher connected
+2026-04-05T17:09:17: 
+2026-04-05T17:09:17: ✅ All CRON jobs initialized:
+2026-04-05T17:09:17:    • BookingExpiry      — every 5 minutes
+2026-04-05T17:09:17:    • CheckoutReminder   — every hour
+2026-04-05T17:09:17:    • RoomCleaning       — every 30 minutes
+2026-04-05T17:09:17:    • SuperhostCalc      — daily at 02:00
+2026-04-05T17:09:17:    • IncidentEscalation — every 4 hours
+2026-04-05T17:09:17: 
+2026-04-05T17:09:17: ✅ Job Supervisor is running
+2026-04-05T17:09:17: 
+2026-04-05T17:10:00: 
+2026-04-05T17:10:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T17:10:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 36ms
+2026-04-05T17:10:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T17:15:00: 
+2026-04-05T17:15:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T17:15:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 15ms
+2026-04-05T17:15:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T17:20:00: 
+2026-04-05T17:20:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T17:20:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 8ms
+2026-04-05T17:20:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T17:25:00: 
+2026-04-05T17:25:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T17:25:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 15ms
+2026-04-05T17:25:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T17:30:00: 
+2026-04-05T17:30:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T17:30:01: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 21ms
+2026-04-05T17:30:01: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T17:35:00: 
+2026-04-05T17:35:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T17:35:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 11ms
+2026-04-05T17:35:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T17:40:00: 
+2026-04-05T17:40:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T17:40:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 13ms
+2026-04-05T17:40:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T17:45:00: 
+2026-04-05T17:45:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T17:45:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 10ms
+2026-04-05T17:45:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T17:50:00: 
+2026-04-05T17:50:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T17:50:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 16ms
+2026-04-05T17:50:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T18:10:00: 
+2026-04-05T18:10:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T18:10:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 10ms
+2026-04-05T18:10:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T18:15:00: 
+2026-04-05T18:15:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T18:15:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 26ms
+2026-04-05T18:15:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T18:20:00: 
+2026-04-05T18:20:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T18:20:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 11ms
+2026-04-05T18:20:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T18:25:00: 
+2026-04-05T18:25:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T18:25:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 13ms
+2026-04-05T18:25:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T18:30:00: 
+2026-04-05T18:30:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T18:30:00: 
+2026-04-05T18:30:00: [CRON] ▶ Starting: RoomCleaning
+2026-04-05T18:30:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 57ms
+2026-04-05T18:30:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T18:30:00: [CRON] RoomCleaning — processed: 0, failed: 0, duration: 49ms
+2026-04-05T18:30:00: [CRON] ✅ Completed: RoomCleaning
+2026-04-05T18:35:00: 
+2026-04-05T18:35:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T18:35:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 21ms
+2026-04-05T18:35:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T18:40:00: 
+2026-04-05T18:40:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T18:40:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 11ms
+2026-04-05T18:40:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T18:45:00: 
+2026-04-05T18:45:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T18:45:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 17ms
+2026-04-05T18:45:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T18:50:00: 
+2026-04-05T18:50:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T18:50:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 19ms
+2026-04-05T18:50:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T18:55:00: 
+2026-04-05T18:55:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T18:55:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 36ms
+2026-04-05T18:55:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T19:00:00: 
+2026-04-05T19:00:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T19:00:00: 
+2026-04-05T19:00:00: [CRON] ▶ Starting: CheckoutReminder
+2026-04-05T19:00:00: 
+2026-04-05T19:00:00: [CRON] ▶ Starting: RoomCleaning
+2026-04-05T19:00:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 37ms
+2026-04-05T19:00:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T19:00:00: [CRON] RoomCleaning — processed: 0, failed: 0, duration: 12ms
+2026-04-05T19:00:00: [CRON] ✅ Completed: RoomCleaning
+2026-04-05T19:00:00: [CRON] CheckoutReminder — processed: 0, failed: 0, duration: 30ms
+2026-04-05T19:00:00: [CRON] ✅ Completed: CheckoutReminder
+2026-04-05T19:05:00: 
+2026-04-05T19:05:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T19:05:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 5ms
+2026-04-05T19:05:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T19:10:00: 
+2026-04-05T19:10:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T19:10:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 17ms
+2026-04-05T19:10:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T19:15:00: 
+2026-04-05T19:15:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T19:15:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 25ms
+2026-04-05T19:15:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T19:20:00: 
+2026-04-05T19:20:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T19:20:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 19ms
+2026-04-05T19:20:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T19:25:00: 
+2026-04-05T19:25:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T19:25:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 11ms
+2026-04-05T19:25:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T19:30:00: 
+2026-04-05T19:30:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T19:30:00: 
+2026-04-05T19:30:00: [CRON] ▶ Starting: RoomCleaning
+2026-04-05T19:30:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 11ms
+2026-04-05T19:30:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T19:30:00: [CRON] RoomCleaning — processed: 0, failed: 0, duration: 10ms
+2026-04-05T19:30:00: [CRON] ✅ Completed: RoomCleaning
+2026-04-05T19:35:00: 
+2026-04-05T19:35:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T19:35:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 16ms
+2026-04-05T19:35:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T19:40:00: 
+2026-04-05T19:40:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T19:40:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 11ms
+2026-04-05T19:40:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T19:45:00: 
+2026-04-05T19:45:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T19:45:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 13ms
+2026-04-05T19:45:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T19:50:00: 
+2026-04-05T19:50:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T19:50:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 20ms
+2026-04-05T19:50:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T19:55:00: 
+2026-04-05T19:55:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T19:55:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 49ms
+2026-04-05T19:55:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T19:57:20: 
+2026-04-05T19:57:20: SIGINT received — shutting down job supervisor...
+2026-04-05T19:57:20: 7:57:20 PM [tsx] Previous process hasn't exited yet. Force killing...
+2026-04-05T19:57:28: 
+2026-04-05T19:57:28: > airbnb-job-supervisor@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/services/job-supervisor
+2026-04-05T19:57:28: > tsx watch src/index.ts
+2026-04-05T19:57:28: 
+2026-04-05T19:57:29: 🚀 Starting Job Supervisor Service...
+2026-04-05T19:57:29: 📝 Environment: development
+2026-04-05T19:57:29: 📚 Connecting to PostgreSQL...
+2026-04-05T19:57:29: ✅ PostgreSQL connected
+2026-04-05T19:57:29: ⚡ Connecting to Redis...
+2026-04-05T19:57:29: ✅ Redis publisher connected
+2026-04-05T19:57:29: ✅ Redis publisher connected
+2026-04-05T19:57:29: 
+2026-04-05T19:57:29: ✅ All CRON jobs initialized:
+2026-04-05T19:57:29:    • BookingExpiry      — every 5 minutes
+2026-04-05T19:57:29:    • CheckoutReminder   — every hour
+2026-04-05T19:57:29:    • RoomCleaning       — every 30 minutes
+2026-04-05T19:57:29:    • SuperhostCalc      — daily at 02:00
+2026-04-05T19:57:29:    • IncidentEscalation — every 4 hours
+2026-04-05T19:57:29: 
+2026-04-05T19:57:29: ✅ Job Supervisor is running
+2026-04-05T19:57:29: 
+2026-04-05T20:00:00: 
+2026-04-05T20:00:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T20:00:00: 
+2026-04-05T20:00:00: [CRON] ▶ Starting: CheckoutReminder
+2026-04-05T20:00:00: 
+2026-04-05T20:00:00: [CRON] ▶ Starting: RoomCleaning
+2026-04-05T20:00:00: 
+2026-04-05T20:00:00: [CRON] ▶ Starting: IncidentEscalation
+2026-04-05T20:00:00: [CRON] IncidentEscalation — processed: 0, failed: 0, duration: 12ms
+2026-04-05T20:00:00: [CRON] ✅ Completed: IncidentEscalation
+2026-04-05T20:00:00: [CRON] RoomCleaning — processed: 0, failed: 0, duration: 15ms
+2026-04-05T20:00:00: [CRON] ✅ Completed: RoomCleaning
+2026-04-05T20:00:00: [CRON] CheckoutReminder — processed: 0, failed: 0, duration: 20ms
+2026-04-05T20:00:00: [CRON] ✅ Completed: CheckoutReminder
+2026-04-05T20:00:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 55ms
+2026-04-05T20:00:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T20:05:00: 
+2026-04-05T20:05:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T20:05:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 18ms
+2026-04-05T20:05:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T20:10:00: 
+2026-04-05T20:10:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T20:10:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 17ms
+2026-04-05T20:10:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T20:15:00: 
+2026-04-05T20:15:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T20:15:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 8ms
+2026-04-05T20:15:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T20:20:00: 
+2026-04-05T20:20:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T20:20:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 12ms
+2026-04-05T20:20:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T20:25:00: 
+2026-04-05T20:25:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T20:25:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 19ms
+2026-04-05T20:25:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T20:30:00: 
+2026-04-05T20:30:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T20:30:00: 
+2026-04-05T20:30:00: [CRON] ▶ Starting: RoomCleaning
+2026-04-05T20:30:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 60ms
+2026-04-05T20:30:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T20:30:00: [CRON] RoomCleaning — processed: 0, failed: 0, duration: 43ms
+2026-04-05T20:30:00: [CRON] ✅ Completed: RoomCleaning
+2026-04-05T20:35:00: 
+2026-04-05T20:35:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T20:35:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 7ms
+2026-04-05T20:35:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T20:40:00: 
+2026-04-05T20:40:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T20:40:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 11ms
+2026-04-05T20:40:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T20:45:00: 
+2026-04-05T20:45:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T20:45:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 12ms
+2026-04-05T20:45:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T20:50:00: 
+2026-04-05T20:50:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T20:50:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 10ms
+2026-04-05T20:50:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T20:55:00: 
+2026-04-05T20:55:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T20:55:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 23ms
+2026-04-05T20:55:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T21:00:00: 
+2026-04-05T21:00:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T21:00:00: 
+2026-04-05T21:00:00: [CRON] ▶ Starting: CheckoutReminder
+2026-04-05T21:00:00: 
+2026-04-05T21:00:00: [CRON] ▶ Starting: RoomCleaning
+2026-04-05T21:00:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 20ms
+2026-04-05T21:00:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T21:00:00: [CRON] RoomCleaning — processed: 0, failed: 0, duration: 10ms
+2026-04-05T21:00:00: [CRON] ✅ Completed: RoomCleaning
+2026-04-05T21:00:00: [CRON] CheckoutReminder — processed: 0, failed: 0, duration: 13ms
+2026-04-05T21:00:00: [CRON] ✅ Completed: CheckoutReminder
+2026-04-05T21:05:00: 
+2026-04-05T21:05:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T21:05:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 22ms
+2026-04-05T21:05:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T21:20:00: 
+2026-04-05T21:20:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T21:20:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 10ms
+2026-04-05T21:20:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T21:25:00: 
+2026-04-05T21:25:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T21:25:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 13ms
+2026-04-05T21:25:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T21:30:00: 
+2026-04-05T21:30:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T21:30:00: 
+2026-04-05T21:30:00: [CRON] ▶ Starting: RoomCleaning
+2026-04-05T21:30:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 9ms
+2026-04-05T21:30:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T21:30:00: [CRON] RoomCleaning — processed: 0, failed: 0, duration: 9ms
+2026-04-05T21:30:00: [CRON] ✅ Completed: RoomCleaning
+2026-04-05T21:35:00: 
+2026-04-05T21:35:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T21:35:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 6ms
+2026-04-05T21:35:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T21:40:00: 
+2026-04-05T21:40:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T21:40:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 10ms
+2026-04-05T21:40:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T21:45:00: 
+2026-04-05T21:45:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T21:45:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 18ms
+2026-04-05T21:45:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T21:50:00: 
+2026-04-05T21:50:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T21:50:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 9ms
+2026-04-05T21:50:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T21:55:00: 
+2026-04-05T21:55:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T21:55:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 10ms
+2026-04-05T21:55:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T22:00:00: 
+2026-04-05T22:00:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T22:00:00: 
+2026-04-05T22:00:00: [CRON] ▶ Starting: CheckoutReminder
+2026-04-05T22:00:00: 
+2026-04-05T22:00:00: [CRON] ▶ Starting: RoomCleaning
+2026-04-05T22:00:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 8ms
+2026-04-05T22:00:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T22:00:00: [CRON] RoomCleaning — processed: 0, failed: 0, duration: 6ms
+2026-04-05T22:00:00: [CRON] ✅ Completed: RoomCleaning
+2026-04-05T22:00:00: [CRON] CheckoutReminder — processed: 0, failed: 0, duration: 9ms
+2026-04-05T22:00:00: [CRON] ✅ Completed: CheckoutReminder
+2026-04-05T22:05:00: 
+2026-04-05T22:05:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T22:05:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 10ms
+2026-04-05T22:05:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T22:10:00: 
+2026-04-05T22:10:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T22:10:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 8ms
+2026-04-05T22:10:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T22:15:00: 
+2026-04-05T22:15:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T22:15:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 11ms
+2026-04-05T22:15:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T22:20:00: 
+2026-04-05T22:20:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T22:20:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 17ms
+2026-04-05T22:20:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T22:25:00: 
+2026-04-05T22:25:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T22:25:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 17ms
+2026-04-05T22:25:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T22:30:00: 
+2026-04-05T22:30:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T22:30:00: 
+2026-04-05T22:30:00: [CRON] ▶ Starting: RoomCleaning
+2026-04-05T22:30:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 12ms
+2026-04-05T22:30:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T22:30:00: [CRON] RoomCleaning — processed: 0, failed: 0, duration: 12ms
+2026-04-05T22:30:00: [CRON] ✅ Completed: RoomCleaning
+2026-04-05T22:35:00: 
+2026-04-05T22:35:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T22:35:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 6ms
+2026-04-05T22:35:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T22:40:00: 
+2026-04-05T22:40:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T22:40:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 13ms
+2026-04-05T22:40:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T22:45:00: 
+2026-04-05T22:45:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T22:45:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 29ms
+2026-04-05T22:45:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T22:50:00: 
+2026-04-05T22:50:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T22:50:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 20ms
+2026-04-05T22:50:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T22:55:00: 
+2026-04-05T22:55:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T22:55:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 39ms
+2026-04-05T22:55:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T23:00:00: 
+2026-04-05T23:00:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T23:00:00: 
+2026-04-05T23:00:00: [CRON] ▶ Starting: CheckoutReminder
+2026-04-05T23:00:00: 
+2026-04-05T23:00:00: [CRON] ▶ Starting: RoomCleaning
+2026-04-05T23:00:00: [CRON] RoomCleaning — processed: 0, failed: 0, duration: 14ms
+2026-04-05T23:00:00: [CRON] ✅ Completed: RoomCleaning
+2026-04-05T23:00:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 23ms
+2026-04-05T23:00:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T23:00:00: [CRON] CheckoutReminder — processed: 0, failed: 0, duration: 19ms
+2026-04-05T23:00:00: [CRON] ✅ Completed: CheckoutReminder
+2026-04-05T23:05:00: 
+2026-04-05T23:05:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T23:05:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 11ms
+2026-04-05T23:05:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T23:10:00: 
+2026-04-05T23:10:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T23:10:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 13ms
+2026-04-05T23:10:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T23:15:00: 
+2026-04-05T23:15:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T23:15:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 9ms
+2026-04-05T23:15:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T23:15:13: 
+2026-04-05T23:15:13: SIGINT received — shutting down job supervisor...
+2026-04-05T23:15:13: 11:15:13 PM [tsx] Previous process hasn't exited yet. Force killing...
+2026-04-05T23:15:19: 
+2026-04-05T23:15:19: > airbnb-job-supervisor@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/services/job-supervisor
+2026-04-05T23:15:19: > tsx watch src/index.ts
+2026-04-05T23:15:19: 
+2026-04-05T23:15:20: 🚀 Starting Job Supervisor Service...
+2026-04-05T23:15:20: 📝 Environment: development
+2026-04-05T23:15:20: 📚 Connecting to PostgreSQL...
+2026-04-05T23:15:20: ✅ PostgreSQL connected
+2026-04-05T23:15:20: ⚡ Connecting to Redis...
+2026-04-05T23:15:20: ✅ Redis publisher connected
+2026-04-05T23:15:20: ✅ Redis publisher connected
+2026-04-05T23:15:20: 
+2026-04-05T23:15:20: ✅ All CRON jobs initialized:
+2026-04-05T23:15:20:    • BookingExpiry      — every 5 minutes
+2026-04-05T23:15:20:    • CheckoutReminder   — every hour
+2026-04-05T23:15:20:    • RoomCleaning       — every 30 minutes
+2026-04-05T23:15:20:    • SuperhostCalc      — daily at 02:00
+2026-04-05T23:15:20:    • IncidentEscalation — every 4 hours
+2026-04-05T23:15:20: 
+2026-04-05T23:15:20: ✅ Job Supervisor is running
+2026-04-05T23:15:20: 
+2026-04-05T23:20:00: 
+2026-04-05T23:20:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T23:20:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 57ms
+2026-04-05T23:20:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-05T23:25:00: 
+2026-04-05T23:25:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-05T23:25:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 24ms
+2026-04-05T23:25:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-06T00:35:00: 
+2026-04-06T00:35:00: [CRON] ▶ Starting: BookingExpiry
+2026-04-06T00:35:00: [CRON] BookingExpiry — processed: 0, failed: 0, duration: 14ms
+2026-04-06T00:35:00: [CRON] ✅ Completed: BookingExpiry
+2026-04-06T00:38:26: 
+2026-04-06T00:38:26: SIGINT received — shutting down job supervisor...
+2026-04-06T00:38:26: 12:38:26 AM [tsx] Previous process hasn't exited yet. Force killing...

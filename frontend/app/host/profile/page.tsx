@@ -27,7 +27,8 @@ import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/lib/axios";
 import { useAuthStore } from "@/store/authStore";
-import { Loader2 } from "lucide-react";
+import { Skeleton as UISkeleton } from "@/components/ui/skeleton";
+import { Skeleton as BoneyardSkeleton } from "boneyard-js/react";
 
 const profileSchema = z.object({
   companyName: z.string().min(2, "Company name must be at least 2 characters"),
@@ -99,9 +100,29 @@ export default function HostProfilePage() {
   if (isFetching) {
     return (
       <AppLayout>
-        <div className="flex justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-        </div>
+        <BoneyardSkeleton
+          loading
+          name="host-profile-page"
+          fallback={
+            <div className="max-w-2xl space-y-6">
+              <div className="space-y-2">
+                <UISkeleton className="h-9 w-64" />
+                <UISkeleton className="h-5 w-80 max-w-full" />
+              </div>
+              <Card>
+                <CardContent className="pt-6 space-y-4">
+                  <UISkeleton className="h-10 w-full" />
+                  <UISkeleton className="h-10 w-full" />
+                  <UISkeleton className="h-10 w-full" />
+                  <UISkeleton className="h-28 w-full" />
+                  <UISkeleton className="h-11 w-full" />
+                </CardContent>
+              </Card>
+            </div>
+          }
+        >
+          <p className="text-muted-foreground">Loading profile...</p>
+        </BoneyardSkeleton>
       </AppLayout>
     );
   }

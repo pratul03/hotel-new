@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { GraphQLError } from "graphql";
 import { env } from "../config/environment";
 import { sessionService } from "../domains/auth/services/session.service";
+import { readAccessTokenFromRequest } from "../domains/auth/services/authCookies.service";
 
 export type GraphQLAuthUser = {
   userId: string;
@@ -37,7 +38,8 @@ export const createGraphQLContext = async (
   req: Request,
   res: Response,
 ): Promise<GraphQLContext> => {
-  const token = readBearerToken(req.headers.authorization);
+  const token =
+    readBearerToken(req.headers.authorization) || readAccessTokenFromRequest(req);
 
   if (!token) {
     return { req, res };
@@ -79,7 +81,9 @@ export const createGraphQLContext = async (
       throw error;
     }
 
-    throw unauthorized("Invalid or expired token");
+    // For cookie-based auth, expired/invalid access token should not break
+    // public operations. Protected resolvers still enforce requireAuth.
+    return { req, res };
   }
 };
 

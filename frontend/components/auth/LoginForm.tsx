@@ -30,7 +30,7 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 export function LoginForm() {
   const router = useRouter();
-  const { setUser, setToken } = useAuthStore();
+  const { setUser } = useAuthStore();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -49,9 +49,8 @@ export function LoginForm() {
         email: data.email,
         password: data.password,
       });
-      const { user, token } = response.data.data;
+      const { user } = response.data.data;
       setUser(user);
-      setToken(token);
       toast.success("Login successful!");
       router.push("/bookings");
     } catch (error) {

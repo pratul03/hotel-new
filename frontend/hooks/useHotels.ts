@@ -18,6 +18,9 @@ export interface HotelSearchParams {
   radiusKm?: number;
   checkIn?: string;
   checkOut?: string;
+  adults?: number;
+  childCount?: number;
+  childAges?: number[];
   guests?: number;
   minPrice?: number;
   maxPrice?: number;
@@ -43,6 +46,9 @@ export function useHotels(params: HotelSearchParams = {}) {
     radiusKm,
     checkIn,
     checkOut,
+    adults,
+    childCount,
+    childAges,
     guests,
     minPrice,
     maxPrice,
@@ -69,6 +75,9 @@ export function useHotels(params: HotelSearchParams = {}) {
             radiusKm,
             checkIn,
             checkOut,
+            adults,
+            childCount,
+            childAges,
             guests,
             minPrice,
             maxPrice,

@@ -3,17 +3,28 @@
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { HotelSearchBar } from "@/components/hotels/HotelSearchBar";
 import { HotelCard } from "@/components/hotels/HotelCard";
 import { useAuthStore } from "@/store/authStore";
-import { LogIn, User, Building2, Star, Loader2 } from "lucide-react";
+import { LogIn, LogOut, User, Building2, Star } from "lucide-react";
 import { ThemeToggle } from "@/components/common/ThemeToggle";
 import { usePromotedHotels, useHotels } from "@/hooks/useHotels";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
+import { Footer } from "@/components/layout/Footer";
+import { Skeleton as UISkeleton } from "@/components/ui/skeleton";
+import { Skeleton as BoneyardSkeleton } from "boneyard-js/react";
+import { TypingAnimation } from "@/components/ui/typing-animation";
+import axiosInstance from "@/lib/axios";
 
 export default function HomePage() {
-  const { user, isAuthenticated } = useAuthStore();
+  const { user, isAuthenticated, logout } = useAuthStore();
   const router = useRouter();
   const { data: promotedHotels, isLoading: promotedLoading } =
     usePromotedHotels();
@@ -25,14 +36,33 @@ export default function HomePage() {
     location: string;
     checkIn: string;
     checkOut: string;
+    adults: number;
+    childCount: number;
+    childAges: number[];
     guests: number;
+    lat?: number;
+    lng?: number;
   }) => {
     const params = new URLSearchParams();
     if (filters.location) params.set("location", filters.location);
     if (filters.checkIn) params.set("checkIn", filters.checkIn);
     if (filters.checkOut) params.set("checkOut", filters.checkOut);
+    if (filters.adults > 0) params.set("adults", String(filters.adults));
+    if (filters.childCount > 0) {
+      params.set("childCount", String(filters.childCount));
+      params.set("childAges", filters.childAges.join(","));
+    }
     if (filters.guests > 1) params.set("guests", String(filters.guests));
+    if (filters.lat !== undefined && filters.lng !== undefined) {
+      params.set("lat", String(filters.lat));
+      params.set("lng", String(filters.lng));
+    }
     router.push(`/search?${params.toString()}`);
+  };
+
+  const handleLogout = () => {
+    axiosInstance.post("/auth/logout").catch(() => {});
+    logout();
   };
 
   return (
@@ -55,12 +85,35 @@ export default function HomePage() {
                     Become a Host
                   </Link>
                 </Button>
-                <Button variant="ghost" size="sm" asChild>
-                  <Link href="/profile">
-                    <User className="h-4 w-4 mr-2" />
-                    {user.name}
-                  </Link>
-                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm" className="gap-2">
+                      <User className="h-4 w-4" />
+                      {user.name}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuItem asChild>
+                      <Link href="/host" className="flex items-center gap-2">
+                        <Building2 className="h-4 w-4" />
+                        Dashboard
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/profile" className="flex items-center gap-2">
+                        <User className="h-4 w-4" />
+                        Profile
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={handleLogout}
+                      className="flex items-center gap-2"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      Logout
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </>
             ) : (
               <Button asChild>
@@ -78,9 +131,12 @@ export default function HomePage() {
       <section className="container max-w-7xl mx-auto px-4 py-12">
         <div className="space-y-8">
           <div className="text-center space-y-2 mb-8">
-            <h1 className="text-4xl md:text-5xl font-bold text-balance">
+            <TypingAnimation
+              as="h1"
+              className="style-script-regular text-4xl md:text-5xl text-balance"
+            >
               Explore Unique Stays and Experiences
-            </h1>
+            </TypingAnimation>
             <p className="text-lg text-muted-foreground text-balance">
               Find your perfect accommodation anywhere in the world
             </p>
@@ -101,11 +157,11 @@ export default function HomePage() {
               Promoted
             </Badge>
           </div>
-          {promotedLoading ? (
-            <div className="flex justify-center py-8">
-              <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-            </div>
-          ) : (
+          <BoneyardSkeleton
+            loading={promotedLoading}
+            name="home-featured-hotels"
+            fallback={<HotelGridSkeleton count={4} />}
+          >
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {(promotedHotels ?? []).map((hotel) => (
                 <div key={hotel.id} className="relative">
@@ -121,7 +177,7 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-          )}
+          </BoneyardSkeleton>
         </section>
       )}
 
@@ -130,11 +186,11 @@ export default function HomePage() {
         <div className="space-y-8">
           <div>
             <h2 className="text-2xl font-bold mb-6">Explore Stays</h2>
-            {recentLoading ? (
-              <div className="flex justify-center py-8">
-                <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-              </div>
-            ) : (
+            <BoneyardSkeleton
+              loading={recentLoading}
+              name="home-recent-hotels"
+              fallback={<HotelGridSkeleton count={8} />}
+            >
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {(recentData?.data ?? []).map((hotel) => (
                   <HotelCard
@@ -144,7 +200,7 @@ export default function HomePage() {
                   />
                 ))}
               </div>
-            )}
+            </BoneyardSkeleton>
           </div>
           <div className="mt-12 space-y-6">
             <h2 className="text-2xl font-bold">Explore by Category</h2>
@@ -186,12 +242,25 @@ export default function HomePage() {
         </section>
       )}
 
-      {/* Footer */}
-      <footer className="border-t bg-background/50 py-8">
-        <div className="container max-w-7xl mx-auto px-4 text-center text-sm text-muted-foreground">
-          <p>&copy; 2024 FND OUT SPACE. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </main>
+  );
+}
+
+function HotelGridSkeleton({ count }: { count: number }) {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {Array.from({ length: count }).map((_, index) => (
+        <div key={index} className="rounded-xl border bg-card overflow-hidden">
+          <UISkeleton className="h-48 w-full" />
+          <div className="p-4 space-y-3">
+            <UISkeleton className="h-5 w-2/3" />
+            <UISkeleton className="h-4 w-full" />
+            <UISkeleton className="h-4 w-3/4" />
+            <UISkeleton className="h-5 w-20" />
+          </div>
+        </div>
+      ))}
+    </div>
   );
 }

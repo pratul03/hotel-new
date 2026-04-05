@@ -1,0 +1,22 @@
+
+> airbnb-job-supervisor@1.0.0 dev /Users/pratulmakar/Developer/hotel-new/services/job-supervisor
+> tsx watch src/index.ts
+
+/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/node_modules/.pnpm/@prisma+client@7.4.2_prisma@7.4.2_@types+react@19.2.14_react-dom@19.2.4_react@19.2.4__r_49b4b128965f74ea9bbd7586bc0c7d7a/node_modules/@prisma/client/src/runtime/utils/validatePrismaClientOptions.ts:229
+    throw new PrismaClientConstructorValidationError(
+          ^
+
+PrismaClientConstructorValidationError: Using engine type "client" requires either "adapter" or "accelerateUrl" to be provided to PrismaClient constructor.
+Read more at https://pris.ly/d/client-constructor
+    at validateDependentOptions (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/node_modules/.pnpm/@prisma+client@7.4.2_prisma@7.4.2_@types+react@19.2.14_react-dom@19.2.4_react@19.2.4__r_49b4b128965f74ea9bbd7586bc0c7d7a/node_modules/@prisma/client/src/runtime/utils/validatePrismaClientOptions.ts:229:11)
+    at validatePrismaClientOptions (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/node_modules/.pnpm/@prisma+client@7.4.2_prisma@7.4.2_@types+react@19.2.14_react-dom@19.2.4_react@19.2.4__r_49b4b128965f74ea9bbd7586bc0c7d7a/node_modules/@prisma/client/src/runtime/utils/validatePrismaClientOptions.ts:246:3)
+    at new t (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/node_modules/.pnpm/@prisma+client@7.4.2_prisma@7.4.2_@types+react@19.2.14_react-dom@19.2.4_react@19.2.4__r_49b4b128965f74ea9bbd7586bc0c7d7a/node_modules/@prisma/client/src/runtime/getPrismaClient.ts:282:7)
+    at <anonymous> (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/src/config/database.ts:8:32)
+    at Object.<anonymous> (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/src/config/database.ts:14:16)
+    at Module._compile (node:internal/modules/cjs/loader:1829:14)
+    at Object.transformer (/Users/pratulmakar/Developer/hotel-new/services/job-supervisor/node_modules/.pnpm/tsx@4.21.0/node_modules/tsx/dist/register-D46fvsV_.cjs:3:1104)
+    at Module.load (node:internal/modules/cjs/loader:1552:32)
+    at Module._load (node:internal/modules/cjs/loader:1354:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+
+Node.js v25.8.1

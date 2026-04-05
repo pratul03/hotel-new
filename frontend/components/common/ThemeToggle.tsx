@@ -1,39 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
-import { Moon, Sun } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
+import { cn } from "@/lib/utils";
 
 export function ThemeToggle({ className }: { className?: string }) {
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return (
-      <Button variant="ghost" size="icon" className={className} disabled>
-        <Sun className="h-4 w-4" />
-      </Button>
-    );
-  }
-
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      className={className}
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      aria-label="Toggle theme"
-    >
-      {theme === "dark" ? (
-        <Sun className="h-4 w-4" />
-      ) : (
-        <Moon className="h-4 w-4" />
+    <AnimatedThemeToggler
+      className={cn(
+        "inline-flex h-9 w-9 items-center justify-center rounded-md border border-border/60 bg-background/70 text-foreground shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background [&_svg]:size-4",
+        className,
       )}
-    </Button>
+      aria-label="Toggle theme"
+    />
   );
 }

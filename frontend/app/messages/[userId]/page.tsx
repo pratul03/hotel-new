@@ -12,6 +12,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useMessages, useSendMessage } from "@/hooks/useMessages";
 import { useAuthStore } from "@/store/authStore";
 import { cn } from "@/lib/utils";
+import { Skeleton as BoneyardSkeleton } from "boneyard-js/react";
 
 export default function MessageThreadPage() {
   const { userId } = useParams<{ userId: string }>();
@@ -82,80 +83,86 @@ export default function MessageThreadPage() {
 
       {/* Messages */}
       <ScrollArea className="flex-1 px-4 py-4">
-        {isLoading ? (
-          <div className="space-y-3">
-            {[...Array(5)].map((_, i) => (
-              <div
-                key={i}
-                className={cn(
-                  "flex gap-2",
-                  i % 2 === 0 ? "justify-start" : "justify-end",
-                )}
-              >
-                <Skeleton className="h-10 w-48 rounded-2xl" />
-              </div>
-            ))}
-          </div>
-        ) : messages.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-40 text-muted-foreground">
-            <p className="text-sm">No messages yet. Say hello!</p>
-          </div>
-        ) : (
-          <div className="space-y-2">
-            {messages.map((msg) => {
-              const isMine = msg.senderId === currentUser?.id;
-              return (
+        <BoneyardSkeleton
+          loading={isLoading}
+          name="messages-thread"
+          fallback={
+            <div className="space-y-3">
+              {Array.from({ length: 5 }).map((_, i) => (
                 <div
-                  key={msg.id}
+                  key={i}
                   className={cn(
-                    "flex gap-2 items-end",
-                    isMine ? "justify-end" : "justify-start",
+                    "flex gap-2",
+                    i % 2 === 0 ? "justify-start" : "justify-end",
                   )}
                 >
-                  {!isMine && (
-                    <Avatar className="h-6 w-6 shrink-0">
-                      <AvatarFallback className="text-xs">
-                        {msg.sender?.name?.slice(0, 2).toUpperCase() ?? "U"}
-                      </AvatarFallback>
-                    </Avatar>
-                  )}
+                  <Skeleton className="h-10 w-48 rounded-2xl" />
+                </div>
+              ))}
+            </div>
+          }
+        >
+          {messages.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-40 text-muted-foreground">
+              <p className="text-sm">No messages yet. Say hello!</p>
+            </div>
+          ) : (
+            <div className="space-y-2">
+              {messages.map((msg) => {
+                const isMine = msg.senderId === currentUser?.id;
+                return (
                   <div
+                    key={msg.id}
                     className={cn(
-                      "max-w-[70%] rounded-2xl px-3 py-2 text-sm wrap-break-word",
-                      isMine
-                        ? "bg-primary text-primary-foreground rounded-br-sm"
-                        : "bg-muted rounded-bl-sm",
+                      "flex gap-2 items-end",
+                      isMine ? "justify-end" : "justify-start",
                     )}
                   >
-                    <p className="wrap-break-word">{msg.content}</p>
-                    {msg.attachmentUrl && (
-                      <a
-                        href={msg.attachmentUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="mt-1 inline-flex items-center gap-1 text-xs underline"
-                      >
-                        <Paperclip className="h-3 w-3" />
-                        Attachment
-                      </a>
+                    {!isMine && (
+                      <Avatar className="h-6 w-6 shrink-0">
+                        <AvatarFallback className="text-xs">
+                          {msg.sender?.name?.slice(0, 2).toUpperCase() ?? "U"}
+                        </AvatarFallback>
+                      </Avatar>
                     )}
-                    <p
+                    <div
                       className={cn(
-                        "text-[10px] mt-0.5 select-none",
+                        "max-w-[70%] rounded-2xl px-3 py-2 text-sm wrap-break-word",
                         isMine
-                          ? "text-primary-foreground/70 text-right"
-                          : "text-muted-foreground",
+                          ? "bg-primary text-primary-foreground rounded-br-sm"
+                          : "bg-muted rounded-bl-sm",
                       )}
                     >
-                      {format(new Date(msg.createdAt), "HH:mm")}
-                    </p>
+                      <p className="wrap-break-word">{msg.content}</p>
+                      {msg.attachmentUrl && (
+                        <a
+                          href={msg.attachmentUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="mt-1 inline-flex items-center gap-1 text-xs underline"
+                        >
+                          <Paperclip className="h-3 w-3" />
+                          Attachment
+                        </a>
+                      )}
+                      <p
+                        className={cn(
+                          "text-[10px] mt-0.5 select-none",
+                          isMine
+                            ? "text-primary-foreground/70 text-right"
+                            : "text-muted-foreground",
+                        )}
+                      >
+                        {format(new Date(msg.createdAt), "HH:mm")}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-            <div ref={bottomRef} />
-          </div>
-        )}
+                );
+              })}
+              <div ref={bottomRef} />
+            </div>
+          )}
+        </BoneyardSkeleton>
       </ScrollArea>
 
       {/* Input */}

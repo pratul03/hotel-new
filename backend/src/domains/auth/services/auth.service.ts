@@ -5,7 +5,12 @@ import { prisma } from "../../../config/database";
 import { env } from "../../../config/environment";
 import { getRedisClient } from "../../../config/redis";
 import { sessionService } from "./session.service";
-import { generateToken } from "../../../utils/jwt";
+import {
+  generateAccessToken,
+  generateRefreshToken,
+  generateToken,
+  verifyRefreshToken,
+} from "../../../utils/jwt";
 import { AppError } from "../../../utils";
 
 const SALT_ROUNDS = 10;
@@ -57,7 +62,18 @@ export const authService = {
     // Generate token
     const sessionId = randomUUID();
     await sessionService.createSession(user.id, sessionId);
-    const token = generateToken(user.id, user.email, user.role, sessionId);
+    const accessToken = generateAccessToken(
+      user.id,
+      user.email,
+      user.role,
+      sessionId,
+    );
+    const refreshToken = generateRefreshToken(
+      user.id,
+      user.email,
+      user.role,
+      sessionId,
+    );
 
     return {
       user: {
@@ -66,7 +82,9 @@ export const authService = {
         name: user.name,
         role: user.role,
       },
-      token,
+      token: accessToken,
+      accessToken,
+      refreshToken,
     };
   },
 
@@ -90,7 +108,18 @@ export const authService = {
     // Generate token
     const sessionId = randomUUID();
     await sessionService.createSession(user.id, sessionId);
-    const token = generateToken(user.id, user.email, user.role, sessionId);
+    const accessToken = generateAccessToken(
+      user.id,
+      user.email,
+      user.role,
+      sessionId,
+    );
+    const refreshToken = generateRefreshToken(
+      user.id,
+      user.email,
+      user.role,
+      sessionId,
+    );
 
     return {
       user: {
@@ -101,7 +130,9 @@ export const authService = {
         verified: user.verified,
         superhost: user.superhost,
       },
-      token,
+      token: accessToken,
+      accessToken,
+      refreshToken,
     };
   },
 
@@ -181,6 +212,59 @@ export const authService = {
     await sessionService.createSession(user.id, sessionId);
     const token = generateToken(user.id, user.email, user.role, sessionId);
     return { token };
+  },
+
+  async refreshSessionFromToken(refreshToken: string) {
+    let decoded: { userId: string; email: string; role: string; sid?: string };
+
+    try {
+      decoded = verifyRefreshToken(refreshToken);
+    } catch {
+      throw new AppError("Invalid or expired refresh token", 401);
+    }
+
+    if (!decoded.sid) {
+      throw new AppError("Refresh token is missing session information", 401);
+    }
+
+    const sessionActive = await sessionService.isSessionActive(
+      decoded.userId,
+      decoded.sid,
+    );
+    if (!sessionActive) {
+      throw new AppError("Session is no longer active", 401);
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: decoded.userId },
+      select: { id: true, email: true, role: true },
+    });
+
+    if (!user) {
+      throw new AppError("User not found", 404);
+    }
+
+    await sessionService.touchSession(user.id, decoded.sid);
+
+    const accessToken = generateAccessToken(
+      user.id,
+      user.email,
+      user.role,
+      decoded.sid,
+    );
+    const rotatedRefreshToken = generateRefreshToken(
+      user.id,
+      user.email,
+      user.role,
+      decoded.sid,
+    );
+
+    return {
+      token: accessToken,
+      accessToken,
+      refreshToken: rotatedRefreshToken,
+      sessionId: decoded.sid,
+    };
   },
 
   async forgotPassword(email: string) {

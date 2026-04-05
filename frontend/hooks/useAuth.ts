@@ -17,7 +17,6 @@ interface RegisterPayload {
 }
 interface AuthResponse {
   user: User;
-  token: string;
 }
 
 export function useLogin() {
@@ -26,14 +25,11 @@ export function useLogin() {
 
   return useMutation({
     mutationFn: async (payload: LoginPayload) => {
-      const { data } = await axiosInstance.post<AuthResponse>(
-        "/auth/login",
-        payload,
-      );
-      return data;
+      const response = await axiosInstance.post("/auth/login", payload);
+      return response.data.data as AuthResponse;
     },
-    onSuccess: ({ user, token }) => {
-      login(user, token);
+    onSuccess: ({ user }) => {
+      login(user);
       router.push("/");
     },
   });
@@ -45,14 +41,11 @@ export function useRegister() {
 
   return useMutation({
     mutationFn: async (payload: RegisterPayload) => {
-      const { data } = await axiosInstance.post<AuthResponse>(
-        "/auth/register",
-        payload,
-      );
-      return data;
+      const response = await axiosInstance.post("/auth/register", payload);
+      return response.data.data as AuthResponse;
     },
-    onSuccess: ({ user, token }) => {
-      login(user, token);
+    onSuccess: ({ user }) => {
+      login(user);
       router.push("/");
     },
   });

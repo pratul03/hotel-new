@@ -6,6 +6,8 @@ import { ThemeToggle } from "@/components/common/ThemeToggle";
 import { ResetPasswordForm } from "@/components/auth/ResetPasswordForm";
 import Link from "next/link";
 import Image from "next/image";
+import { Skeleton as UISkeleton } from "@/components/ui/skeleton";
+import { Skeleton as BoneyardSkeleton } from "boneyard-js/react";
 
 export default function ResetPasswordPage() {
   return (
@@ -32,9 +34,22 @@ export default function ResetPasswordPage() {
         <Card className="p-6">
           <Suspense
             fallback={
-              <p className="text-sm text-muted-foreground">
-                Loading reset form...
-              </p>
+              <BoneyardSkeleton
+                loading
+                name="reset-password-form"
+                fallback={
+                  <div className="space-y-4">
+                    <UISkeleton className="h-10 w-full" />
+                    <UISkeleton className="h-10 w-full" />
+                    <UISkeleton className="h-10 w-full" />
+                    <UISkeleton className="h-11 w-full" />
+                  </div>
+                }
+              >
+                <p className="text-sm text-muted-foreground">
+                  Loading reset form...
+                </p>
+              </BoneyardSkeleton>
             }
           >
             <ResetPasswordForm />

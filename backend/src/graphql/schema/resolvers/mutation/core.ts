@@ -45,21 +45,50 @@ import {
   normalizeHotel,
   toDate,
 } from "../../helpers";
+import { setAuthCookies } from "../../../../domains/auth/services/authCookies.service";
 
 export const coreMutationResolvers = {
-  register: async (_parent: unknown, args: { input: unknown }) => {
+  register: async (
+    _parent: unknown,
+    args: { input: unknown },
+    context: GraphQLContext,
+  ) => {
     const payload = registerSchema.parse(args.input);
-    return authService.register(
+    const result = await authService.register(
       payload.email,
       payload.password,
       payload.name,
       payload.role,
     );
+
+    setAuthCookies(context.res, {
+      accessToken: result.accessToken,
+      refreshToken: result.refreshToken,
+    });
+
+    return {
+      user: result.user,
+      token: result.token,
+    };
   },
 
-  login: async (_parent: unknown, args: { input: unknown }) => {
+  login: async (
+    _parent: unknown,
+    args: { input: unknown },
+    context: GraphQLContext,
+  ) => {
     const payload = loginSchema.parse(args.input);
-    return authService.login(payload.email, payload.password);
+    const result = await authService.login(payload.email, payload.password);
+
+    setAuthCookies(context.res, {
+      accessToken: result.accessToken,
+      refreshToken: result.refreshToken,
+    });
+
+    return {
+      user: result.user,
+      token: result.token,
+    };
   },
 
   createHotel: async (

@@ -1,14 +1,42 @@
 import { PrismaClient } from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import pg from "pg";
 
-declare global {
-  var __supervisorPrisma: PrismaClient | undefined;
+const globalForDb = globalThis as unknown as {
+  supervisorPgPool?: pg.Pool;
+  supervisorPrisma?: PrismaClient;
+};
+
+const buildPool = () =>
+  new pg.Pool({
+    connectionString: process.env.DATABASE_URL,
+    max: parseInt(process.env.DB_POOL_MAX || "5", 10),
+    min: parseInt(process.env.DB_POOL_MIN || "1", 10),
+    idleTimeoutMillis: 20000,
+    connectionTimeoutMillis: 5000,
+    allowExitOnIdle: true,
+  });
+
+const pool = globalForDb.supervisorPgPool ?? buildPool();
+
+if (pool.listenerCount("error") === 0) {
+  pool.on("error", (err) => {
+    console.error(`[Supervisor DB Pool] Unexpected error on idle client: ${err.message}`);
+  });
 }
 
-export const prisma =
-  global.__supervisorPrisma ?? new PrismaClient({ log: ["error"] });
+const adapter = new PrismaPg(pool);
+const prisma =
+  globalForDb.supervisorPrisma ??
+  new PrismaClient({
+    adapter,
+    log: ["error"],
+  });
 
 if (process.env.NODE_ENV !== "production") {
-  global.__supervisorPrisma = prisma;
+  globalForDb.supervisorPgPool = pool;
+  globalForDb.supervisorPrisma = prisma;
 }
 
+export { prisma, pool };
 export default prisma;

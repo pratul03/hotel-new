@@ -3,6 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import compression from "compression";
 import morgan from "morgan";
+import cookieParser from "cookie-parser";
 import { env } from "../config/environment";
 import { pool } from "../config/database";
 import { getRedisClient } from "../config/redis";
@@ -45,6 +46,9 @@ export const setupMiddleware = async (app: Express) => {
   );
   app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
+  // Cookies
+  app.use(cookieParser());
+
   // Request logger middleware
   app.use(requestLogger);
 
@@ -75,6 +79,14 @@ export const setupMiddleware = async (app: Express) => {
     const database = databaseCheck.ok;
     const redis = redisCheck.ok;
     const healthy = database && redis;
+    const databaseError =
+      databaseCheck.ok || !("error" in databaseCheck)
+        ? undefined
+        : databaseCheck.error;
+    const redisError =
+      redisCheck.ok || !("error" in redisCheck)
+        ? undefined
+        : redisCheck.error;
 
     res.status(healthy ? 200 : 503).json({
       success: healthy,
@@ -89,8 +101,8 @@ export const setupMiddleware = async (app: Express) => {
       errors: healthy
         ? undefined
         : {
-            database: databaseCheck.ok ? undefined : databaseCheck.error,
-            redis: redisCheck.ok ? undefined : redisCheck.error,
+            database: databaseError,
+            redis: redisError,
           },
     });
   });

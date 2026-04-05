@@ -6,6 +6,7 @@ import { AppLayout } from "@/components/layout/AppLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { NumberInput } from "@/components/ui/number-input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { formatPrice } from "@/lib/format";
@@ -245,23 +246,26 @@ export default function HostToolsPage() {
               <option value="moderate">Moderate</option>
               <option value="strict">Strict</option>
             </select>
-            <Input
-              value={freeHours}
-              onChange={(e) => setFreeHours(e.target.value)}
+            <NumberInput
+              value={freeHours === "" ? undefined : Number(freeHours)}
+              onValueChange={(value) =>
+                setFreeHours(value === undefined ? "" : String(value))
+              }
               placeholder="Free cancel hours"
-              type="number"
             />
-            <Input
-              value={partialRefund}
-              onChange={(e) => setPartialRefund(e.target.value)}
+            <NumberInput
+              value={partialRefund === "" ? undefined : Number(partialRefund)}
+              onValueChange={(value) =>
+                setPartialRefund(value === undefined ? "" : String(value))
+              }
               placeholder="Partial refund %"
-              type="number"
             />
-            <Input
-              value={noShowPenalty}
-              onChange={(e) => setNoShowPenalty(e.target.value)}
+            <NumberInput
+              value={noShowPenalty === "" ? undefined : Number(noShowPenalty)}
+              onValueChange={(value) =>
+                setNoShowPenalty(value === undefined ? "" : String(value))
+              }
               placeholder="No-show penalty %"
-              type="number"
             />
             <div className="md:col-span-4">
               <Button
@@ -424,11 +428,12 @@ export default function HostToolsPage() {
                 onChange={(e) => setCohostPermissions(e.target.value)}
                 placeholder="permissions comma separated"
               />
-              <Input
-                value={cohostSplit}
-                onChange={(e) => setCohostSplit(e.target.value)}
+              <NumberInput
+                value={cohostSplit === "" ? undefined : Number(cohostSplit)}
+                onValueChange={(value) =>
+                  setCohostSplit(value === undefined ? "" : String(value))
+                }
                 placeholder="Revenue split %"
-                type="number"
               />
             </div>
             <Button
@@ -529,11 +534,12 @@ export default function HostToolsPage() {
                 onChange={(e) => setClaimTitle(e.target.value)}
                 placeholder="Claim title"
               />
-              <Input
-                value={claimAmount}
-                onChange={(e) => setClaimAmount(e.target.value)}
+              <NumberInput
+                value={claimAmount === "" ? undefined : Number(claimAmount)}
+                onValueChange={(value) =>
+                  setClaimAmount(value === undefined ? "" : String(value))
+                }
                 placeholder="Amount"
-                type="number"
               />
               <Input
                 value={claimDescription}
